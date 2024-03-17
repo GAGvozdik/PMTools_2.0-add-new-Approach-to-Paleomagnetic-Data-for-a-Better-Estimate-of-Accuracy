@@ -7,7 +7,7 @@ import { useTheme } from '@mui/material/styles';
 import {
   bgColorMain,
 } from '../../utils/ThemeConstants';
-import CACResultTable from '../CACResultTable/CACResultTable';
+import CACResultTable from './CACResultTable';
 
 interface ITables {
   dataToShow: IDirData | null;

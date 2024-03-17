@@ -18,6 +18,8 @@ import DefaultButton from "../Buttons/DefaultButton/DefaultButton";
 import { GraphType } from "../../../../utils/GlobalTypes";
 import InfoButton from "../Buttons/InfoButton/InfoButton";
 
+
+
 interface ISelectableGraph {
   graphId: GraphType;
   graphName?: string;

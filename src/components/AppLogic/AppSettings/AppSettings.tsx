@@ -43,6 +43,7 @@ const AppSettings: FC<IAppSettings> = ({
   const availableFormats = {
     pca: ['.pmd', '.squid', '.rs3', '.csv', '.xlsx'],
     dir: ['.dir', '.pmm', '.csv', '.xlsx'], 
+    Khokhlov_Gvozdik: ['.dir', '.pmm', '.csv', '.xlsx'], 
   };
 
   const [showSettings, setShowSettings] = useState(false);
@@ -92,7 +93,7 @@ const AppSettings: FC<IAppSettings> = ({
           }}
         >
           {
-            (currentPage === 'pca' || currentPage === 'dir') &&
+            (currentPage === 'pca' || currentPage === 'dir' || currentPage === 'Khokhlov_Gvozdik') &&
             <Input 
               id="upload-file"
               type={'file'}  
@@ -105,11 +106,12 @@ const AppSettings: FC<IAppSettings> = ({
               sx={{display: 'none'}}
             />
           }
+
           <DefaultResponsiveButton
             icon={<UploadFileOutlinedIcon />}
             text={t('appLayout.settings.import')}
             variant='outlined'
-            disabled={currentPage !== 'pca' && currentPage !== 'dir'}
+            disabled={currentPage !== 'pca' && currentPage !== 'dir' && currentPage !== 'Khokhlov_Gvozdik'}
             component="span"
             id="upload-file-button"
           />

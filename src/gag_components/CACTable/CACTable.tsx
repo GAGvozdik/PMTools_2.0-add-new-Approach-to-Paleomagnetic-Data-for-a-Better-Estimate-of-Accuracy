@@ -1,6 +1,6 @@
 import React, { FC, useEffect, useState } from 'react';
 import styles from '../khokhlov-gvozdik/khokhlov-gvozdik.module.scss';
-import CACDataTable from '../CACDataTable/CACDataTable';
+import CACDataTable from './CACDataTable';
 import { useAppSelector } from '../../services/store/hooks';
 import { IDirData, StatisitcsInterpretationFromDIR } from "../../utils/GlobalTypes";
 import { DataTableDIR, StatisticsDataTableDIR } from '../../components/AppLogic';

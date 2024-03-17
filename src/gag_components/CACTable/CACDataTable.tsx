@@ -3,16 +3,16 @@
 
 import React, { FC, useEffect, useState } from "react";
 import styles from './CACDataTable.module.scss';
-import { DataGridDIRFromDIRRow, IDirData } from "../../../src/utils/GlobalTypes";
+import { DataGridDIRFromDIRRow, IDirData } from "../../utils/GlobalTypes";
 import { DataGrid, GridActionsCellItem, GridColumnHeaderParams, GridColumns, GridSelectionModel, GridValueFormatterParams } from '@mui/x-data-grid';
-import DataTableDIRSkeleton from '../../../src/components/AppLogic/DataTablesDIR/InputDataTable/DataTableDIRSkeleton';
-import { useAppDispatch, useAppSelector } from "../../../src/services/store/hooks";
-import { setSelectedDirectionsIDs, setHiddenDirectionsIDs, setReversedDirectionsIDs } from "../../../src/services/reducers/dirPage";
-import { GetDataTableBaseStyle } from "../../../src/components/AppLogic/DataTablesDIR/styleConstants";
-import PMDInputDataTableToolbar from "../../../src/components/Common/DataTable/Toolbar/PMDInputDataTableToolbar";
+import DataTableDIRSkeleton from '../../components/AppLogic/DataTablesDIR/InputDataTable/DataTableDIRSkeleton';
+import { useAppDispatch, useAppSelector } from "../../services/store/hooks";
+import { setSelectedDirectionsIDs, setHiddenDirectionsIDs, setReversedDirectionsIDs } from "../../services/reducers/dirPage";
+import { GetDataTableBaseStyle } from "../../components/AppLogic/DataTablesDIR/styleConstants";
+import PMDInputDataTableToolbar from "../../components/Common/DataTable/Toolbar/PMDInputDataTableToolbar";
 import VisibilityIcon from '@mui/icons-material/Visibility';
 import VisibilityOffIcon from '@mui/icons-material/VisibilityOff';
-import { StatisticsModeDIR } from "../../../src/utils/graphs/types";
+import { StatisticsModeDIR } from "../../utils/graphs/types";
 
 
 import SwapVertRoundedIcon from '@mui/icons-material/SwapVertRounded';
@@ -21,8 +21,8 @@ import SettingsBackupRestoreIcon from '@mui/icons-material/SettingsBackupRestore
 import { useTheme } from '@mui/material/styles';
 import {
   primaryColor,
-} from '../../../src/utils/ThemeConstants';
-import Direction from "../../../src/utils/graphs/classes/Direction";
+} from '../../utils/ThemeConstants';
+import Direction from "../../utils/graphs/classes/Direction";
 
 
 

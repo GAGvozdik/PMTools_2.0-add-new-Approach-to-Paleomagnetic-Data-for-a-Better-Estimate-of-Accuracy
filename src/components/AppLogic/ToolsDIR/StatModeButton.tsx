@@ -6,7 +6,7 @@ import { StatisticsModeDIR } from '../../../utils/graphs/types';
 
 interface IStatModeButton {
   mode: StatisticsModeDIR;
-  hotkey: string;
+  hotkey?: string;
 };
 
 const StatModeButton: FC<IStatModeButton> = ({ mode, hotkey }) => {

@@ -92,7 +92,7 @@
   .main_container{
     display: grid;
     grid-template-columns: 10fr 2fr 3fr;
-    grid-template-rows: 3fr 4fr 3fr;
+    grid-template-rows: 0.79fr 2fr 1fr 3fr 3fr;
     grid-gap: 20px;
     height: 100vh;
     overflow:auto;
@@ -120,8 +120,8 @@
   .table_container{
     grid-column-start: 1;
     grid-column-end: 1;
-    grid-row-start: 1;
-    grid-row-end: 3;
+    grid-row-start: 2;
+    grid-row-end: 4;
     box-shadow: var(--my-shadow) 0px 0px 10px 1px;
     transition: 0.4s ease-in-out;
   }
@@ -138,8 +138,8 @@
   .table2_container{
     grid-column-start: 1;
     grid-column-end: 1;
-    grid-row-start: 3;
-    grid-row-end: 3;
+    grid-row-start: 4;
+    grid-row-end: 4;
     box-shadow: var(--my-shadow) 0px 0px 10px 1px;
     transition: 0.4s ease-in-out;
   }
@@ -151,11 +151,30 @@
   }
 
   
+
+
+  .table3_container{
+    grid-column-start: 1;
+    grid-column-end: 1;
+    grid-row-start: 5;
+    grid-row-end: 5;
+    box-shadow: var(--my-shadow) 0px 0px 10px 1px;
+    transition: 0.4s ease-in-out;
+  }
+
+  .table3_container:hover {
+    box-shadow: none;
+    transition: 0.4s ease-in-out;
+  
+  }
+
+
+
   .graph_container {
     grid-column-start: 2;
     grid-column-end: 4;
     grid-row-start: 1;
-    grid-row-end: 3;
+    grid-row-end: 5;
   }
   
   
@@ -165,9 +184,22 @@
   .container {
     grid-column-start: 2;
     grid-column-end: 4;
-    grid-row-start: 3;
-    grid-row-end: 3;
+    grid-row-start: 5;
+    grid-row-end: 5;
   }
+
+
+  
+  .tool_container {
+    padding-top: 0vh;
+    display: flex;
+    grid-column-start: 1;
+    grid-column-end: 2;
+    grid-row-start: 1;
+    grid-row-end: 1;
+  }
+
+
   
   @media screen and (max-width: 720px){
     .main_container{
@@ -345,7 +377,7 @@
     padding: 1vh;
     height: 17.5vh;
     display: grid;
-    grid-template-columns: 6fr 6fr 4fr;
+    grid-template-columns: 6fr 6fr 5fr;
     grid-template-rows: 1fr 1fr 1fr 1fr;
     grid-gap: 10px;
   }
@@ -396,6 +428,18 @@
     grid-row-end: 5;
     justify-self: center;
     align-self: center;
+  }
+  
+  
+  .chooseButtonItem {
+    grid-column-start: 2;
+    grid-column-end: 3;
+    grid-row-start: 3;
+    grid-row-end: 5;
+    justify-self: center;
+    align-self: center;
+    // margin-top: -2vh;
+    // margin-left: -1.5vh;
   }
   
   .infoItem1 {

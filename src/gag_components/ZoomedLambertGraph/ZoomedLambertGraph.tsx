@@ -9,7 +9,7 @@ import { Axis, Data, Dot } from "../../components/Common/Graphs";
 
 // import Graphs from '../pages/DIRPage/Graphs';
 // import { Rumbs } from "./rumbs";
-import { DegreeGrid } from "../degreeGrid/degreeGrid";
+import { DegreeGrid } from "./degreeGrid";
 
 import styles from "./ZoomedLabertGraph.module.scss" 
 

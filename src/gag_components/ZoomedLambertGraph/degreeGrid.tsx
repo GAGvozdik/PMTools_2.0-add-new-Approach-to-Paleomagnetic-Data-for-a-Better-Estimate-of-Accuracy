@@ -29,7 +29,7 @@ import {
 
 } from "../gag_functions";
 import { Axis, Data, Dot } from "../../components/Common/Graphs";
-import {PointsWithLabels} from "../pointsWithLabels/pointsWithLabels";
+import {PointsWithLabels} from "./pointsWithLabels";
 
 
 interface degreeGraticules {
