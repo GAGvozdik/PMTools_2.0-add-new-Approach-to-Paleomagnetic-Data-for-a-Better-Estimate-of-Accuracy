@@ -96,6 +96,14 @@ export function Khokhlov_Gvozdik() {
     }, [dataToShow]);
 
 
+    const { 
+        statisticsMode, 
+        selectedDirectionsIDs, 
+        reversedDirectionsIDs,
+        currentFileInterpretations,
+        allInterpretations
+    } = useAppSelector(state => state.dirPageReducer);
+
     // const [selectedRows, setSelectedRows] = useState<Array<DataGridDIRFromDIRRow>>([]);
 
     //-----------------------------------------------------------
@@ -170,13 +178,13 @@ export function Khokhlov_Gvozdik() {
         setSelectedAPC(number);
     };
 
-    // const [selectedRows, setSelectedRows] = useState<Array<DataGridDIRFromDIRRow>>([]);
+    const [selectedRows, setSelectedRows] = useState<Array<DataGridDIRFromDIRRow>>([]);
 
-    // step_list = dataToShow?.interpretations.map(interpretation => interpretation.stepCount);
+    step_list = dataToShow?.interpretations.map(interpretation => interpretation.stepCount);
 
-    // let igeoList: number[] | undefined = dataToShow?.interpretations.map(interpretation => interpretation.Igeo);
-    // let dgeoList: number[] | undefined = dataToShow?.interpretations.map(interpretation => interpretation.Dgeo);
-    // let idList: number[] | undefined = dataToShow?.interpretations.map(interpretation => interpretation.id);
+    let igeoList: number[] | undefined = dataToShow?.interpretations.map(interpretation => interpretation.Igeo);
+    let dgeoList: number[] | undefined = dataToShow?.interpretations.map(interpretation => interpretation.Dgeo);
+    let idList: number[] | undefined = dataToShow?.interpretations.map(interpretation => interpretation.id);
     
 
     let paleo_data: number[] = [];
@@ -208,40 +216,40 @@ export function Khokhlov_Gvozdik() {
         let dir_number = 0;
         let dir_list: [number, number, number][] = [];
 
-        // // let testDir = (GeoVdek(20, 60));
-        // if (igeoList != undefined && dgeoList != undefined && idList != undefined){
+        // let testDir = (GeoVdek(20, 60));
+        if (igeoList != undefined && dgeoList != undefined && idList != undefined){
 
-        //     dir_number = igeoList.length;
+            dir_number = igeoList.length;
 
-        //     for ( var i = 0; i < igeoList.length; i ++ ) {   
+            for ( var i = 0; i < igeoList.length; i ++ ) {   
                 
-        //         if (selectedDirectionsIDs != null){
-        //             for ( var j = 0; j < selectedDirectionsIDs.length; j ++ ) { 
-        //                 if (idList[i] == selectedDirectionsIDs[j]){
-        //                     if (dgeoList[i] > 180){
-        //                         paleo_data = GeoVdek(dgeoList[i] - 360, igeoList[i]);
-        //                     }
-        //                     else{
-        //                         paleo_data = GeoVdek(dgeoList[i], igeoList[i]);
+                if (selectedDirectionsIDs != null){
+                    for ( var j = 0; j < selectedDirectionsIDs.length; j ++ ) { 
+                        if (idList[i] == selectedDirectionsIDs[j]){
+                            if (dgeoList[i] > 180){
+                                paleo_data = GeoVdek(dgeoList[i] - 360, igeoList[i]);
+                            }
+                            else{
+                                paleo_data = GeoVdek(dgeoList[i], igeoList[i]);
             
-        //                     }
-        //                     // paleo_data = NormalizeV([-1 + getRandomfloat(0, 0.2), -1 + getRandomfloat(0, 0.2), -1  + getRandomfloat(0, 0.2)]);
-        //                     // console.log(GeoVdek(dgeoList[i], igeoList[i]));
-        //                     // НУЖНО ЛИ НОРМАЛИЗОВЫВАТЬ???
+                            }
+                            // paleo_data = NormalizeV([-1 + getRandomfloat(0, 0.2), -1 + getRandomfloat(0, 0.2), -1  + getRandomfloat(0, 0.2)]);
+                            // console.log(GeoVdek(dgeoList[i], igeoList[i]));
+                            // НУЖНО ЛИ НОРМАЛИЗОВЫВАТЬ???
                             
-        //                     // console.log(Math.pow(paleo_data[0] * paleo_data[0] + paleo_data[1] * paleo_data[1] + paleo_data[2] * paleo_data[2], 0.5));
-        //                     if (paleo_data[0] == 1 && paleo_data[1] == 1 && paleo_data[2] == 1){
-        //                     }
-        //                     else {
-        //                         dir_list.push([paleo_data[0], paleo_data[1], paleo_data[2]]);
-        //                     }
+                            // console.log(Math.pow(paleo_data[0] * paleo_data[0] + paleo_data[1] * paleo_data[1] + paleo_data[2] * paleo_data[2], 0.5));
+                            if (paleo_data[0] == 1 && paleo_data[1] == 1 && paleo_data[2] == 1){
+                            }
+                            else {
+                                dir_list.push([paleo_data[0], paleo_data[1], paleo_data[2]]);
+                            }
                             
-        //                 }
-        //             }
-        //         }
+                        }
+                    }
+                }
 
-        //     }
-        // }
+            }
+        }
         setDirList(dir_list);
         setStepList(step_list);
         setDirNumb(dir_number);
@@ -617,11 +625,6 @@ export function Khokhlov_Gvozdik() {
             <h3 className={styles.lowScreen}>Размер окна должен быть не меньше чем 720x560</h3>
 
             
-            {/* <div className={styles.table2_container + ' ' + styles.commonContainer}>
-                <CACResultTable 
-                    rows={ResultTableRow}
-                />
-            </div> */}
 
             <div className={styles.cac_fish_container + ' ' + styles.commonContainer}>
     
@@ -680,6 +683,13 @@ export function Khokhlov_Gvozdik() {
                     <CACTable dataToShow={dataToShow}/> 
 
                 {/* <CACResTable dataToShow={dataToShow}/>   */}
+
+
+            {/* <div className={styles.table2_container + ' ' + styles.commonContainer}>
+                <CACResultTable 
+                    rows={ResultTableRow}
+                />
+            </div> */}
 
 
                 {/* for debug */}

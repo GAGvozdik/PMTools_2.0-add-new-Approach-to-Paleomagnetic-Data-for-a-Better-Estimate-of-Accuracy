@@ -5,7 +5,7 @@ import { Cutoff } from "../../utils/GlobalTypes";
 import { DotsData, GraphSettings, MeanDirection, TooltipDot } from "../../utils/graphs/types";
 import { graphSelectedDotColor } from "../../utils/ThemeConstants";
 import { Axis, Data, Dot } from "../../components/Common/Graphs";
-
+import { PlaneData, DotSettings, DotType} from "../../utils/graphs/types";
 
 // import Graphs from '../pages/DIRPage/Graphs';
 // import { Rumbs } from "./rumbs";
@@ -29,6 +29,11 @@ import {
 
 
 
+const dotSettings: DotSettings = {
+    annotations: true,
+    tooltips: true,
+    // Другие свойства
+  };
 
 interface HGGraph {
     centerZone: number[],
@@ -247,49 +252,55 @@ export function ZoomedLambertGraph({
             }
 
             {/* Спиральный грид в зоне пересечения */}
-            {/* { showGrid && gridPointsCentered.map((gridPoints) => (
+
+
+
+            { showGrid && gridPointsCentered.map((gridPoints) => (
                 <Dot 
                     x={gridPoints[0]} 
                     y={gridPoints[1]} 
                     r={gridRadius}
                     id={'1'} 
-                    type={'mean'}
+                    type={'cac'}
                     annotation={{id: '', label: ''}}
                     fillColor={gridColor}
                     strokeColor={'purple'}
                     strokeWidth={0}
+                    settings={dotSettings}
                 />
-            ))} */}
+            ))}
 
 
 
             {/* Круги вокруг палеонаправлений */}
-            {/* { smallCircles.map((circles) => (
+            { smallCircles.map((circles) => (
                 <Dot 
                     x={circles[0]} 
                     y={circles[1]} 
                     r={circlesRadius}
                     id={'1'} 
-                    type={'mean'}
+                    type={'cac'}
                     annotation={{id: '', label: ''}}
                     fillColor={"black"}
-                    strokeColor={'purple'}
+                    strokeColor={'green'}
                     strokeWidth={0}
+                    settings={dotSettings}
                 />
-            ))}     */}
+            ))}    
      
             {/* Истинное направление по фишеру (удалю когда сравню результаты) */}
-            {/* <Dot 
+            <Dot 
                 x={to_center(meanDir, meanDir)[0]} 
                 y={to_center(meanDir, meanDir)[1]} 
                 r={fisherRadius}
                 id={'1'} 
-                type={'mean'}
+                type={'cac'}
                 annotation={{id: '', label: ''}}
                 fillColor={'red'}
                 strokeColor={'purple'}
                 strokeWidth={0}
-            /> */}
+                settings={dotSettings}
+            />
 
 
             {/* Круг альфа 95 */}
@@ -302,17 +313,18 @@ export function ZoomedLambertGraph({
             />
 
             {/* Истинное направление по Хохлову */}
-            {/* <Dot 
+            <Dot 
                 x={rotationCenterZone[0]} 
                 y={rotationCenterZone[1]} 
                 r={centerZoneRadius}
                 id={'1'} 
-                type={'mean'}
+                type={'cac'}
                 annotation={{id: '', label: ''}}
                 fillColor={centerZoneColor}
                 strokeColor={'purple'}
                 strokeWidth={0}
-            /> */}
+                settings={dotSettings}
+            />
 
         </svg>
     );

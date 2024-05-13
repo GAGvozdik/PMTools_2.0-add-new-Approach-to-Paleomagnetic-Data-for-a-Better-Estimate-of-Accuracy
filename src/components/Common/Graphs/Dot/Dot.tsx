@@ -188,6 +188,12 @@ const Dot: FC<IDot> = ({
             <line x1={x} x2={x} y1={y - 8} y2={y + 8} stroke={graphSelectedDotColor(type)}/>
           </g>,
 
+          type === 'cac' &&
+          <g>
+
+          </g>,
+
+
           confidenceCircle && settings.confidenceCircle &&
           [
             <path 

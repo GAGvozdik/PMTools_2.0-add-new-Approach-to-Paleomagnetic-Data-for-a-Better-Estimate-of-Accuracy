@@ -59,7 +59,7 @@ export type TooltipDot = {
   comment?: string;
 };
 
-export type DotType = 'h' | 'v'| 'all' | 'mean' | string;
+export type DotType = 'h' | 'v'| 'all' | 'mean' | 'cac' | string;
 
 export type TMenuItem = {
   label: string;
