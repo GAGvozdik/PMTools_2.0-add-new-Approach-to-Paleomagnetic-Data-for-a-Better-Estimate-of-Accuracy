@@ -4,7 +4,7 @@ export type Projection = {y: 'W, UP', x: 'N, N'} | {y: 'N, UP', x: 'E, E'} | {y:
 
 export type StatisticsModePCA = 'pca' | 'pca0' | 'gc' | 'gcn' | null;
 
-export type StatisticsModeDIR = 'fisher' | 'mcFad' | 'gc' | null;
+export type StatisticsModeDIR = 'fisher' | 'mcFad' | 'gc' | 'cac' | null;
 
 export type StatisticsModeCAC = 'Fisher' | 'CAC' | 'debug' | 'result' | null;
 

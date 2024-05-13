@@ -23,12 +23,20 @@ import { deleteInterpretation, setAllInterpretations, updateCurrentFileInterpret
 // import DIRStatisticsDataTableToolbar from "../../../Common/DataTable/Toolbar/DIRStatisticsDataTableToolbar";
 // import { acitvateHotkeys, deactivateHotkeys } from "../../../../services/reducers/appSettings";
 import { useCellModesModel } from "../../components/AppLogic/hooks";
-import { IStatisticsDataTableDIR, StatisticsDataTableRow, StatisticsDataTableColumns } from "../../components/AppLogic/DataTablesDIR/types";
+import { StatisticsDataTableRow, StatisticsDataTableColumns } from "../../components/AppLogic/DataTablesDIR/types";
 import { useScrollToInterpretationRow } from "../../components/AppLogic/hooks/useScrollToInterpretationRow";
 
-// interface IStatisticsDataTableDIR {
-//   currentFileInterpretations: Array<StatisitcsInterpretationFromDIR> | null;
-// };
+interface IStatisticsDataTableDIR {
+  currentFileInterpretations: Array<StatisitcsInterpretationFromDIR> | null;
+  lat?: number | null;
+  lon?: number | null;
+  RZ?: number | null;
+  alpha95?: number | null;
+  PCaPC?: string | null;
+  q?: number | null;
+  dir_number?: number | null;
+  selectedD?: number | null;
+};
 
 // interface IStatisticsDataTableDIR {
 //   data: Array<StatisitcsInterpretationFromDIR> | null;
@@ -37,7 +45,7 @@ import { useScrollToInterpretationRow } from "../../components/AppLogic/hooks/us
 // const CACDataTable: FC<IStatisticsDataTableDIR> = ({ data }) => {
 
 
-  const CACDataTable: FC<IStatisticsDataTableDIR> = ({ currentFileInterpretations }) => {
+  const CACDataTable: FC<IStatisticsDataTableDIR> = ({ currentFileInterpretations, lat, lon, RZ, alpha95, PCaPC, q, dir_number, selectedD}) => {
   
     const dispatch = useAppDispatch();
     const theme = useTheme();
@@ -135,7 +143,7 @@ import { useScrollToInterpretationRow } from "../../components/AppLogic/hooks/us
         },
       },
       { field: 'id', headerName: 'Label', type: 'string', width: 80 },
-      { field: 'code', headerName: 'Code', type: 'string', width: 60 },
+      { field: 'codeCAC', headerName: 'Code', type: 'string', width: 60 },
       { field: 'stepRange', headerName: 'StepRange', type: 'string', width: 90 },
       { field: 'stepCount', headerName: 'N', type: 'number', minWidth: 30, width: 30 },
       { field: 'Dgeo', headerName: 'Dgeo', type: 'number', width: 60,
@@ -158,17 +166,25 @@ import { useScrollToInterpretationRow } from "../../components/AppLogic/hooks/us
         valueFormatter: (params: GridValueFormatterParams) => (params.value as number)?.toFixed(1)
       },
 
+    { field: 'lat', headerName: 'lat', type: 'number', width: 40},
+    { field: 'lon', headerName: 'lon', type: 'number', width: 40},
+
     { field: 'RZ', headerName: 'RZ', type: 'number', width: 40},
 
-    { field: 'a95', headerName: 'a95', type: 'number', width: 40},
+    { field: 'alpha95', headerName: 'α95', type: 'number', width: 40},
 
-    { field: 'PCaPC', headerName: 'PCaPC', type: 'string', width: 60},
+    { field: 'PCaPC', headerName: 'PC/aPC', type: 'string', width: 60},
 
     { field: 'q', headerName: 'q', type: 'number', width: 40},
 
 
     { field: 'comment', headerName: 'Comment', type: 'string', minWidth: 40, flex: 1, 
     editable: true, cellClassName: styles[`editableCell_${theme.palette.mode}`] },
+
+
+    { field: 'dir_number', headerName: 'N', type: 'number', width: 10},
+
+    { field: 'selectedD', headerName: 'd', type: 'number', width: 10},
 
 
     ];
@@ -190,10 +206,10 @@ import { useScrollToInterpretationRow } from "../../components/AppLogic/hooks/us
       // let qInRow: number = 10; 
   
 
-      const { label, code, stepRange, stepCount, Dgeo, Igeo, Dstrat, Istrat, confidenceRadiusGeo, Kgeo, confidenceRadiusStrat, Kstrat, comment} = statistics;
+      const { label, stepRange, stepCount, Dgeo, Igeo, Dstrat, Istrat, confidenceRadiusGeo, Kgeo, confidenceRadiusStrat, Kstrat, comment} = statistics;
       return {
         id: label,
-        code, 
+        codeCAC: 'cac',
         stepRange,
         stepCount,
         Dgeo: +Dgeo.toFixed(1),
@@ -205,10 +221,15 @@ import { useScrollToInterpretationRow } from "../../components/AppLogic/hooks/us
         confidenceRadiusStrat: +confidenceRadiusStrat.toFixed(1),
         accuracyStrat: +(Kstrat || 0).toFixed(1),
         comment, 
-        RZ: 8, 
-        a95: 9, 
-        PCaPC: "apc", 
-        q: 5 
+        lat: lat,
+        lon: lon,
+        RZ: RZ, 
+        alpha95: alpha95, 
+        PCaPC: PCaPC, 
+        q: q,
+        dir_number:dir_number,
+        selectedD:selectedD,
+
       };
     }).reverse();
   

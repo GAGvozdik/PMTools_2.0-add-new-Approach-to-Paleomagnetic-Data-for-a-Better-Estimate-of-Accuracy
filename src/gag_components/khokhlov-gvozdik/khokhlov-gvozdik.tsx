@@ -153,6 +153,9 @@ export function Khokhlov_Gvozdik() {
 
 
     const [apc, setSelectedAPC] = useState<number>(0);
+    const [PCaPCString, setPCaPC] = useState<string>('kh');
+
+
     const [selectedP, setSelectedP] = useState<number>(990);
     const [selectedD, setSelectedD] = useState<number>(10);
 
@@ -191,7 +194,7 @@ export function Khokhlov_Gvozdik() {
         setSelectedP(number);
     };
 
-
+    
 
     const handleAPCChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
         const number = parseInt(event.target.value);
@@ -213,6 +216,10 @@ export function Khokhlov_Gvozdik() {
 
     const getData = () => {
         
+      
+
+
+
         // dataToShow.name
 
 
@@ -282,7 +289,13 @@ export function Khokhlov_Gvozdik() {
     
         
 
-      
+        if (apc == 0.0) {
+            setPCaPC('PC');
+        }
+        else {
+            setPCaPC('aPC');
+        }
+
 
 
 
@@ -654,16 +667,21 @@ export function Khokhlov_Gvozdik() {
 
 
     // TODO 
-
+    // change parameters change const rows data
+    // drop of website when routing on DIR page sometimes!!!
+    // change data in result table
+    // при переходе на страницу cac происходит расчет недостающих данных из табооицы, это надо исправить, если оно грузит систему
+    // debug panel
     // rotate grid
     // result table
     // fix zoom graph 
+    // margin between cacfisher and debug
 
     // load file dont work
     // add graph with find points
     // select points dont work
     // fix size of fisher graph
-    // change fisher to Zijervelde?
+
 
     // button on main window
     // tooltips
@@ -672,8 +690,8 @@ export function Khokhlov_Gvozdik() {
     // eng language
 
     // load file don`t work at cac page
-    // mouse zone selet of points don`t work
-
+    // mouse zone select of points don`t work
+    // drag on dot turn on random point. del it
 
     // if (unsupportedResolution) return <>Размер окна должен быть не меньше чем 720x560</>
     return (
@@ -768,8 +786,18 @@ export function Khokhlov_Gvozdik() {
                     {isCACDebugVisible ? (
 
 
-                            <CACResTable dataToShow={dataToShow}/>  
-
+                            <CACResTable 
+                                dataToShow={dataToShow}
+                                RZ={85}
+                                lat={6}
+                                lon={6}
+                                alpha95={alpha95}
+                                PCaPC={PCaPCString}
+                                q={selectedP}
+                                dir_number = {dir_number}
+                                selectedD={selectedD}
+                            />  
+                            // selectedD, apc, selectedP, dir_number
 
                         ) : (
                         <div className={styles.table2_container + ' ' + styles.commonContainer}>

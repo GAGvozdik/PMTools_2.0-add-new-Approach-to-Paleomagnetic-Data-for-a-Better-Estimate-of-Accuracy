@@ -132,7 +132,7 @@ export type StatisitcsInterpretationFromDIR = {
   readonly uuid: string;
   parentFile: string;
   label: string;
-  code: StatisticsModeDIR;
+  code?: StatisticsModeDIR;
   directions: IDirData["interpretations"];
   stepRange: string;
   stepCount: number;
@@ -147,6 +147,14 @@ export type StatisitcsInterpretationFromDIR = {
   comment: string;
   demagType: "thermal" | "alternating field" | undefined;
   rawData: RawStatisticsDIR;
+  lat?: number | null;
+  lon?: number | null;
+  RZ?: number | null;
+  alpha95?: number | null;
+  PCaPC?: string | null;
+  q?: number | null;
+
+
 };
 
 export type RawStatisticsPCA = {

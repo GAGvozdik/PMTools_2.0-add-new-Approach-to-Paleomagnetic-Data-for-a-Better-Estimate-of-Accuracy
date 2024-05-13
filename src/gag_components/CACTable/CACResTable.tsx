@@ -11,9 +11,18 @@ import CACResultTable from './CACResultTable';
 
 interface ITables {
   dataToShow: IDirData | null;
+  lat?: number | null;
+  lon?: number | null;
+  RZ?: number | null;
+  alpha95?: number | null;
+  PCaPC?: string | null;
+  q?: number | null;
+  dir_number?: number | null;
+  selectedD?: number | null;
 };
 
-const CACResTable: FC<ITables> = ({ dataToShow }) => {
+
+const CACResTable: FC<ITables> = ({ dataToShow, lat, lon, RZ, alpha95, PCaPC, q, dir_number, selectedD}) => {
 
 
 // export function CACTable({ dataToShow }) {
@@ -34,7 +43,17 @@ const CACResTable: FC<ITables> = ({ dataToShow }) => {
 
       
         {/* <DataTableDIR data={dataToShow}/> */}
-        <CACResultTable currentFileInterpretations={interpretations}/>
+        <CACResultTable 
+          currentFileInterpretations={interpretations}
+          RZ={RZ}
+          lat={lat}
+          lon={lon}
+          alpha95={alpha95}
+          PCaPC={PCaPC}
+          q={q}
+          dir_number={dir_number}
+          selectedD={selectedD}
+        />
       
     </>
   )
