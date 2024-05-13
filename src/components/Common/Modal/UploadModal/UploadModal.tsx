@@ -14,7 +14,7 @@ import { useTranslation } from "react-i18next";
 import { filesToData } from "../../../../services/axios/filesAndData";
 
 type Props = {
-  page: 'pca' | 'dir';
+  page: 'pca' | 'dir' | 'cac';
 }
 
 const UploadModal = ({page}: Props) => {
@@ -28,6 +28,7 @@ const UploadModal = ({page}: Props) => {
     const acceptedFiles: File[] = files ? files : Array.from(event.currentTarget.files);
     if (page === 'pca') dispatch(filesToData({files: acceptedFiles, format: 'pmd'}));
     if (page === 'dir') dispatch(filesToData({files: acceptedFiles, format: 'dir'}));
+    if (page === 'cac') dispatch(filesToData({files: acceptedFiles, format: 'dir'}));
   };
 
   const onDrop = useCallback(acceptedFiles => {
@@ -35,7 +36,7 @@ const UploadModal = ({page}: Props) => {
   }, [page]);
 
   const {getRootProps, getInputProps, isDragActive} = useDropzone({onDrop, noClick: true})
-  const rootProps = (page === 'pca' || page === 'dir' ? {...getRootProps()} : undefined);
+  const rootProps = (page === 'pca' || page === 'dir' || page === 'cac' ? {...getRootProps()} : undefined);
 
   const useExample = async () => {
     const fileArr = [];
@@ -43,16 +44,19 @@ const UploadModal = ({page}: Props) => {
       const rawPCA = await fetch(examplePCA).then(res => res.text());
       fileArr.push(new File([rawPCA], 'examplePCA.pmd'));
     };
-    if (page === 'dir') {
+    if (page === 'dir'|| page === 'cac') {
       const rawDIR = await fetch(exampleDIR).then(res => res.text());
       fileArr.push(new File([rawDIR], 'exampleDIR.pmm'));
     };
+
+
     handleFileUpload(undefined, fileArr);
   };
 
   const availableFormats = {
     pca: ['.pmd', '.squid', '.rs3', '.csv', '.xlsx'],
     dir: ['.dir', '.pmm', '.csv', '.xlsx'], 
+    cac: ['.dir', '.pmm', '.csv', '.xlsx'], 
   };
 
   // накладывается на глобальный импорт через dnd в appLayout...

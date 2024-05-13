@@ -4,11 +4,11 @@ import { Button, ButtonGroup } from '@mui/material';
 
 import { setStatisticsMode } from '../../services/reducers/dirPage';
 import { useAppDispatch, useAppSelector } from '../../services/store/hooks';
-import { StatisticsModeDIR } from '../../utils/graphs/types';
+import { StatisticsModeCAC } from '../../utils/graphs/types';
 
 
   interface ICACGraphButton {
-    mode: StatisticsModeDIR;
+    mode: StatisticsModeCAC;
     changeGraph?: () => void;
   };
   
@@ -19,7 +19,7 @@ import { StatisticsModeDIR } from '../../utils/graphs/types';
     const dispatch = useAppDispatch();
     const { statisticsMode } = useAppSelector(state => state.dirPageReducer); 
   
-    const onStatisticsModeClick = (mode: StatisticsModeDIR) => {
+    const onStatisticsModeClick = (mode: StatisticsModeCAC) => {
       if (statisticsMode === mode) mode = null;
         
       // dispatch(setStatisticsMode(mode));

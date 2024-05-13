@@ -1,5 +1,5 @@
 import React, { FC, useMemo, useState } from "react";
-import styles from "./ZijdGraph.module.scss";
+import styles from "../../../gag_components/khokhlov-gvozdik/khokhlov-gvozdik.module.scss";
 import { useAppSelector } from "../../../services/store/hooks";
 import { useGraphSelectableNodesDIR, useGraphSelectedIDs, useDIRGraphSettings } from "../../../utils/GlobalHooks";
 import { Cutoff, IDirData, IGraph, RawStatisticsDIR, VGPData } from "../../../utils/GlobalTypes";
@@ -59,6 +59,7 @@ const StereoGraphDIR: FC<IStereoGraphDIR> = ({
 
   return (
     <>
+      <div className="style.gr">
       <SelectableGraph
         graphId={graphId}
         width={viewWidth}
@@ -100,6 +101,7 @@ const StereoGraphDIR: FC<IStereoGraphDIR> = ({
           />
         </g>
       </SelectableGraph>
+      </div>
     </>
   )
 }

@@ -78,9 +78,9 @@ const CACStereoGraphDIR: FC<IStereoGraphDIR> = ({
           isDotsHidden: !cutoff.outerDots?.show || false
         }}
       >
-        
+         
         <g>
-            
+    
             <AxesAndData 
                 graphId={graphId}
                 width={width}
@@ -100,9 +100,9 @@ const CACStereoGraphDIR: FC<IStereoGraphDIR> = ({
                 disabled={true}
             />
 
-            
+          
         </g>
-        
+
       </SelectableGraph>
       </div>
     </>

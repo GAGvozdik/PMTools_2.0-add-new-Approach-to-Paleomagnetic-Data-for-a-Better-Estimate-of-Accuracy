@@ -117,6 +117,10 @@
   
   }
   
+.gr{
+  box-shadow: var(--my-shadow) 0px 0px 10px 1px;
+}
+
   .table_container{
     grid-column-start: 1;
     grid-column-end: 1;
@@ -175,6 +179,7 @@
     grid-column-end: 4;
     grid-row-start: 1;
     grid-row-end: 3;
+    padding-bottom: 0;
   }
   
   
@@ -197,6 +202,19 @@
     grid-column-end: 2;
     grid-row-start: 2;
     grid-row-end: 3;
+  }
+
+  
+  .cac_fish_container {
+    padding-top: 0vh;
+    display: flex;
+    grid-column-start: 1;
+    grid-column-end: 2;
+    grid-row-start: 1;
+    grid-row-end: 1;
+
+    align-items: center; /* Центрирование по вертикали */
+    padding-bottom: 0%;
   }
 
 

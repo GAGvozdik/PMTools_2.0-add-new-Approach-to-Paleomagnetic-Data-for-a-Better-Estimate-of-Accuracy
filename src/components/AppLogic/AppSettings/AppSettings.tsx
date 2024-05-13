@@ -49,6 +49,7 @@ const AppSettings: FC<IAppSettings> = ({
   const availableFormats = {
     pca: ['.pmd', '.squid', '.rs3', '.csv', '.xlsx'],
     dir: ['.dir', '.pmm', '.csv', '.xlsx'], 
+    cac: ['.dir', '.pmm', '.csv', '.xlsx'], 
   };
 
   const [showSettings, setShowSettings] = useState(false);
@@ -70,6 +71,11 @@ const AppSettings: FC<IAppSettings> = ({
     }
 
     if (currentPage === 'dir') {
+      setShowDIRTotalStatisticsOutput(true);
+    }
+
+    
+    if (currentPage === 'cac') {
       setShowDIRTotalStatisticsOutput(true);
     }
   }
@@ -114,7 +120,7 @@ const AppSettings: FC<IAppSettings> = ({
           }}
         >
           {
-            (currentPage === 'pca' || currentPage === 'dir') &&
+            (currentPage === 'pca' || currentPage === 'dir' || currentPage === 'cac') &&
             <Input 
               id="upload-file"
               type={'file'}  
@@ -130,7 +136,7 @@ const AppSettings: FC<IAppSettings> = ({
           <DefaultResponsiveButton
             icon={<UploadFileOutlinedIcon />}
             text={t('appLayout.settings.import')}
-            disabled={currentPage !== 'pca' && currentPage !== 'dir'}
+            disabled={currentPage !== 'pca' && currentPage !== 'dir' && currentPage !== 'cac'}
             component="span"
             id="upload-file-button"
           />

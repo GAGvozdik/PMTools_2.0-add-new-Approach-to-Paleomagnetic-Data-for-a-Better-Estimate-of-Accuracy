@@ -607,6 +607,9 @@ export function Khokhlov_Gvozdik() {
     // dark theme
     // eng language
 
+    // load file don`t work at cac page
+    // mouse zone selet of points don`t work
+
 
     // if (unsupportedResolution) return <>Размер окна должен быть не меньше чем 720x560</>
     return (
@@ -620,23 +623,31 @@ export function Khokhlov_Gvozdik() {
                 />
             </div> */}
 
-            <div className={styles.tool_container + ' ' + styles.commonContainer}>
+            <div className={styles.cac_fish_container + ' ' + styles.commonContainer}>
     
-                {/* <CACToolDIR data={dataToShow} />  */}
+                <CACToolDIR data={dataToShow} /> 
 
-                {/* <ButtonGroupWithLabel label={'Change show mode'}>
+                <ButtonGroupWithLabel label={'Change show mode'}>
                     <CACGraphButton mode='CAC' changeGraph={() => handleButtonSelection('CAC')}/>
                     <CACGraphButton mode='Fisher' changeGraph={() => handleButtonSelection('Fisher')}/>
-                </ButtonGroupWithLabel> */}
+                </ButtonGroupWithLabel>
 
-
+                            <ModalWrapper
+                    open={showUploadModal}
+                    setOpen={setShowUploadModal}
+                    size={{width: '60vw', height: widthLessThan720 ? 'fit-content' : '60vh'}}
+                    showBottomClose
+                >
+                    <UploadModal page='cac' />
+                </ModalWrapper>
+                <InterpretationSetter dataToShow={dataToShow} />
             </div>            
             
 
 
             {isCACGraphVisible ? (
                 <div className={styles.graph_container + ' ' + styles.commonContainer}>
-                    {/* <CACFishGraph dataToShow={dataToShow}/> */}
+                    <CACFishGraph dataToShow={dataToShow}/>
                 </div>
             ) : (
                 <div className={styles.graph_container + ' ' + styles.commonContainer}>

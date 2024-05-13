@@ -2,7 +2,7 @@ import React, { FC, useEffect, useMemo, useRef, useState } from 'react';
 import styles from './DIRPage.module.scss';
 import { useDIRGraphSettings, useWindowSize } from '../../utils/GlobalHooks';
 import { IDirData } from '../../utils/GlobalTypes';
-import GraphsSkeleton from '../../pages/DIRPage/GraphsSkeleton';
+// import GraphsSkeleton from '../../pages/DIRPage/GraphsSkeleton';
 import { StereoGraphDIR }from '../../components/AppGraphs';
 import { useAppDispatch, useAppSelector } from '../../services/store/hooks';
 import { addHiddenDirectionsIDs, removeHiddenDirectionsIDs } from '../../services/reducers/dirPage';
@@ -12,9 +12,22 @@ import CACGraphSkeleton from '../CACFishGraph/CACGraphSkeleton';
 import CACStereoGraphDIR from '../CACFishGraph/CACStereoGraphDir';
 
 
+
+
+
+
+
+// import GraphsSkeleton from './GraphsSkeleton';
+
+
+
+
+
+
 interface IGraphs {
   dataToShow: IDirData | null;
 };
+
 
 const CACFishGraph: FC<IGraphs> = ({ dataToShow }) => {
 
@@ -45,7 +58,8 @@ const CACFishGraph: FC<IGraphs> = ({ dataToShow }) => {
   const cutoffOuterDotsIDs: number[] = useMemo(() => {
     if (!currentInterpretation?.rawData || !dataToShow) return [];
     // сначала берём среднее направление, относительно него будем строить cutoff
-    const { direction: meanDirection }  = currentInterpretation.rawData.mean[reference as 'geographic' | 'stratigraphic']; 
+    let { direction: meanDirection } = currentInterpretation.rawData.mean[reference as 'geographic' | 'stratigraphic']; 
+    meanDirection = new Direction(meanDirection.declination, meanDirection.inclination, meanDirection.length);
     // затем берём все имеющиеся векторы и фильтруем их по их удалённости от среднего направления
     const newDirsToHideIDs = dataToShow.interpretations.filter(
       direction => {
@@ -74,61 +88,65 @@ const CACFishGraph: FC<IGraphs> = ({ dataToShow }) => {
   );
 
   return (
-    <>
-      <CACGraphSkeleton 
-        graph={{
-          node: <CACStereoGraphDIR 
-            graphId={`stereoDir`} 
-            width={graphSize}
-            height={graphSize}
-            data={dataToShow}
-            centeredByMean={centeredByMean}
-            setCenteredByMean={setCenteredByMean}
-            menuSettings={{menuItems, settings}}
-            cutoff={{
-              enabled: enableCutoff,
-              setEnableCutoff,
-              borderCircle: {
-                show: showCutoffCircle,
-                setShow: setShowCutoffCircle,
-                angle: cutoffAngle // 45 is the most common angle in paleomagnetism
-              },
-              outerDots: {
-                show: showCutoffOuterDots,
-                setShow: setShowCutoffOuterDots
-              }
-            }}
-          />,
-          ref: graphRef
-        }}
-        graphToExport={{
-          node: <CACStereoGraphDIR
-            graphId={`export_stereoDir`}
-            width={500}
-            height={500}
-            data={dataToShow}
-            centeredByMean={centeredByMean}
-            setCenteredByMean={setCenteredByMean}
-            cutoff={{
-              enabled: enableCutoff,
-              setEnableCutoff,
-              borderCircle: {
-                show: showCutoffCircle,
-                setShow: setShowCutoffCircle,
-                angle: 45 // most common in paleomagnetism
-              },
-              outerDots: {
-                show: showCutoffOuterDots,
-                setShow: setShowCutoffOuterDots
-              }
-            }}
-            menuSettings={{menuItems, settings}}
-          />,
-          ref: graphToExportRef
-        }}
-      />
-    </>
+    <CACGraphSkeleton 
+      graph={{
+        node: <CACStereoGraphDIR 
+          graphId={`stereoDir`} 
+          width={graphSize}
+          height={graphSize}
+          data={dataToShow}
+          centeredByMean={centeredByMean}
+          setCenteredByMean={setCenteredByMean}
+          menuSettings={{menuItems, settings}}
+          cutoff={{
+            enabled: enableCutoff,
+            setEnableCutoff,
+            borderCircle: {
+              show: showCutoffCircle,
+              setShow: setShowCutoffCircle,
+              angle: cutoffAngle // 45 is the most common angle in paleomagnetism
+            },
+            outerDots: {
+              show: showCutoffOuterDots,
+              setShow: setShowCutoffOuterDots
+            }
+          }}
+        />,
+        ref: graphRef
+      }}
+      graphToExport={{
+        node: <CACStereoGraphDIR
+          graphId={`export_stereoDir`}
+          width={500}
+          height={500}
+          data={dataToShow}
+          centeredByMean={centeredByMean}
+          setCenteredByMean={setCenteredByMean}
+          cutoff={{
+            enabled: enableCutoff,
+            setEnableCutoff,
+            borderCircle: {
+              show: showCutoffCircle,
+              setShow: setShowCutoffCircle,
+              angle: 45 // most common in paleomagnetism
+            },
+            outerDots: {
+              show: showCutoffOuterDots,
+              setShow: setShowCutoffOuterDots
+            }
+          }}
+          menuSettings={{menuItems, settings}}
+        />,
+        ref: graphToExportRef
+      }}
+    />
   )
 };
+
+
+
+
+
+
 
 export default CACFishGraph;

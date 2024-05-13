@@ -6,6 +6,9 @@ export type StatisticsModePCA = 'pca' | 'pca0' | 'gc' | 'gcn' | null;
 
 export type StatisticsModeDIR = 'fisher' | 'mcFad' | 'gc' | null;
 
+export type StatisticsModeCAC = 'Fisher' | 'CAC' | null;
+
+
 export type PCALines = {
   horX: [number, number], horY: [number, number],
   verX: [number, number], verY: [number, number]

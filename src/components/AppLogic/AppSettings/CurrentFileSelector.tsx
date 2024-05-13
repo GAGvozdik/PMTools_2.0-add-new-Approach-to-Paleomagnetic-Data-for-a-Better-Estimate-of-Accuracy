@@ -17,6 +17,11 @@ const CurrentFileSelector: FC<ICurrentFileSelector> = ({
     return <CurrentDIRFileSelector />
   }
 
+  if (currentPage === 'cac') {
+    return <CurrentDIRFileSelector />
+  }
+
+
   return null;
 }
 
