@@ -10,6 +10,7 @@ import { acitvateHotkeys, deactivateHotkeys, setColorMode } from '../services/re
 import { setCurrentDIRid, setCurrentPMDid, setDirStatData, setTreatmentData } from '../services/reducers/parsedData';
 import * as pcaPageReducer from '../services/reducers/pcaPage';
 import * as dirPageReducer from '../services/reducers/dirPage';
+import { Khokhlov_Gvozdik } from '../gag_components/khokhlov-gvozdik/khokhlov-gvozdik';
 
 function App() {
 
@@ -131,6 +132,7 @@ function App() {
           <Route path='/app' element={<AppLayout />}>
             <Route path='pca' element={<PCAPage />}/>
             <Route path='dir' element={<DIRPage />}/>
+            <Route path='cac' element={<Khokhlov_Gvozdik />}/>
           </Route>
           <Route path='*' element={<NotFoundPage />}/>
         </Routes>

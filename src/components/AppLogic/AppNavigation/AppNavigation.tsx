@@ -56,6 +56,14 @@ const AppNavigation: FC = ({}) => {
         icon={'DIR'}
         to={'/app/dir'}
       />
+
+      <NavButton 
+        label={t('')}
+        icon={'CAC'}
+        to={'/app/cac'}
+      />
+
+
       <NavButton 
         label={t('appLayout.navPanel.projectRepo')}
         icon={<GitHubIcon />}
