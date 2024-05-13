@@ -577,6 +577,8 @@ export function Khokhlov_Gvozdik() {
     // console.log(DekVgeo(center_zone)[1].toFixed(2));
     // console.log('--------------------------------');
 
+
+    // Choce fisher or cac
     const [isCACGraphVisible, setIsCACGraphVisible] = useState<boolean>(false);
 
     const toggleCACGraphVisibility = () => {
@@ -595,6 +597,28 @@ export function Khokhlov_Gvozdik() {
             setIsCACGraphVisible(false);
         }
     };
+
+    // choice debug or result
+
+    
+    const [isCACDebugVisible, setIsCACDebugVisible] = useState<boolean>(false);
+
+    const toggleCACDebugVisibility = () => {
+      setIsCACDebugVisible((prev) => !prev);
+    };
+
+    const [selectedDebugButton, setSelectedDebugButton] = useState<string | null>(null);
+
+    const handleDebugButtonSelection = (mode: string) => {
+        if (mode === 'debug' && !isCACDebugVisible) {
+            setSelectedDebugButton(mode);
+            setIsCACDebugVisible(true);
+        } else if (mode === 'result' && isCACDebugVisible) {
+            setSelectedDebugButton(mode);
+            setIsCACDebugVisible(false);
+        }
+    };
+
 
 
     // TODO 
@@ -628,7 +652,7 @@ export function Khokhlov_Gvozdik() {
 
             <div className={styles.cac_fish_container + ' ' + styles.commonContainer}>
     
-                <CACToolDIR data={dataToShow} /> 
+                {/* <CACToolDIR data={dataToShow} />  */}
 
                 <ButtonGroupWithLabel label={'Change show mode'}>
                     <CACGraphButton mode='CAC' changeGraph={() => handleButtonSelection('CAC')}/>
@@ -644,6 +668,14 @@ export function Khokhlov_Gvozdik() {
                     <UploadModal page='cac' />
                 </ModalWrapper>
                 <InterpretationSetter dataToShow={dataToShow} />
+
+
+                <ButtonGroupWithLabel label={'Change show mode'}>
+                    <CACGraphButton mode='debug' changeGraph={() => handleDebugButtonSelection('debug')}/>
+                    <CACGraphButton mode='result' changeGraph={() => handleDebugButtonSelection('result')}/>
+                </ButtonGroupWithLabel>
+
+
             </div>            
             
 
@@ -686,42 +718,59 @@ export function Khokhlov_Gvozdik() {
 
 
             {/* <div className={styles.table2_container + ' ' + styles.commonContainer}>
-                <CACResultTable 
-                    rows={ResultTableRow}
-                />
+
             </div> */}
 
 
-                {/* for debug */}
-                <div className={styles.table2_container + ' ' + styles.commonContainer}>
-                    <h3>Debug panel</h3>
+
+
+                {/* for debug or results*/}
+
+
+       
+
+                    {isCACDebugVisible ? (
+
+
+                            <CACResTable dataToShow={dataToShow}/>  
+
+
+                        ) : (
+                        <div className={styles.table2_container + ' ' + styles.commonContainer}>
+                            <h3>Debug panel</h3>
+
+                            <div className={styles.debugItem1}>
+                                <button className={styles.button} onClick={generateRandomNumbers}>Generate Random Numbers</button>
+                            </div>
+                            <br></br>
+                            <div className={styles.debugItem2}>
+                                <select className={styles.my_select} value={octo} onChange={octoChange}>
+                                    <option value={1}>+++</option>
+                                    <option value={2}>++-</option>
+                                    <option value={3}>+-+</option>
+                                    <option value={4}>+--</option>
+                                    <option value={5}>-++</option>
+                                    <option value={6}>-+-</option>
+                                    <option value={7}>--+</option>
+                                    <option value={8}>---</option>
+                                    <option value={9}>0 1 0</option>
+                                    <option value={10}>0 -1 0</option>
+                                </select>
+                            </div>
+                        </div>
+
+                    )}
+
+                    
 
                     {/* <div className={styles.debug}> */}
                         
 
-                        <div className={styles.debugItem1}>
-                            <button className={styles.button} onClick={generateRandomNumbers}>Generate Random Numbers</button>
-                        </div>
-                        
-                        <div className={styles.debugItem2}>
-                            <select className={styles.my_select} value={octo} onChange={octoChange}>
-                                <option value={1}>+++</option>
-                                <option value={2}>++-</option>
-                                <option value={3}>+-+</option>
-                                <option value={4}>+--</option>
-                                <option value={5}>-++</option>
-                                <option value={6}>-+-</option>
-                                <option value={7}>--+</option>
-                                <option value={8}>---</option>
-                                <option value={9}>0 1 0</option>
-                                <option value={10}>0 -1 0</option>
-                            </select>
-                        </div>
 
 
                     {/* </div> */}
 
-                    <br></br>
+                    {/* <br></br> */}
                     {/* {DekVgeo(sred_dir)[0].toFixed(2)}{' ; '}{DekVgeo(sred_dir)[1].toFixed(2)}
                     <br></br>
                     {sred_dir[0].toFixed(2)}{' ; '}{sred_dir[1].toFixed(2)}{' ; '}{sred_dir[2].toFixed(2)} */}
@@ -730,7 +779,7 @@ export function Khokhlov_Gvozdik() {
                     {/* {dgeoList[0].toFixed(2)}{' ; '}{igeoList[0].toFixed(2)} */}
                     {/* {dgeoList}{' ; '} */}
 
-                </div>
+   
 
 
 

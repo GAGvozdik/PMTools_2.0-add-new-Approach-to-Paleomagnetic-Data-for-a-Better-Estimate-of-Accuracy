@@ -6,7 +6,7 @@ export type StatisticsModePCA = 'pca' | 'pca0' | 'gc' | 'gcn' | null;
 
 export type StatisticsModeDIR = 'fisher' | 'mcFad' | 'gc' | null;
 
-export type StatisticsModeCAC = 'Fisher' | 'CAC' | null;
+export type StatisticsModeCAC = 'Fisher' | 'CAC' | 'debug' | 'result' | null;
 
 
 export type PCALines = {
