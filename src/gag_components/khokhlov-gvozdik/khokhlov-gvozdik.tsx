@@ -62,6 +62,18 @@ import CACToolDIR from '../CACToolDIR/CACToolDIR';
     import { setCurrentDIRid } from '../../services/reducers/parsedData';
     import InterpretationSetter from '../../../src/pages/DIRPage/InterpretationSetter';
 
+    import { Button, Typography } from '@mui/material';
+
+
+
+    import { StatisticsModeDIR } from '../../../src/utils/graphs/types';
+    
+interface IStatModeButton {
+    mode: StatisticsModeDIR;
+    hotkey: string;
+};
+
+
 export function Khokhlov_Gvozdik() {
       //---------------------------------------------------------------------------------------
     // Ванин код из DIRTable
@@ -105,6 +117,14 @@ export function Khokhlov_Gvozdik() {
     } = useAppSelector(state => state.dirPageReducer);
 
     // const [selectedRows, setSelectedRows] = useState<Array<DataGridDIRFromDIRRow>>([]);
+
+
+
+
+
+    
+ 
+    
 
     //-----------------------------------------------------------
     // input data generating
@@ -254,6 +274,18 @@ export function Khokhlov_Gvozdik() {
         setStepList(step_list);
         setDirNumb(dir_number);
         setAngleList([0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]);
+
+        
+
+        
+        dispatch(setStatisticsMode('fisher'));
+    
+        
+
+      
+
+
+
     };
 
     const [isvis, setIsVisible] = useState(true);
@@ -608,12 +640,12 @@ export function Khokhlov_Gvozdik() {
     };
 
     const [selectedDebugButton, setSelectedDebugButton] = useState<string | null>(null);
-
+    // here you can add result debug change button animation
     const handleDebugButtonSelection = (mode: string) => {
-        if (mode === 'debug' && !isCACDebugVisible) {
+        if (mode === 'result' && !isCACDebugVisible) {
             setSelectedDebugButton(mode);
             setIsCACDebugVisible(true);
-        } else if (mode === 'result' && isCACDebugVisible) {
+        } else if (mode === 'debug' && isCACDebugVisible) {
             setSelectedDebugButton(mode);
             setIsCACDebugVisible(false);
         }
@@ -671,8 +703,9 @@ export function Khokhlov_Gvozdik() {
 
 
                 <ButtonGroupWithLabel label={'Change show mode'}>
-                    <CACGraphButton mode='debug' changeGraph={() => handleDebugButtonSelection('debug')}/>
                     <CACGraphButton mode='result' changeGraph={() => handleDebugButtonSelection('result')}/>
+                    <CACGraphButton mode='debug' changeGraph={() => handleDebugButtonSelection('debug')}/>
+
                 </ButtonGroupWithLabel>
 
 
@@ -681,30 +714,33 @@ export function Khokhlov_Gvozdik() {
 
 
             {isCACGraphVisible ? (
+
+                <div className={styles.graph_container + ' ' + styles.commonContainer}>
+                            
+                <div className={styles.interfaceTooltip}>
+                    <HelpCenterOutlinedIcon className={styles.question}/>
+                    <FileDownloadOutlinedIcon className={styles.question}/>
+                </div>
+
+                <ZoomedLambertGraph
+                    centerZone={center_zone}
+                    dirList={dir_list}
+                    angleList={angle_list}
+                    gridPoints={grid_points}
+                    meanDir={sred_dir}
+                    alpha95={alpha95}
+                    gridColor={grid_color}
+                    polygonColor={poly_color}
+                    showGrid={isvisgrid}
+                    showDegreeGrid={degree_grid_isvis}
+                    showPolygon={isvis}
+                />
+                </div>
+
+            ) : (
+
                 <div className={styles.graph_container + ' ' + styles.commonContainer}>
                     <CACFishGraph dataToShow={dataToShow}/>
-                </div>
-            ) : (
-                <div className={styles.graph_container + ' ' + styles.commonContainer}>
-            
-                    <div className={styles.interfaceTooltip}>
-                        <HelpCenterOutlinedIcon className={styles.question}/>
-                        <FileDownloadOutlinedIcon className={styles.question}/>
-                    </div>
-
-                    <ZoomedLambertGraph
-                        centerZone={center_zone}
-                        dirList={dir_list}
-                        angleList={angle_list}
-                        gridPoints={grid_points}
-                        meanDir={sred_dir}
-                        alpha95={alpha95}
-                        gridColor={grid_color}
-                        polygonColor={poly_color}
-                        showGrid={isvisgrid}
-                        showDegreeGrid={degree_grid_isvis}
-                        showPolygon={isvis}
-                    />
                 </div>
 
             )}

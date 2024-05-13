@@ -30,16 +30,13 @@ const CACResTable: FC<ITables> = ({ dataToShow }) => {
   }, [currentInterpretation, currentFileInterpretations]);
 
   return (
-    <div 
+    <>
 
-      className={styles.table2_container + ' ' + styles.commonContainer}
-      // style={{backgroundColor: bgColorMain(theme.palette.mode)}}
-    >
       
         {/* <DataTableDIR data={dataToShow}/> */}
-        <CACResultTable data={interpretations}/>
+        <CACResultTable currentFileInterpretations={interpretations}/>
       
-    </div>
+    </>
   )
 };
 

@@ -134,7 +134,7 @@ const ToolsDIR: FC<IToolsDIR> = ({ data }) => {
 
   return (
     <ToolsPMDSkeleton>
-      <ButtonGroupWithLabel label={t('dirPage.tools.coordinateSystem.title')}>
+      {/* <ButtonGroupWithLabel label={t('dirPage.tools.coordinateSystem.title')}>
         {
           availableReferences.map(availRef => (
             <Tooltip
@@ -156,7 +156,7 @@ const ToolsDIR: FC<IToolsDIR> = ({ data }) => {
             </Tooltip>
           ))
         }
-      </ButtonGroupWithLabel>
+      </ButtonGroupWithLabel> */}
       <ButtonGroupWithLabel label={t('dirPage.tools.statMethod.title')}>
         <StatModeButton mode='fisher' hotkey={fisherHotkey.key}/>
         <StatModeButton mode='mcFad' hotkey={mcFaddenHotkey.key}/>
