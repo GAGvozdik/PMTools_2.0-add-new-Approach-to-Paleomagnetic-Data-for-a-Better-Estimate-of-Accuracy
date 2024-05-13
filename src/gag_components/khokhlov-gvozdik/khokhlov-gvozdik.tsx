@@ -7,10 +7,10 @@ import CACTable from "../CACTable/CACTable";
 
 import Tables from '../../pages/DIRPage/Tables';
 import Graphs from '../../pages/DIRPage/Graphs';
-import ModalWrapper from '../../components/Common/Modal/ModalWrapper';
-import UploadModal from '../../components/Common/Modal/UploadModal/UploadModal';
+
+
 // import { IDirData } from '../../utils/GlobalTypes';
-import { useAppDispatch, useAppSelector } from '../../services/store/hooks';
+
 import { filesToData } from '../../services/axios/filesAndData';
 import { 
     addInterpretation, 
@@ -51,12 +51,49 @@ import CACFishGraph from '../CACFishGraph/CACFishGraph';
 import CACToolDIR from '../CACToolDIR/CACToolDIR';
 
 
+    import { useAppDispatch, useAppSelector } from '../../services/store/hooks';
+
+    import { ToolsDIR } from '../../components/AppLogic';
+    import { useTheme } from '@mui/material/styles';
+    import { bgColorMain } from '../../utils/ThemeConstants';
+    import ModalWrapper from '../../components/Common/Modal/ModalWrapper';
+    import UploadModal from '../../components/Common/Modal/UploadModal/UploadModal';
+
+    import { setCurrentDIRid } from '../../services/reducers/parsedData';
+    import InterpretationSetter from '../../../src/pages/DIRPage/InterpretationSetter';
+
 export function Khokhlov_Gvozdik() {
       //---------------------------------------------------------------------------------------
     // Ванин код из DIRTable
     //---------------------------------------------------------------------------------------
     
 
+    const theme = useTheme();
+    const dispatch = useAppDispatch();
+    const widthLessThan720 = useMediaQuery({ maxWidth: 719 });
+    const heightLessThan560 = useMediaQuery({ maxHeight: 559 });
+    const unsupportedResolution = widthLessThan720 || heightLessThan560;
+  
+    const { dirStatData, currentDataDIRid } = useAppSelector(state => state.parsedDataReducer);
+    const { hiddenDirectionsIDs } = useAppSelector(state => state.dirPageReducer);
+  
+    const [dataToShow, setDataToShow] = useState<IDirData | null>(null);
+    const [showUploadModal, setShowUploadModal] = useState<boolean>(false);
+  
+    useEffect(() => {
+      if (dirStatData && dirStatData.length > 0) {
+        if (!currentDataDIRid) {
+          dispatch(setCurrentDIRid(0));
+        }
+        const dirID = currentDataDIRid || 0;
+        setDataToShow(dirStatData[dirID]);
+      } else setDataToShow(null);
+    }, [dirStatData, currentDataDIRid, hiddenDirectionsIDs]);
+  
+    useEffect(() => {
+      if (!dataToShow) setShowUploadModal(true);
+      else setShowUploadModal(false);
+    }, [dataToShow]);
 
 
     // const [selectedRows, setSelectedRows] = useState<Array<DataGridDIRFromDIRRow>>([]);
@@ -629,9 +666,8 @@ export function Khokhlov_Gvozdik() {
 
 
 
+                    <CACTable dataToShow={dataToShow}/> 
 
-
-                {/* <CACTable dataToShow={dataToShow}/>  */}
                 {/* <CACResTable dataToShow={dataToShow}/>   */}
 
 

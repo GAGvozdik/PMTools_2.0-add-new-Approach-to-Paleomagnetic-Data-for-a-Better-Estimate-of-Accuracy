@@ -10,6 +10,9 @@ import {
 } from '../../utils/ThemeConstants';
 
 
+// import styles from './DIRPage.module.scss';
+
+
 // export function CACTable() {
 
 
@@ -31,8 +34,6 @@ interface ITables {
 const CACTable: FC<ITables> = ({ dataToShow }) => {
 
 
-// export function CACTable({ dataToShow }) {
-
   const theme = useTheme();
   
   const { currentInterpretation, currentFileInterpretations } = useAppSelector(state => state.dirPageReducer);
@@ -44,18 +45,31 @@ const CACTable: FC<ITables> = ({ dataToShow }) => {
     else setInterpretations(null);
   }, [currentInterpretation, currentFileInterpretations]);
 
-  return (
-    <div 
-    className={styles.table_container + ' ' + styles.commonContainer}
-    // style={{backgroundColor: bgColorMain(theme.palette.mode)}}
-    >
-        <CACDataTable data={dataToShow}/>
 
+  return (
+    // <div 
+    // className={styles.table_container + ' ' + styles.commonContainer}
+    // // style={{backgroundColor: bgColorMain(theme.palette.mode)}}
+    // >
+
+    <>
+
+          <CACDataTable data={dataToShow}/>
+
+
+        
         {/* <DataTableDIR data={dataToShow}/> */}
-    </div>
+
+
+      {/* <StatisticsDataTableDIR currentFileInterpretations={interpretations}/> */}
+      {/* <DataTableDIR data={dataToShow}/> */}
+
+
+    </>
   )
 };
 
 export default CACTable;
+
 
 
