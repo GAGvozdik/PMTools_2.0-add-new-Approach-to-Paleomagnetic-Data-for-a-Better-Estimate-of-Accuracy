@@ -11,18 +11,22 @@ import CACResultTable from './CACResultTable';
 
 interface ITables {
   dataToShow: IDirData | null;
-  lat?: number | null;
-  lon?: number | null;
-  RZ?: number | null;
-  alpha95?: number | null;
-  PCaPC?: string | null;
-  q?: number | null;
-  dir_number?: number | null;
-  selectedD?: number | null;
+  lat?: number | null | undefined;
+  lon?: number | null | undefined;
+  RZ?: number | null | undefined;
+  alpha95?: number | null | undefined;
+  PCaPC?: string | null | undefined;
+  q?: number | null | undefined;
+  dir_number?: number | null | undefined;
+  selectedD?: number | null | undefined;
+  gridN?: number | null | undefined;
+
+  
 };
 
 
-const CACResTable: FC<ITables> = ({ dataToShow, lat, lon, RZ, alpha95, PCaPC, q, dir_number, selectedD}) => {
+
+const CACResTable: FC<ITables> = ({ dataToShow, lat, lon, RZ, alpha95, PCaPC, q, selectedD, gridN, dir_number}) => {
 
 
 // export function CACTable({ dataToShow }) {
@@ -33,10 +37,39 @@ const CACResTable: FC<ITables> = ({ dataToShow, lat, lon, RZ, alpha95, PCaPC, q,
   const [interpretations, setInterpretations] = useState<StatisitcsInterpretationFromDIR[] | null>(null);
 
   useEffect(() => {
-    if (currentFileInterpretations && currentFileInterpretations.length) setInterpretations(currentFileInterpretations);
-    else if (currentInterpretation) setInterpretations([currentInterpretation]);
+
+    if (interpretations == null) {console.log('----------------');}
+    else if (interpretations){
+      console.log('+++++++++++++++++++++++');
+      console.log(interpretations[0].Igeo);
+  
+      // interpretations[0].d = 10;
+    }
+
+
+    if (currentFileInterpretations && currentFileInterpretations.length) 
+      {
+        console.log('htrshtsr');
+
+        console.log(currentFileInterpretations[0].Igeo);
+
+
+        // const m :StatisitcsInterpretationFromDIR = null;
+
+
+        setInterpretations(currentFileInterpretations);
+      }
+    else if (currentInterpretation && currentInterpretation != null) 
+      {
+        currentInterpretation.d=66;
+        console.log('cscscs');
+        setInterpretations([currentInterpretation])
+      }
+
     else setInterpretations(null);
   }, [currentInterpretation, currentFileInterpretations]);
+
+
 
   return (
     <>
@@ -53,6 +86,7 @@ const CACResTable: FC<ITables> = ({ dataToShow, lat, lon, RZ, alpha95, PCaPC, q,
           q={q}
           dir_number={dir_number}
           selectedD={selectedD}
+         gridN={gridN}
         />
       
     </>

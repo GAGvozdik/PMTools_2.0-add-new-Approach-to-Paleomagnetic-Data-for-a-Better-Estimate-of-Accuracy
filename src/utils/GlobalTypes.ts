@@ -78,6 +78,14 @@ export interface IDirData extends IObjectKeys {
     Kgeo: number;
     MADstrat: number;
     Kstrat: number;
+    lat?: number | null;
+    lon?: number | null;
+    RZ?: number | null | undefined;
+    alpha95?: number | null;
+    PCaPC?: string | null | undefined;
+    q?: number | null | undefined;
+    dir_number?: number | null | undefined;
+    selectedD?: number | null | undefined;
     comment: string;
     demagType: "thermal" | "alternating field" | undefined;
   }[];
@@ -147,12 +155,14 @@ export type StatisitcsInterpretationFromDIR = {
   comment: string;
   demagType: "thermal" | "alternating field" | undefined;
   rawData: RawStatisticsDIR;
+  d?: number | null;
   lat?: number | null;
   lon?: number | null;
   RZ?: number | null;
   alpha95?: number | null;
   PCaPC?: string | null;
   q?: number | null;
+  gridN?: number | null;
 
 
 };

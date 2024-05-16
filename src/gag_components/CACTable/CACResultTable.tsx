@@ -27,7 +27,7 @@ import { StatisticsDataTableRow, StatisticsDataTableColumns } from "../../compon
 import { useScrollToInterpretationRow } from "../../components/AppLogic/hooks/useScrollToInterpretationRow";
 
 interface IStatisticsDataTableDIR {
-  currentFileInterpretations: Array<StatisitcsInterpretationFromDIR> | null;
+  currentFileInterpretations?: Array<StatisitcsInterpretationFromDIR> | null;
   lat?: number | null;
   lon?: number | null;
   RZ?: number | null;
@@ -35,7 +35,8 @@ interface IStatisticsDataTableDIR {
   PCaPC?: string | null;
   q?: number | null;
   dir_number?: number | null;
-  selectedD?: number | null;
+  selectedD?: number | null; 
+  gridN?: number | null;
 };
 
 // interface IStatisticsDataTableDIR {
@@ -45,8 +46,10 @@ interface IStatisticsDataTableDIR {
 // const CACDataTable: FC<IStatisticsDataTableDIR> = ({ data }) => {
 
 
-  const CACDataTable: FC<IStatisticsDataTableDIR> = ({ currentFileInterpretations, lat, lon, RZ, alpha95, PCaPC, q, dir_number, selectedD}) => {
-  
+  const CACDataTable: FC<IStatisticsDataTableDIR> = ({ currentFileInterpretations}) => {
+    
+    
+
     const dispatch = useAppDispatch();
     const theme = useTheme();
     const apiRef = useGridApiRef();
@@ -178,13 +181,17 @@ interface IStatisticsDataTableDIR {
     { field: 'q', headerName: 'q', type: 'number', width: 40},
 
 
+    { field: 'selectedD', headerName: 'd', type: 'number', width: 25},
+    { field: 'gridN', headerName: 'N', type: 'number', width: 25},
+
+    
+
     { field: 'comment', headerName: 'Comment', type: 'string', minWidth: 40, flex: 1, 
     editable: true, cellClassName: styles[`editableCell_${theme.palette.mode}`] },
 
 
-    { field: 'dir_number', headerName: 'N', type: 'number', width: 10},
+   
 
-    { field: 'selectedD', headerName: 'd', type: 'number', width: 10},
 
 
     ];
@@ -196,7 +203,7 @@ interface IStatisticsDataTableDIR {
       col.disableColumnMenu = true;
     });
   
-    if (!currentFileInterpretations || !currentFileInterpretations.length) return <StatisticsDataTablePMDSkeleton />;
+    if (!currentFileInterpretations || !currentFileInterpretations.length) return <div className={styles.table2_container + ' ' + styles.commonContainer}></div>;
   
     const rows: StatisticsDataTableRow[] = currentFileInterpretations.map((statistics) => {
 
@@ -206,7 +213,30 @@ interface IStatisticsDataTableDIR {
       // let qInRow: number = 10; 
   
 
-      const { label, stepRange, stepCount, Dgeo, Igeo, Dstrat, Istrat, confidenceRadiusGeo, Kgeo, confidenceRadiusStrat, Kstrat, comment} = statistics;
+      const { 
+        label, 
+        stepRange, 
+        stepCount, 
+        Dgeo, 
+        Igeo, 
+        Dstrat, 
+        Istrat, 
+        confidenceRadiusGeo, 
+        Kgeo, 
+        confidenceRadiusStrat, 
+        Kstrat, 
+        comment, 
+        lat, 
+        lon, 
+        RZ, 
+        alpha95, 
+        PCaPC, 
+        q, 
+        gridN, 
+        d
+      } = statistics;
+
+
       return {
         id: label,
         codeCAC: 'cac',
@@ -227,8 +257,8 @@ interface IStatisticsDataTableDIR {
         alpha95: alpha95, 
         PCaPC: PCaPC, 
         q: q,
-        dir_number:dir_number,
-        selectedD:selectedD,
+        selectedD:d,
+        gridN:gridN,
 
       };
     }).reverse();

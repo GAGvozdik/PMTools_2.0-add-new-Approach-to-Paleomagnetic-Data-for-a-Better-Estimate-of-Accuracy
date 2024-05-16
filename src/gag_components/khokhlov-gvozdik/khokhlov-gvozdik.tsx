@@ -75,61 +75,16 @@ interface IStatModeButton {
 
 
 export function Khokhlov_Gvozdik() {
-      //---------------------------------------------------------------------------------------
-    // Ванин код из DIRTable
-    //---------------------------------------------------------------------------------------
-    
-
-    const theme = useTheme();
-    const dispatch = useAppDispatch();
-    const widthLessThan720 = useMediaQuery({ maxWidth: 719 });
-    const heightLessThan560 = useMediaQuery({ maxHeight: 559 });
-    const unsupportedResolution = widthLessThan720 || heightLessThan560;
-  
-    const { dirStatData, currentDataDIRid } = useAppSelector(state => state.parsedDataReducer);
-    const { hiddenDirectionsIDs } = useAppSelector(state => state.dirPageReducer);
-  
-    const [dataToShow, setDataToShow] = useState<IDirData | null>(null);
-    const [showUploadModal, setShowUploadModal] = useState<boolean>(false);
-  
-    useEffect(() => {
-      if (dirStatData && dirStatData.length > 0) {
-        if (!currentDataDIRid) {
-          dispatch(setCurrentDIRid(0));
-        }
-        const dirID = currentDataDIRid || 0;
-        setDataToShow(dirStatData[dirID]);
-      } else setDataToShow(null);
-    }, [dirStatData, currentDataDIRid, hiddenDirectionsIDs]);
-  
-    useEffect(() => {
-      if (!dataToShow) setShowUploadModal(true);
-      else setShowUploadModal(false);
-    }, [dataToShow]);
-
-
-    const { 
-        statisticsMode, 
-        selectedDirectionsIDs, 
-        reversedDirectionsIDs,
-        currentFileInterpretations,
-        allInterpretations
-    } = useAppSelector(state => state.dirPageReducer);
-
-    // const [selectedRows, setSelectedRows] = useState<Array<DataGridDIRFromDIRRow>>([]);
 
 
 
 
-
-    
- 
-    
+       
 
     //-----------------------------------------------------------
     // input data generating
     //-----------------------------------------------------------
-
+    const [dataToShow, setDataToShow] = useState<IDirData | null>(null);
     var max_lon = 0;
     var min_lon = 10;
     var max_lat = 0;
@@ -151,9 +106,9 @@ export function Khokhlov_Gvozdik() {
 
     const [dir_number, setDirNumb] = useState<number>(0);
 
-
     const [apc, setSelectedAPC] = useState<number>(0);
-    const [PCaPCString, setPCaPC] = useState<string>('kh');
+    // начальное значение kh??
+    const [PCaPCString, setPCaPC] = useState<string>('PC');
 
 
     const [selectedP, setSelectedP] = useState<number>(990);
@@ -163,6 +118,9 @@ export function Khokhlov_Gvozdik() {
     const [quantiles, setQuantiles] = useState<number[]>([0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]);
 
 	const [angle_list, setAngleList] = useState<number[]>([]);
+
+	const [RZ, setRZ] = useState<number>(999);
+
 
 
 
@@ -199,6 +157,14 @@ export function Khokhlov_Gvozdik() {
     const handleAPCChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
         const number = parseInt(event.target.value);
         setSelectedAPC(number);
+
+        
+        if (number == 0.0) {
+            setPCaPC('PC');
+        }
+        else {
+            setPCaPC('aPC');
+        }
     };
 
     const [selectedRows, setSelectedRows] = useState<Array<DataGridDIRFromDIRRow>>([]);
@@ -213,11 +179,121 @@ export function Khokhlov_Gvozdik() {
     let paleo_data: number[] = [];
     
 
+    //---------------------------------------------------------------------------------------
+    // Ванин код из DIRTable
+    //---------------------------------------------------------------------------------------
+    
+
+    const theme = useTheme();
+    const dispatch = useAppDispatch();
+    const widthLessThan720 = useMediaQuery({ maxWidth: 719 });
+    const heightLessThan560 = useMediaQuery({ maxHeight: 559 });
+    const unsupportedResolution = widthLessThan720 || heightLessThan560;
+  
+    let { dirStatData, currentDataDIRid } = useAppSelector(state => state.parsedDataReducer);
+    const { hiddenDirectionsIDs } = useAppSelector(state => state.dirPageReducer);
+  
+
+    const [showUploadModal, setShowUploadModal] = useState<boolean>(false);
+  
+    useEffect(() => {
+      if (dirStatData && dirStatData.length > 0) {
+        if (!currentDataDIRid) {
+          dispatch(setCurrentDIRid(0));
+        }
+        const dirID = currentDataDIRid || 0;
+        
+        
+        // dirStatData.Interpretations.lat = 99;
+
+
+        // dirStatData[dirID].q=90;
+
+        // // Найти нужный объект в массиве interpretations (например, по id)
+
+        // let interpretationToUpdate = dirStatData[dirID];
+
+          
+        let interpretationToUpdate = { ...dirStatData[dirID] };
+    
+
+    
+
+        const output = interpretationToUpdate.interpretations.map((direction, index) => {
+
+
+    
+            return {
+                ...direction, 
+                lat: center_zone[0], 
+                lon: center_zone[1], 
+                RZ:RZ, 
+                alpha95:alpha95, 
+                PCaPC:PCaPCString, 
+                q:selectedP, 
+                selectedD:selectedD, 
+                gridN:selectedNumber,
+            };
+          
+        });
+
+        interpretationToUpdate.interpretations = output;
+    
+
+                // Проверка, найден ли объект
+
+        // Изменить значение параметра q
+        console.log('output-------------------');
+        console.log(output);
+        console.log(dirStatData[dirID]);
+        console.log('output-------------------');
+        
+        // console.log(interpretationToUpdate.interpretations[0]);
+
+        // interpretationToUpdate.interpretations[0].q = 44;
+
+
+        // 
+
+
+
+
+        setDataToShow(interpretationToUpdate);
+      } else setDataToShow(null);
+    }, [dirStatData, currentDataDIRid, hiddenDirectionsIDs, selectedP, selectedD, PCaPCString, selectedP]);
+  
+
+
+
+
+    useEffect(() => {
+      if (!dataToShow) setShowUploadModal(true);
+      else setShowUploadModal(false);
+    }, [dataToShow]);
+
+
+    const { 
+        statisticsMode, 
+        selectedDirectionsIDs, 
+        reversedDirectionsIDs,
+        currentFileInterpretations,
+        allInterpretations
+    } = useAppSelector(state => state.dirPageReducer);
+
+    // const [selectedRows, setSelectedRows] = useState<Array<DataGridDIRFromDIRRow>>([]);
+
+
+
+
+
+    
+ 
+ 
 
     const getData = () => {
         
       
-
+        setRZ(RZ + 1);
 
 
         // dataToShow.name
@@ -289,14 +365,10 @@ export function Khokhlov_Gvozdik() {
     
         
 
-        if (apc == 0.0) {
-            setPCaPC('PC');
-        }
-        else {
-            setPCaPC('aPC');
-        }
 
 
+        dirStatData[-1].lat = 99;
+        dirStatData[0].lat = 99;
 
 
     };
@@ -646,7 +718,7 @@ export function Khokhlov_Gvozdik() {
     // choice debug or result
 
     
-    const [isCACDebugVisible, setIsCACDebugVisible] = useState<boolean>(false);
+    const [isCACDebugVisible, setIsCACDebugVisible] = useState<boolean>(true);
 
     const toggleCACDebugVisibility = () => {
       setIsCACDebugVisible((prev) => !prev);
@@ -733,32 +805,32 @@ export function Khokhlov_Gvozdik() {
 
             {isCACGraphVisible ? (
 
-                <div className={styles.graph_container + ' ' + styles.commonContainer}>
-                            
-                <div className={styles.interfaceTooltip}>
-                    <HelpCenterOutlinedIcon className={styles.question}/>
-                    <FileDownloadOutlinedIcon className={styles.question}/>
-                </div>
-
-                <ZoomedLambertGraph
-                    centerZone={center_zone}
-                    dirList={dir_list}
-                    angleList={angle_list}
-                    gridPoints={grid_points}
-                    meanDir={sred_dir}
-                    alpha95={alpha95}
-                    gridColor={grid_color}
-                    polygonColor={poly_color}
-                    showGrid={isvisgrid}
-                    showDegreeGrid={degree_grid_isvis}
-                    showPolygon={isvis}
-                />
-                </div>
-
-            ) : (
 
                 <div className={styles.graph_container + ' ' + styles.commonContainer}>
                     <CACFishGraph dataToShow={dataToShow}/>
+                </div>
+            ) : (
+
+                <div className={styles.graph_container + ' ' + styles.commonContainer}>
+                            
+                    <div className={styles.interfaceTooltip}>
+                        <HelpCenterOutlinedIcon className={styles.question}/>
+                        <FileDownloadOutlinedIcon className={styles.question}/>
+                    </div>
+
+                    <ZoomedLambertGraph
+                        centerZone={center_zone}
+                        dirList={dir_list}
+                        angleList={angle_list}
+                        gridPoints={grid_points}
+                        meanDir={sred_dir}
+                        alpha95={alpha95}
+                        gridColor={grid_color}
+                        polygonColor={poly_color}
+                        showGrid={isvisgrid}
+                        showDegreeGrid={degree_grid_isvis}
+                        showPolygon={isvis}
+                    />
                 </div>
 
             )}
@@ -788,14 +860,7 @@ export function Khokhlov_Gvozdik() {
 
                             <CACResTable 
                                 dataToShow={dataToShow}
-                                RZ={85}
-                                lat={6}
-                                lon={6}
-                                alpha95={alpha95}
-                                PCaPC={PCaPCString}
-                                q={selectedP}
-                                dir_number = {dir_number}
-                                selectedD={selectedD}
+                        
                             />  
                             // selectedD, apc, selectedP, dir_number
 

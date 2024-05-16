@@ -14,23 +14,40 @@ const calculateStatisticsDIR = (
   selectedDirectionsIDs: Array<number>, 
   reversedDirectionsIDs: Array<number>,
 ) => {
+// CAC? поменять запрос добавив туда параметры, если режим CAC
 
-  const selectedDirections = data.interpretations.filter(
-    (direction, index) => selectedDirectionsIDs.includes(index + 1)
-  ).map((direction, index) => {
-    const { id, Dgeo, Igeo, Dstrat, Istrat } = direction;
-    let geoDirection = new Direction(Dgeo, Igeo, 1);
-    let stratDirection = new Direction(Dstrat, Istrat, 1);
-    if (reversedDirectionsIDs.includes(id)) {
-      geoDirection = geoDirection.reversePolarity();
-      stratDirection = stratDirection.reversePolarity();
-    };
-    const DgeoFinal = +geoDirection.declination.toFixed(1);
-    const IgeoFinal = +geoDirection.inclination.toFixed(1);
-    const DstratFinal = +stratDirection.declination.toFixed(1);
-    const IstratFinal = +stratDirection.inclination.toFixed(1);
-    return {...direction, Dgeo: DgeoFinal, Igeo: IgeoFinal, Dstrat: DstratFinal, Istrat: IstratFinal};
-  });
+const selectedDirections = data.interpretations.filter(
+  (direction, index) => selectedDirectionsIDs.includes(index + 1)
+).map((direction, index) => {
+  const { id, Dgeo, Igeo, Dstrat, Istrat, lat, lon, RZ, alpha95, PCaPC, q, selectedD} = direction;
+  let geoDirection = new Direction(Dgeo, Igeo, 1);
+  let stratDirection = new Direction(Dstrat, Istrat, 1);
+  if (reversedDirectionsIDs.includes(id)) {
+    geoDirection = geoDirection.reversePolarity();
+    stratDirection = stratDirection.reversePolarity();
+  };
+  const DgeoFinal = +geoDirection.declination.toFixed(1);
+  const IgeoFinal = +geoDirection.inclination.toFixed(1);
+  const DstratFinal = +stratDirection.declination.toFixed(1);
+  const IstratFinal = +stratDirection.inclination.toFixed(1);
+  return {
+    ...direction, 
+    Dgeo: DgeoFinal, 
+    Igeo: IgeoFinal, 
+    Dstrat: DstratFinal, 
+    Istrat: IstratFinal, 
+    lat: lat, 
+    lon:lon,
+    RZ:RZ, 
+    alpha95:alpha95, 
+    PCaPC:PCaPC, 
+    q:q, 
+    selectedD:selectedD, 
+  
+  };
+});
+
+
 
   let meanByMode = {
     geographic: {direction: new Direction(0, 0, 0), MAD: 0}, 
@@ -40,7 +57,8 @@ const calculateStatisticsDIR = (
   if (mode === 'gc') meanByMode = calculatePCA_dir(selectedDirections);
   if (mode === 'fisher') meanByMode = calculateFisherMean(selectedDirections);
   if (mode === 'mcFad') meanByMode = calculateMcFaddenMean(selectedDirections);
-
+  //CAC?
+  // if (mode === 'cac') meanByMode = calculateFisherMean(selectedDirections);
   const rawStatistics: RawStatisticsDIR = {
     code: mode, 
     mean: meanByMode

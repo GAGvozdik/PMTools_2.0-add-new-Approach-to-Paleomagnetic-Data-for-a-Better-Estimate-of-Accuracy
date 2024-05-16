@@ -15,6 +15,9 @@ const rawStatisticsDIRToInterpretation = (
   const filenameWithoutExtension = filename.replace(/\.[^/.]+$/, "");
   const label: string = filenameWithoutExtension.slice(0, 6);
 
+  console.log('selectedDirections');
+  console.log(selectedDirections);
+
   const stepRange: string = "avg";
   const stepCount: number = selectedDirections.length;
 
@@ -44,6 +47,14 @@ const rawStatisticsDIRToInterpretation = (
     Kgeo: +(accuracyGeo || 0).toFixed(1),
     confidenceRadiusStrat: +confidenceRadiusStrat.toFixed(1),
     Kstrat: +(accuracyStrat || 0).toFixed(1),
+    lat: selectedDirections[0].lat,
+    lon: selectedDirections[0].lon,
+    RZ: selectedDirections[0].RZ, 
+    alpha95: selectedDirections[0].alpha95, 
+    PCaPC: selectedDirections[0].PCaPC, 
+    q: selectedDirections[0].q, 
+    d: selectedDirections[0].selectedD, 
+
     comment,
     demagType,
     rawData: statistics,
