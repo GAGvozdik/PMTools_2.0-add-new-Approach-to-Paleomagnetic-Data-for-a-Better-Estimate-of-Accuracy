@@ -77,9 +77,12 @@ interface IStatModeButton {
 export function Khokhlov_Gvozdik() {
 
 
+    const [selectedNumber, setSelectedNumber] = useState<number>(10000);
+
+    const [alpha95, setAlpha95] = useState<number>(0);
+    const [sred_dir, setSredDir] = useState<number[]>([0,0,1]);
 
 
-       
 
     //-----------------------------------------------------------
     // input data generating
@@ -136,6 +139,7 @@ export function Khokhlov_Gvozdik() {
             }
             setAngleList(new_ang_list);
         }
+
         
     }, [selectedD, apc, selectedP, dir_number, step_list]);
 
@@ -201,6 +205,7 @@ export function Khokhlov_Gvozdik() {
         if (!currentDataDIRid) {
           dispatch(setCurrentDIRid(0));
         }
+
         const dirID = currentDataDIRid || 0;
           
         let interpretationToUpdate = { ...dirStatData[dirID] };
@@ -211,7 +216,7 @@ export function Khokhlov_Gvozdik() {
                 ...direction, 
                 lat: center_zone[0], 
                 lon: center_zone[1], 
-                // RZ:RZ, 
+                RZ:999, 
                 alpha95:alpha95, 
                 PCaPC:PCaPCString, 
                 q:selectedP, 
@@ -224,8 +229,25 @@ export function Khokhlov_Gvozdik() {
         interpretationToUpdate.interpretations = output;
 
         setDataToShow(interpretationToUpdate);
+
+
+
+        console.log('gkhkhkhkhkhkh');
+        console.log(interpretationToUpdate);
+
       } else setDataToShow(null);
-    }, [dirStatData, currentDataDIRid, hiddenDirectionsIDs, selectedP, selectedD, PCaPCString, selectedP]);
+    // }, [dirStatData, currentDataDIRid, hiddenDirectionsIDs]);
+    }, [
+        dirStatData, 
+        currentDataDIRid, 
+        hiddenDirectionsIDs, 
+        selectedP, 
+        selectedD, 
+        PCaPCString, 
+        selectedP, 
+        selectedNumber, 
+        alpha95
+    ]);
   
 
 
@@ -324,12 +346,16 @@ export function Khokhlov_Gvozdik() {
         setAngleList([0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]);
 
         
+        // const [sred_dir, alpha95]: [ number[], number] = fisherStat(dir_list);
 
-        
+        setSredDir(fisherStat(dir_list)[0]);
+
+
         dispatch(setStatisticsMode('fisher'));
 
         // dirStatData[-1].lat = 99;
         // dirStatData[0].lat = 99;
+
 
 
     };
@@ -351,7 +377,7 @@ export function Khokhlov_Gvozdik() {
         setisvisgrid(!isvisgrid);
     };
     
-    const [selectedNumber, setSelectedNumber] = useState<number>(10000);
+
 
     const handleNumberChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
         const number = parseInt(event.target.value);
@@ -366,13 +392,18 @@ export function Khokhlov_Gvozdik() {
         setDegree(!degree_grid_isvis);
     };
 
-
-
     //-----------------------------------------------------------------------
     // fisher stat
     //-----------------------------------------------------------------------
+    useEffect(() => {
+        
+        setAlpha95(fisherStat(dir_list)[1]);
+        // setSredDir(fisherStat(dir_list)[0]);
 
-    const [sred_dir, alpha95]: [ number[], number] = fisherStat(dir_list);
+    }, [dir_list]);
+
+
+
 
     //-----------------------------------------------------------------------
     // making grid dots
@@ -727,37 +758,7 @@ export function Khokhlov_Gvozdik() {
     return (
         <div className={styles.main_container}>
             <h3 className={styles.lowScreen}>Размер окна должен быть не меньше чем 720x560</h3>
-
-            
-
-            <div className={styles.cac_fish_container + ' ' + styles.commonContainer}>
     
-                {/* <CACToolDIR data={dataToShow} />  */}
-
-                <ButtonGroupWithLabel label={'Change show mode'}>
-                    <CACGraphButton mode='CAC' changeGraph={() => handleButtonSelection('CAC')}/>
-                    <CACGraphButton mode='Fisher' changeGraph={() => handleButtonSelection('Fisher')}/>
-                </ButtonGroupWithLabel>
-
-                            <ModalWrapper
-                    open={showUploadModal}
-                    setOpen={setShowUploadModal}
-                    size={{width: '60vw', height: widthLessThan720 ? 'fit-content' : '60vh'}}
-                    showBottomClose
-                >
-                    <UploadModal page='cac' />
-                </ModalWrapper>
-                <InterpretationSetter dataToShow={dataToShow} />
-
-
-                <ButtonGroupWithLabel label={'Change show mode'}>
-                    <CACGraphButton mode='result' changeGraph={() => handleDebugButtonSelection('result')}/>
-                    <CACGraphButton mode='debug' changeGraph={() => handleDebugButtonSelection('debug')}/>
-
-                </ButtonGroupWithLabel>
-
-
-            </div>            
             
 
 
@@ -795,6 +796,36 @@ export function Khokhlov_Gvozdik() {
 
 
 
+            
+
+<div className={styles.cac_fish_container + ' ' + styles.commonContainer}>
+    
+    {/* <CACToolDIR data={dataToShow} />  */}
+
+    <ButtonGroupWithLabel label={'Change show mode'}>
+        <CACGraphButton mode='CAC' changeGraph={() => handleButtonSelection('CAC')}/>
+        <CACGraphButton mode='Fisher' changeGraph={() => handleButtonSelection('Fisher')}/>
+    </ButtonGroupWithLabel>
+
+                <ModalWrapper
+        open={showUploadModal}
+        setOpen={setShowUploadModal}
+        size={{width: '60vw', height: widthLessThan720 ? 'fit-content' : '60vh'}}
+        showBottomClose
+    >
+        <UploadModal page='cac' />
+    </ModalWrapper>
+    <InterpretationSetter dataToShow={dataToShow} />
+
+
+    <ButtonGroupWithLabel label={'Change show mode'}>
+        <CACGraphButton mode='result' changeGraph={() => handleDebugButtonSelection('result')}/>
+        <CACGraphButton mode='debug' changeGraph={() => handleDebugButtonSelection('debug')}/>
+
+    </ButtonGroupWithLabel>
+
+
+</div>        
 
                     <CACTable dataToShow={dataToShow}/> 
 

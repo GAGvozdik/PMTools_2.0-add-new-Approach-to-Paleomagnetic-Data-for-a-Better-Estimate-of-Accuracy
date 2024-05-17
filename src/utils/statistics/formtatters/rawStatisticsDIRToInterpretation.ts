@@ -54,6 +54,7 @@ const rawStatisticsDIRToInterpretation = (
     PCaPC: selectedDirections[0].PCaPC, 
     q: selectedDirections[0].q, 
     d: selectedDirections[0].selectedD, 
+    gridN: selectedDirections[0].gridN, 
 
     comment,
     demagType,

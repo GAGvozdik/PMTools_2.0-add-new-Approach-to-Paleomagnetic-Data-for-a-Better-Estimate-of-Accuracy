@@ -88,27 +88,27 @@ export function get_quantiles(d: number, apc: number, p: number) {
 
 
 
-export function fisherStat(dirs: number[][]) {
+export function fisherStat(dirs: number[][]): [number[], number] {
 
-    var x_sum = 0;
-    var y_sum = 0;
-    var z_sum = 0;
+    let x_sum = 0;
+    let y_sum = 0;
+    let z_sum = 0;
 
-    for (var i = 0; i < dirs.length; i++)
+    for (let i = 0; i < dirs.length; i++)
     {
         x_sum += dirs[i][0];
         y_sum += dirs[i][1];
         z_sum += dirs[i][2];
     }
-    var r = [x_sum, y_sum, z_sum];
+    let r = [x_sum, y_sum, z_sum];
 
-    var r_len = vector_length(r);
-    var n = dirs.length;
-    var k = (n - 1) / (n - r_len);
-    var alpha95 = 140 / Math.sqrt(k * n);
+    let r_len = vector_length(r);
+    let n = dirs.length;
+    let k = (n - 1) / (n - r_len);
+    let alpha95 = 140 / Math.sqrt(k * n);
 
-    var result : [number[], number] = [NormalizeV(r), alpha95];
-    return result;
+
+    return [NormalizeV(r), alpha95];
 }
 
 export function getRandomInt(min: number, max: number) {

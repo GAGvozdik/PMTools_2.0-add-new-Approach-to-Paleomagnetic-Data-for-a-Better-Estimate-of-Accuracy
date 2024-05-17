@@ -26,7 +26,7 @@ interface ITables {
 
 
 
-const CACResTable: FC<ITables> = ({ dataToShow, lat, lon, RZ, alpha95, PCaPC, q, selectedD, gridN, dir_number}) => {
+const CACResTable: FC<ITables> = ({ dataToShow}) => {
 
 
 // export function CACTable({ dataToShow }) {
@@ -63,15 +63,15 @@ const CACResTable: FC<ITables> = ({ dataToShow, lat, lon, RZ, alpha95, PCaPC, q,
         {/* <DataTableDIR data={dataToShow}/> */}
         <CACResultTable 
           currentFileInterpretations={interpretations}
-          RZ={RZ}
-          lat={lat}
-          lon={lon}
-          alpha95={alpha95}
-          PCaPC={PCaPC}
-          q={q}
-          dir_number={dir_number}
-          selectedD={selectedD}
-         gridN={gridN}
+        //   RZ={RZ}
+        //   lat={lat}
+        //   lon={lon}
+        //   alpha95={alpha95}
+        //   PCaPC={PCaPC}
+        //   q={q}
+        //   dir_number={dir_number}
+        //   selectedD={selectedD}
+        //  gridN={gridN}
         />
       
     </>

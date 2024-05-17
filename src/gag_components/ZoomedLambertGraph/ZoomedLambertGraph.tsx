@@ -1,4 +1,4 @@
-import React, {} from 'react';
+import React, { useState, useEffect } from 'react';
 
 import { useTheme } from '@mui/material/styles';
 import { Cutoff } from "../../utils/GlobalTypes";
@@ -6,7 +6,8 @@ import { DotsData, GraphSettings, MeanDirection, TooltipDot } from "../../utils/
 import { graphSelectedDotColor } from "../../utils/ThemeConstants";
 import { Axis, Data, Dot } from "../../components/Common/Graphs";
 import { PlaneData, DotSettings, DotType} from "../../utils/graphs/types";
-
+import { useAppDispatch, useAppSelector } from '../../services/store/hooks';
+import { setCurrentDIRid } from '../../services/reducers/parsedData';
 // import Graphs from '../pages/DIRPage/Graphs';
 // import { Rumbs } from "./rumbs";
 import { DegreeGrid } from "./degreeGrid";
@@ -26,10 +27,11 @@ import {
     points_dist,
     getViewBoxSize,
     getPointSize,
-    angle_between_v
+    angle_between_v,
+    vector_length,
 } from "../gag_functions";
 
-
+import { DataGridDIRFromDIRRow, IDirData } from "../../../src/utils/GlobalTypes";
 
 const dotSettings: DotSettings = {
     annotations: true,
@@ -68,6 +70,7 @@ export function ZoomedLambertGraph({
 }: HGGraph) {
 
 
+
     const centerZoneColor = '#2b3bb3';
     let plotPointsCount = 150; 
 
@@ -94,13 +97,59 @@ export function ZoomedLambertGraph({
     // fullViewBoxSize = '-1 -1 2 2';
     // viewBoxSize = '-1 -1 2 2';
 
-    if (angleList[0] == 0) {
-      return (
-        <div>
-          <svg className={styles.svg + ' ' + styles.interface} key={6534324} viewBox={"-1 -1 2 2"} />
-        </div>
-      );
-    }
+
+    const theme = useTheme();
+    const dispatch = useAppDispatch();
+
+    let { dirStatData, currentDataDIRid } = useAppSelector(state => state.parsedDataReducer);
+    const [dataToShow, setDataToShow] = useState<IDirData | null>(null);
+
+
+    useEffect(() => {
+
+
+        if (dirStatData && dirStatData.length > 0) {
+            if (!currentDataDIRid) {
+              dispatch(setCurrentDIRid(0));
+            }
+
+            
+        let dirID = currentDataDIRid || 0;
+          
+        let interpretationToUpdate = { ...dirStatData[dirID] };
+
+        let output = interpretationToUpdate.interpretations.map((direction) => {
+    
+            return {
+                ...direction, 
+                RZ:99, 
+
+            };
+          
+        });
+
+        interpretationToUpdate.interpretations = output;
+
+        setDataToShow(interpretationToUpdate);
+
+
+        console.log('grdgggggggggg');
+        console.log(interpretationToUpdate);
+
+    } else setDataToShow(null);
+
+
+    }, []);
+
+  
+
+    // if (angleList[0] == 0) {
+    //   return (
+    //     <div>
+    //       <svg className={styles.svg + ' ' + styles.interface} key={6534324} viewBox={"-1 -1 2 2"} />
+    //     </div>
+    //   );
+    // }
 
 
 
@@ -177,26 +226,34 @@ export function ZoomedLambertGraph({
 
     let maxRad = -1;
     let onePointNumb = -1;
-    // for (let i = 0; i < polygonPoints3d.length; i++) {
-    //     if (points_dist(rotationCenterZone, polygonPoints3d[i]) > maxRad) {
-    //         onePointNumb = i;
-    //         maxRad = points_dist(rotationCenterZone, polygonPoints3d[i]);
-    //     }
-    // }
+    for (let i = 0; i < polygonPoints3d.length; i++) {
+        if (points_dist(rotationCenterZone, polygonPoints3d[i]) > maxRad) {
+            onePointNumb = i;
+            maxRad = points_dist(rotationCenterZone, polygonPoints3d[i]);
+        }
+    }
     
 
     // maxRad
 
 
-    // let maxRPt: number[] = rotationCenterZone;
-    // if (onePointNumb != -1){
-    //     maxRPt = polygonPoints3d[onePointNumb];
+    let maxRPt: number[] = rotationCenterZone;
+    if (onePointNumb != -1){
+        maxRPt = polygonPoints3d[onePointNumb];
 
-    // }
-    
+    }
+    let gmaxRad: number = angle_between_v(rotationCenterZone, maxRPt);
 
-    // let gmaxRad: number = angle_between_v(rotationCenterZone, polygonPoints3d[onePointNumb]);
 
+
+
+
+    // if (gmaxRad > 180) { gmaxRad -= 180; }
+
+    // let gmaxRad: number;
+    // let gmaxRad = angle_between_v(rotationCenterZone, polygonPoints3d[onePointNumb]);
+
+    // gmaxRad += 1;
     //---------------------------------------------------------------------------------------
     // DEGREE GRID
     //---------------------------------------------------------------------------------------

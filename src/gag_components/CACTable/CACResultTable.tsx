@@ -182,7 +182,7 @@ interface IStatisticsDataTableDIR {
 
 
     { field: 'selectedD', headerName: 'd', type: 'number', width: 25},
-    { field: 'gridN', headerName: 'N', type: 'number', width: 25},
+    { field: 'gridN', headerName: 'gridN', type: 'number', width: 25},
 
     
 

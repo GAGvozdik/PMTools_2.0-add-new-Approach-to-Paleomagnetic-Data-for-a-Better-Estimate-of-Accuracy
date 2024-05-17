@@ -86,6 +86,7 @@ export interface IDirData extends IObjectKeys {
     q?: number | null | undefined;
     dir_number?: number | null | undefined;
     selectedD?: number | null | undefined;
+    gridN?: number | null | undefined;
     comment: string;
     demagType: "thermal" | "alternating field" | undefined;
   }[];
