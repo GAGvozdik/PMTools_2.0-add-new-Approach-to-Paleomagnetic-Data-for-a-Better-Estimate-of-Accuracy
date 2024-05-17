@@ -23,8 +23,10 @@ import {
     lambertMass,
     to_center,
     points_dist_2d,
+    points_dist,
     getViewBoxSize,
-    getPointSize
+    getPointSize,
+    angle_between_v
 } from "../gag_functions";
 
 
@@ -165,20 +167,35 @@ export function ZoomedLambertGraph({
     }
 
     let polygonPoints2d = poly_contour(input, [rotationCenterZone[0], rotationCenterZone[1]]);
-    let polygonPoints3d = [];
+    let polygonPoints3d: number[][] = [];
 
     for (let i = 0; i < polygonPoints2d.length; i++) {
-        polygonPoints3d.push([polygonPoints2d[i][0], polygonPoints2d[i][1], 1 ]);
+        polygonPoints3d.push([polygonPoints2d[i][0], polygonPoints2d[i][1], 1 - polygonPoints2d[i][0] * polygonPoints2d[i][0] - polygonPoints2d[i][1] * polygonPoints2d[i][1]]);
     }
 
     let polygonPoints = make_coords(polygonPoints3d);
 
     let maxRad = -1;
-    for (let i = 0; i < input.length; i++) {
-        if (points_dist_2d(rotationCenterZone, input[i]) > maxRad) {
-            maxRad = points_dist_2d(rotationCenterZone, input[i]);
+    let onePointNumb = -1;
+    for (let i = 0; i < polygonPoints3d.length; i++) {
+        if (points_dist(rotationCenterZone, polygonPoints3d[i]) > maxRad) {
+            onePointNumb = i;
+            maxRad = points_dist(rotationCenterZone, polygonPoints3d[i]);
         }
     }
+    
+
+    // maxRad
+
+
+    // let maxRPt: number[] = rotationCenterZone;
+    // if (onePointNumb != -1){
+    //     maxRPt = polygonPoints3d[onePointNumb];
+
+    // }
+    
+
+    let gmaxRad: number = angle_between_v(rotationCenterZone, polygonPoints3d[onePointNumb]);
 
     //---------------------------------------------------------------------------------------
     // DEGREE GRID
@@ -288,6 +305,7 @@ export function ZoomedLambertGraph({
                 />
             ))}    
      
+
             {/* Истинное направление по фишеру (удалю когда сравню результаты) */}
             <Dot 
                 x={to_center(meanDir, meanDir)[0]} 
@@ -311,6 +329,16 @@ export function ZoomedLambertGraph({
                 strokeWidth={alphaCircleWidth} 
                 strokeDasharray={"0.01px, 0.003px"}
             />
+
+
+            {/* Круг альфа 95
+            <polyline 
+                points={ make_coords(PlotCircle(maxRPt, 1, 90)) } 
+                stroke={ "red" }
+                fill={'none'}
+                strokeWidth={alphaCircleWidth} 
+                strokeDasharray={"0.01px, 0.003px"}
+            /> */}
 
             {/* Истинное направление по Хохлову */}
             <Dot 

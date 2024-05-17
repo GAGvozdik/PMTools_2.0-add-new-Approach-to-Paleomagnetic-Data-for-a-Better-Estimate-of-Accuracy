@@ -345,7 +345,7 @@ export function points_dist(p1:number[], p2:number[]) {
 
 export function angle_between_v(v1: number[], v2: number[])
 {
-    let angle;
+    let angle: number;
     angle = Math.acos( (v1[0] * v2[0] + v1[1] * v2[1] + v1[2] * v2[2]) / ( vector_length(v1) * vector_length(v2) ) );
 
     if (angle > 180) { angle -= 180; }
@@ -699,6 +699,8 @@ export function convexHull(points: [number, number][]): [number, number][] {
 }
 
 export function points_dist_2d(v1: number[], v2: number[]) { return Math.sqrt( (v1[0] - v2[0]) * (v1[0] - v2[0]) + (v1[1] - v2[1]) * (v1[1] - v2[1]) ); }
+
+export function points_dist_3d(v1: number[], v2: number[]) { return Math.sqrt( (v1[0] - v2[0]) * (v1[0] - v2[0]) + (v1[1] - v2[1]) * (v1[1] - v2[1]) + (v1[2] - v2[2]) * (v1[2] - v2[2]) ); }
 
 export function v_len_2d(v: number[]) { return Math.sqrt( v[0] * v[0] + v[1] * v[1] ); }
 

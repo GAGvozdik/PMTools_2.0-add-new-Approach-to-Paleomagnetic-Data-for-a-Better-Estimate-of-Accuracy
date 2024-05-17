@@ -119,7 +119,7 @@ export function Khokhlov_Gvozdik() {
 
 	const [angle_list, setAngleList] = useState<number[]>([]);
 
-	const [RZ, setRZ] = useState<number>(999);
+	// const [RZ, setRZ] = useState<number>(999);
 
 
 
@@ -202,32 +202,16 @@ export function Khokhlov_Gvozdik() {
           dispatch(setCurrentDIRid(0));
         }
         const dirID = currentDataDIRid || 0;
-        
-        
-        // dirStatData.Interpretations.lat = 99;
-
-
-        // dirStatData[dirID].q=90;
-
-        // // Найти нужный объект в массиве interpretations (например, по id)
-
-        // let interpretationToUpdate = dirStatData[dirID];
-
           
         let interpretationToUpdate = { ...dirStatData[dirID] };
-    
-
-    
 
         const output = interpretationToUpdate.interpretations.map((direction, index) => {
-
-
     
             return {
                 ...direction, 
                 lat: center_zone[0], 
                 lon: center_zone[1], 
-                RZ:RZ, 
+                // RZ:RZ, 
                 alpha95:alpha95, 
                 PCaPC:PCaPCString, 
                 q:selectedP, 
@@ -238,25 +222,6 @@ export function Khokhlov_Gvozdik() {
         });
 
         interpretationToUpdate.interpretations = output;
-    
-
-                // Проверка, найден ли объект
-
-        // Изменить значение параметра q
-        console.log('output-------------------');
-        console.log(output);
-        console.log(dirStatData[dirID]);
-        console.log('output-------------------');
-        
-        // console.log(interpretationToUpdate.interpretations[0]);
-
-        // interpretationToUpdate.interpretations[0].q = 44;
-
-
-        // 
-
-
-
 
         setDataToShow(interpretationToUpdate);
       } else setDataToShow(null);
@@ -293,7 +258,7 @@ export function Khokhlov_Gvozdik() {
     const getData = () => {
         
       
-        setRZ(RZ + 1);
+        // setRZ(RZ + 1);
 
 
         // dataToShow.name
@@ -739,13 +704,10 @@ export function Khokhlov_Gvozdik() {
 
 
     // TODO 
-    // change parameters change const rows data
-    // drop of website when routing on DIR page sometimes!!!
-    // change data in result table
-    // при переходе на страницу cac происходит расчет недостающих данных из табооицы, это надо исправить, если оно грузит систему
+
     // debug panel
     // rotate grid
-    // result table
+    // result table ra a95 lat lon N
     // fix zoom graph 
     // margin between cacfisher and debug
 
@@ -753,7 +715,7 @@ export function Khokhlov_Gvozdik() {
     // add graph with find points
     // select points dont work
     // fix size of fisher graph
-
+    // del cac reducer
 
     // button on main window
     // tooltips
