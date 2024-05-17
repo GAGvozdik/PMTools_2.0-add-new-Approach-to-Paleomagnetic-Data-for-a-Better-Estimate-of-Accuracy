@@ -327,13 +327,9 @@ export function Khokhlov_Gvozdik() {
 
         
         dispatch(setStatisticsMode('fisher'));
-    
-        
 
-
-
-        dirStatData[-1].lat = 99;
-        dirStatData[0].lat = 99;
+        // dirStatData[-1].lat = 99;
+        // dirStatData[0].lat = 99;
 
 
     };
@@ -802,28 +798,16 @@ export function Khokhlov_Gvozdik() {
 
                     <CACTable dataToShow={dataToShow}/> 
 
-                {/* <CACResTable dataToShow={dataToShow}/>   */}
-
-
-            {/* <div className={styles.table2_container + ' ' + styles.commonContainer}>
-
-            </div> */}
-
-
-
 
                 {/* for debug or results*/}
 
 
-       
-
                     {isCACDebugVisible ? (
 
+                            <>
+                                <CACResTable dataToShow={dataToShow}/>  
+                            </>
 
-                            <CACResTable 
-                                dataToShow={dataToShow}
-                        
-                            />  
                             // selectedD, apc, selectedP, dir_number
 
                         ) : (

@@ -177,12 +177,12 @@ export function ZoomedLambertGraph({
 
     let maxRad = -1;
     let onePointNumb = -1;
-    for (let i = 0; i < polygonPoints3d.length; i++) {
-        if (points_dist(rotationCenterZone, polygonPoints3d[i]) > maxRad) {
-            onePointNumb = i;
-            maxRad = points_dist(rotationCenterZone, polygonPoints3d[i]);
-        }
-    }
+    // for (let i = 0; i < polygonPoints3d.length; i++) {
+    //     if (points_dist(rotationCenterZone, polygonPoints3d[i]) > maxRad) {
+    //         onePointNumb = i;
+    //         maxRad = points_dist(rotationCenterZone, polygonPoints3d[i]);
+    //     }
+    // }
     
 
     // maxRad
@@ -195,7 +195,7 @@ export function ZoomedLambertGraph({
     // }
     
 
-    let gmaxRad: number = angle_between_v(rotationCenterZone, polygonPoints3d[onePointNumb]);
+    // let gmaxRad: number = angle_between_v(rotationCenterZone, polygonPoints3d[onePointNumb]);
 
     //---------------------------------------------------------------------------------------
     // DEGREE GRID

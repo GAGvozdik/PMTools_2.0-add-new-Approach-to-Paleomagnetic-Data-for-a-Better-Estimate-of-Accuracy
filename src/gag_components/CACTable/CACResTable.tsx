@@ -10,7 +10,7 @@ import {
 import CACResultTable from './CACResultTable';
 
 interface ITables {
-  dataToShow: IDirData | null;
+  dataToShow?: IDirData | null;
   lat?: number | null | undefined;
   lon?: number | null | undefined;
   RZ?: number | null | undefined;
@@ -38,31 +38,16 @@ const CACResTable: FC<ITables> = ({ dataToShow, lat, lon, RZ, alpha95, PCaPC, q,
 
   useEffect(() => {
 
-    if (interpretations == null) {console.log('----------------');}
-    else if (interpretations){
-      console.log('+++++++++++++++++++++++');
-      console.log(interpretations[0].Igeo);
-  
-      // interpretations[0].d = 10;
-    }
-
 
     if (currentFileInterpretations && currentFileInterpretations.length) 
       {
-        console.log('htrshtsr');
-
-        console.log(currentFileInterpretations[0].Igeo);
-
-
-        // const m :StatisitcsInterpretationFromDIR = null;
 
 
         setInterpretations(currentFileInterpretations);
       }
     else if (currentInterpretation && currentInterpretation != null) 
       {
-        currentInterpretation.d=66;
-        console.log('cscscs');
+
         setInterpretations([currentInterpretation])
       }
 
