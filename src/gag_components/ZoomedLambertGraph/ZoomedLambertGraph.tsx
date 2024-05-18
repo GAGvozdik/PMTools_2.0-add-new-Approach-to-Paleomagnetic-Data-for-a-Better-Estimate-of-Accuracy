@@ -10,10 +10,15 @@ import { useAppDispatch, useAppSelector } from '../../services/store/hooks';
 import { setCurrentDIRid } from '../../services/reducers/parsedData';
 // import Graphs from '../pages/DIRPage/Graphs';
 // import { Rumbs } from "./rumbs";
+import InterpretationSetter from '../../../src/pages/DIRPage/InterpretationSetter';
 import { DegreeGrid } from "./degreeGrid";
 
 import styles from "./ZoomedLabertGraph.module.scss" 
-
+import { 
+    addInterpretation, 
+    setStatisticsMode, 
+    showSelectionInput,
+  } from '../../services/reducers/dirPage';
 import {
     RotateAroundV,
     PlotCircle,
@@ -51,6 +56,7 @@ interface HGGraph {
     showGrid: boolean,
     showDegreeGrid: boolean,
     showPolygon: boolean,
+    setRZ: React.Dispatch<React.SetStateAction<number>>;
 }
 
 
@@ -66,7 +72,8 @@ export function ZoomedLambertGraph({
     polygonColor,
     showGrid,
     showDegreeGrid,
-    showPolygon
+    showPolygon,
+    setRZ
 }: HGGraph) {
 
 
@@ -90,6 +97,17 @@ export function ZoomedLambertGraph({
     let alphaCircleWidth = 1.5 * circlesRadius;
 
 
+    let gmaxRad: number = 888;
+
+    useEffect(() => {
+        // Логика для вычисления результатов 2 на основе calculationResult1
+        
+        setRZ(gmaxRad);
+      }, [gmaxRad, centerZone]);
+
+    // setRZ(gmaxRad);
+
+
 
     // to see all sphere
     // fullViewBoxSize = '-0.5 -0.5 1 1';
@@ -98,48 +116,49 @@ export function ZoomedLambertGraph({
     // viewBoxSize = '-1 -1 2 2';
 
 
-    const theme = useTheme();
-    const dispatch = useAppDispatch();
+    // const theme = useTheme();
+    // const dispatch = useAppDispatch();
 
-    let { dirStatData, currentDataDIRid } = useAppSelector(state => state.parsedDataReducer);
-    const [dataToShow, setDataToShow] = useState<IDirData | null>(null);
-
-
-    useEffect(() => {
+    // let { dirStatData, currentDataDIRid } = useAppSelector(state => state.parsedDataReducer);
+    // const [dataToShow, setDataToShow] = useState<IDirData | null>(null);
 
 
-        if (dirStatData && dirStatData.length > 0) {
-            if (!currentDataDIRid) {
-              dispatch(setCurrentDIRid(0));
-            }
+    // useEffect(() => {
+
+
+    //     if (dirStatData && dirStatData.length > 0) {
+    //         if (!currentDataDIRid) {
+    //           dispatch(setCurrentDIRid(0));
+    //         }
 
             
-        let dirID = currentDataDIRid || 0;
+    //     let dirID = currentDataDIRid || 0;
           
-        let interpretationToUpdate = { ...dirStatData[dirID] };
+    //     let interpretationToUpdate = { ...dirStatData[dirID] };
 
-        let output = interpretationToUpdate.interpretations.map((direction) => {
+    //     let output = interpretationToUpdate.interpretations.map((direction) => {
     
-            return {
-                ...direction, 
-                RZ:99, 
+    //         return {
+    //             ...direction, 
+    //             RZ:99, 
 
-            };
+    //         };
           
-        });
+    //     });
 
-        interpretationToUpdate.interpretations = output;
+    //     interpretationToUpdate.interpretations = output;
 
-        setDataToShow(interpretationToUpdate);
-
-
-        console.log('grdgggggggggg');
-        console.log(interpretationToUpdate);
-
-    } else setDataToShow(null);
+    //     setDataToShow(interpretationToUpdate);
 
 
-    }, []);
+    //     console.log('grdgggggggggg');
+    //     console.log(interpretationToUpdate);
+
+    // } else setDataToShow(null);
+    // dispatch(setStatisticsMode('fisher'));
+
+
+    // }, [dirStatData]);
 
   
 
@@ -242,10 +261,7 @@ export function ZoomedLambertGraph({
         maxRPt = polygonPoints3d[onePointNumb];
 
     }
-    let gmaxRad: number = angle_between_v(rotationCenterZone, maxRPt);
-
-
-
+    gmaxRad = angle_between_v(rotationCenterZone, maxRPt) * 180 / Math.PI;
 
 
     // if (gmaxRad > 180) { gmaxRad -= 180; }
@@ -305,7 +321,7 @@ export function ZoomedLambertGraph({
     
     return (
         <svg className={styles.graph_interface} viewBox={ fullViewBoxSize }>
- 
+            {/* <InterpretationSetter dataToShow={dataToShow} /> */}
             {/* Градусная сетка */}
             { showDegreeGrid && 
                 <DegreeGrid
@@ -360,9 +376,36 @@ export function ZoomedLambertGraph({
                     strokeWidth={0}
                     settings={dotSettings}
                 />
-            ))}    
-     
+            ))}  
 
+
+            {/* Точка max rad */}
+            <Dot 
+                x={maxRPt[0]} 
+                y={maxRPt[1]} 
+                r={circlesRadius * 4}
+                id={'1'} 
+                type={'cac'}
+                annotation={{id: '', label: ''}}
+                fillColor={"black"}
+                strokeColor={'green'}
+                strokeWidth={0}
+                settings={dotSettings}
+            />
+     
+            <Dot 
+                x={maxRPt[0]} 
+                y={maxRPt[1]} 
+                r={circlesRadius * 2.5}
+                id={'1'} 
+                type={'cac'}
+                annotation={{id: '', label: ''}}
+                fillColor={"white"}
+                strokeColor={'green'}
+                strokeWidth={0}
+                settings={dotSettings}
+            />
+     
             {/* Истинное направление по фишеру (удалю когда сравню результаты) */}
             <Dot 
                 x={to_center(meanDir, meanDir)[0]} 

@@ -55,6 +55,9 @@ const rawStatisticsDIRToInterpretation = (
     q: selectedDirections[0].q, 
     d: selectedDirections[0].selectedD, 
     gridN: selectedDirections[0].gridN, 
+    alpha95Square: selectedDirections[0].alpha95Square,
+    zoneSquare: selectedDirections[0].zoneSquare,
+
 
     comment,
     demagType,

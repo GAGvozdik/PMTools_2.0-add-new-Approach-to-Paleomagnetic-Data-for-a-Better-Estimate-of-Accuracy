@@ -37,6 +37,9 @@ interface IStatisticsDataTableDIR {
   dir_number?: number | null;
   selectedD?: number | null; 
   gridN?: number | null;
+  alpha95Square?: number | null;
+  zoneSquare?: number | null;
+
 };
 
 // interface IStatisticsDataTableDIR {
@@ -175,6 +178,8 @@ interface IStatisticsDataTableDIR {
     { field: 'RZ', headerName: 'RZ', type: 'number', width: 40},
 
     { field: 'alpha95', headerName: 'α95', type: 'number', width: 40},
+    { field: 'alpha95Square', headerName: 'Sα95', type: 'number', width: 40},
+    { field: 'zoneSquare', headerName: 'zoneSquare', type: 'number', width: 40},
 
     { field: 'PCaPC', headerName: 'PC/aPC', type: 'string', width: 60},
 
@@ -233,7 +238,9 @@ interface IStatisticsDataTableDIR {
         PCaPC, 
         q, 
         gridN, 
-        d
+        d,
+        alpha95Square,
+        zoneSquare
       } = statistics;
 
 
@@ -259,6 +266,8 @@ interface IStatisticsDataTableDIR {
         q: q,
         selectedD:d,
         gridN:gridN,
+        alpha95Square:alpha95Square, 
+        zoneSquare:zoneSquare,
 
       };
     }).reverse();

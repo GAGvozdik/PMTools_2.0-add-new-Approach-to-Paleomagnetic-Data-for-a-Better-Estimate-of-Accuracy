@@ -80,6 +80,8 @@ export function Khokhlov_Gvozdik() {
     const [selectedNumber, setSelectedNumber] = useState<number>(10000);
 
     const [alpha95, setAlpha95] = useState<number>(0);
+    const [alpha95Square, setAlpha95Square] = useState<number>(0);
+    const [zoneSquare, setZoneSquare] = useState<number>(0);
     const [sred_dir, setSredDir] = useState<number[]>([0,0,1]);
 
 
@@ -122,7 +124,7 @@ export function Khokhlov_Gvozdik() {
 
 	const [angle_list, setAngleList] = useState<number[]>([]);
 
-	// const [RZ, setRZ] = useState<number>(999);
+	const [RZ, setRZ] = useState<number>(999);
 
 
 
@@ -216,8 +218,11 @@ export function Khokhlov_Gvozdik() {
                 ...direction, 
                 lat: center_zone[0], 
                 lon: center_zone[1], 
-                RZ:999, 
+                RZ:RZ, 
                 alpha95:alpha95, 
+                alpha95Square:alpha95Square, 
+                zoneSquare:zoneSquare, 
+                
                 PCaPC:PCaPCString, 
                 q:selectedP, 
                 selectedD:selectedD, 
@@ -246,7 +251,8 @@ export function Khokhlov_Gvozdik() {
         PCaPCString, 
         selectedP, 
         selectedNumber, 
-        alpha95
+        alpha95,
+        RZ
     ]);
   
 
@@ -350,6 +356,9 @@ export function Khokhlov_Gvozdik() {
 
         setSredDir(fisherStat(dir_list)[0]);
 
+        setZoneSquare(2 * Math.PI * (1 - Math.cos(RZ * Math.PI / 180)));
+        // setZoneSquare(2 * Math.PI * (1 - Math.cos(RZ)));
+        // setZoneSquare((grid_points.length / selectedNumber) * 4 * Math.PI);
 
         dispatch(setStatisticsMode('fisher'));
 
@@ -396,8 +405,10 @@ export function Khokhlov_Gvozdik() {
     // fisher stat
     //-----------------------------------------------------------------------
     useEffect(() => {
-        
-        setAlpha95(fisherStat(dir_list)[1]);
+        let a95:number = fisherStat(dir_list)[1];
+        setAlpha95(a95);
+        setAlpha95Square( 2 * Math.PI * (1 - Math.cos(a95 * Math.PI / 180)));
+
         // setSredDir(fisherStat(dir_list)[0]);
 
     }, [dir_list]);
@@ -457,6 +468,9 @@ export function Khokhlov_Gvozdik() {
         center_zone[2] += grid_points[i][2];
     }
     center_zone = NormalizeV(center_zone);
+
+
+    
 
     //---------------------------------------------------------------------------------------
     // polygon of zone and max radius calculation
@@ -789,6 +803,7 @@ export function Khokhlov_Gvozdik() {
                         showGrid={isvisgrid}
                         showDegreeGrid={degree_grid_isvis}
                         showPolygon={isvis}
+                        setRZ={setRZ}
                     />
                 </div>
 
@@ -843,7 +858,8 @@ export function Khokhlov_Gvozdik() {
 
                         ) : (
                         <div className={styles.table2_container + ' ' + styles.commonContainer}>
-                            <h3>Debug panel</h3>
+                            <h3>Debug panel {RZ} </h3>
+                            
 
                             <div className={styles.debugItem1}>
                                 <button className={styles.button} onClick={generateRandomNumbers}>Generate Random Numbers</button>

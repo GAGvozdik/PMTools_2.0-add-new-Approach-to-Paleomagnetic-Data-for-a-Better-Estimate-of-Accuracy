@@ -87,6 +87,10 @@ export interface IDirData extends IObjectKeys {
     dir_number?: number | null | undefined;
     selectedD?: number | null | undefined;
     gridN?: number | null | undefined;
+    alpha95Square?: number | null | undefined,
+    zoneSquare?: number | null | undefined,
+
+
     comment: string;
     demagType: "thermal" | "alternating field" | undefined;
   }[];
@@ -164,6 +168,9 @@ export type StatisitcsInterpretationFromDIR = {
   PCaPC?: string | null;
   q?: number | null;
   gridN?: number | null;
+  alpha95Square?: number | null | undefined,
+  zoneSquare?: number | null | undefined,
+
 
 
 };
