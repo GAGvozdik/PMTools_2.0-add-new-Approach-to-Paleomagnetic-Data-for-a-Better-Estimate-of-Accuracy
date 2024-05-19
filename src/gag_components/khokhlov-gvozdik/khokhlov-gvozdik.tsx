@@ -35,6 +35,7 @@ import {
     get_quantiles,
     DekVgeo,
     get_perp,
+    GridVdek
    
     } from "../gag_functions";
 
@@ -216,8 +217,8 @@ export function Khokhlov_Gvozdik() {
     
             return {
                 ...direction, 
-                lat: center_zone[0], 
-                lon: center_zone[1], 
+                lat: DekVgeo(center_zone)[0], 
+                lon: DekVgeo(center_zone)[1],
                 RZ:RZ, 
                 alpha95:alpha95, 
                 alpha95Square:alpha95Square, 
@@ -322,23 +323,13 @@ export function Khokhlov_Gvozdik() {
                 if (selectedDirectionsIDs != null){
                     for ( var j = 0; j < selectedDirectionsIDs.length; j ++ ) { 
                         if (idList[i] == selectedDirectionsIDs[j]){
-                            if (dgeoList[i] > 180){
-                                paleo_data = GeoVdek(dgeoList[i] - 360, igeoList[i]);
-                            }
-                            else{
-                                paleo_data = GeoVdek(dgeoList[i], igeoList[i]);
-            
-                            }
-                            // paleo_data = NormalizeV([-1 + getRandomfloat(0, 0.2), -1 + getRandomfloat(0, 0.2), -1  + getRandomfloat(0, 0.2)]);
-                            // console.log(GeoVdek(dgeoList[i], igeoList[i]));
+
+                            paleo_data = NormalizeV(GeoVdek(igeoList[i], dgeoList[i]));
+
                             // НУЖНО ЛИ НОРМАЛИЗОВЫВАТЬ???
-                            
-                            // console.log(Math.pow(paleo_data[0] * paleo_data[0] + paleo_data[1] * paleo_data[1] + paleo_data[2] * paleo_data[2], 0.5));
-                            if (paleo_data[0] == 1 && paleo_data[1] == 1 && paleo_data[2] == 1){
-                            }
-                            else {
-                                dir_list.push([paleo_data[0], paleo_data[1], paleo_data[2]]);
-                            }
+
+                            dir_list.push([paleo_data[0], paleo_data[1], paleo_data[2]]);
+
                             
                         }
                     }
@@ -435,7 +426,7 @@ export function Khokhlov_Gvozdik() {
         x = (i * phi - Math.round(i * phi)) * 360;
         y = (i / points_numb - Math.round(i / points_numb)) * 360;
 
-        m = GeoVdek(x, y);
+        m = GridVdek(x, y);
 
 
         for (var j = 0; j < dir_list.length; j++ )

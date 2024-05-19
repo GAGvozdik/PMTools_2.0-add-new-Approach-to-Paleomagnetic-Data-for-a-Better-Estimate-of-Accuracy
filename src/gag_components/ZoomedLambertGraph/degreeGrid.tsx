@@ -26,12 +26,18 @@ import {
     GeoVdek,
     cutParEnd,
     cutMerEnd,
+    RotateAroundZ
 
 } from "../gag_functions";
 import { Axis, Data, Dot } from "../../components/Common/Graphs";
 import {PointsWithLabels} from "./pointsWithLabels";
+import { PlaneData, DotSettings, DotType} from "../../utils/graphs/types";
 
-
+const dotSettings: DotSettings = {
+    annotations: false,
+    tooltips: false,
+    // Другие свойства
+  };
 interface degreeGraticules {
     viewBoxSize: string,
     meridianCount: number,
@@ -87,23 +93,28 @@ export function DegreeGrid({
 
     let merTicksSift: number = width / 25;
 
-    let point = [1, 0, 0];
+    let point = [1.001, 0, 0];
 
     let centeredMeridian: number[][] = [];
 
     for (let i = 0; i < meridianCount / 2; i++) {
 
 
-        point = RotateAroundV(point, [0, 1, 0], 360 / meridianCount );
+        point = RotateAroundZ(point, 360 / meridianCount );
+
+        
         centeredMeridian = PlotArcInBox(to_center(point, meanDir), 90, width, 200);
-       
+  
+        console.log('----------');
+        console.log(i, DekVgeo(centeredMeridian[0]));
+        // console.log(i, DekVgeo(centeredMeridian[-1]));
         // слабое место. здесь происходит вылет, без ошибки если убрать это условие, не знаю почему
         if (centeredMeridian.length > 3){
             
             // разварачиваю массивы с точками меридианов, чтобы нулевая точка была внизу сетки
             if (centeredMeridian[0][1] > centeredMeridian[2][1]) {
                 centeredMeridian.reverse();
-            }
+            }  
 
             // обрезаю концы параллелей и меридианов по краю рамки
             centeredMeridian = cutMerEnd(lambertMass(centeredMeridian, meanDir), width);
@@ -111,14 +122,35 @@ export function DegreeGrid({
             
             // координата конца меридиана
             let merEnd: number[] = centeredMeridian[centeredMeridian.length - 1]
+            
+            // console.log('merEnd');
+            // console.log(DekVgeo(merEnd));
 
             // координаты делений и подписи к ним
             // только внизу сетки
             if (merEnd[1] == width) {
                 
-                
+                let g: number[] = centerToBack(merEnd, meanDir);
+                // g[1] *= -1;
+                // g = RotateAroundZ(g, 180);
 
-                degreeMerLabels.push(DekVgeo(centerToBack(merEnd, meanDir)));
+                if (g[0] <= 0 && g[1] >= 0) {
+
+                    // g = RotateAroundZ(g, 0);
+                    let h: number[] = DekVgeo(g);
+                    h[1] = 450 - h[1];
+
+
+                    degreeMerLabels.push(
+                        h
+                    );
+                }
+                else {
+                    degreeMerLabels.push(
+                        DekVgeo(g)
+                    );
+                }
+
                  
                 merTicks.push(
                     [
@@ -157,7 +189,7 @@ export function DegreeGrid({
             }      
         }
     }
-
+console.log(degreeMerLabels);
 
     // делаю подписи через одну рядос с северным полюсом
 
@@ -191,7 +223,7 @@ export function DegreeGrid({
 
     for (let i = 2; i < parallelsCount / 2; i++) {
 
-        let centeredParallel: number[][] = PlotArcInBox(to_center([0, 1, 0], meanDir), i * (360 / meridianCount), width, 300);
+        let centeredParallel: number[][] = PlotArcInBox(to_center([0, 0, -1], meanDir), i * (360 / meridianCount), width, 300);
 
         if (centeredParallel.length > 5){
 
@@ -230,6 +262,11 @@ export function DegreeGrid({
     return (
         <g>
 
+
+
+
+
+
             {/* ------------------------------------------- */}
             {/* ------------------MERIDIANS---------------- */}
             {/* ------------------------------------------- */}
@@ -247,7 +284,7 @@ export function DegreeGrid({
             <PointsWithLabels
                 points={endMerCords}
                 radius={0}
-                type={"lat"}
+                type={"lon"}
                 labelsValues={degreeMerLabels}
                 fontSize={width / 12}
                 xShift={degreeMerLabelsShift[0]}
@@ -283,7 +320,7 @@ export function DegreeGrid({
             <PointsWithLabels
                 points={endParCords}
                 radius={0}
-                type={"lon"}
+                type={"lat"}
                 labelsValues={degreeParLabels}
                 fontSize={width / 12}
                 xShift={degreeParLabelsShift[0]}
@@ -313,6 +350,11 @@ export function DegreeGrid({
                 fill={'none'}
                 strokeWidth={width / 100} 
             />
+
+
+
+
+
 
         </g>
     );

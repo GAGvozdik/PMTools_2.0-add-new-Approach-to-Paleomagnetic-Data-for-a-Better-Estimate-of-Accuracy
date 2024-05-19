@@ -123,24 +123,6 @@ export function getRandomfloat(min: number, max: number) {
 
 
 
-export function GridVdek(phiAngle: number, lmbdAngle: number)
-{
-
-    // let r: number = 1;
-    // let phi: number = phiAngle * Math.PI / 180;
-    // let lmbd: number = lmbdAngle * Math.PI / 180;
-
-    // let X: number = r * Math.cos(phi) * Math.cos(lmbd);
-    // let Y: number = r * Math.cos(phi) * Math.sin(lmbd);
-    // let Z: number = r * Math.sin(phi);
-    
-    // //!!
-    // let C: number[] = RotateAroundV([X, Y, Z], [1,0,0], 90);
-
-    // return C;
-    return GeoVdek(phiAngle, lmbdAngle);
-
-}
 
 
 
@@ -412,6 +394,9 @@ export function RotateAroundV(B: number[], V: number[], angle: number)
 export function RotateAroundZ(B: number[], angle: number)
 {
     let phi = angle * Math.PI / 180;
+    if (B[0] == 0){B[0] += 0.00001}
+    if (B[1] == 0){B[1] += 0.00001}
+    if (B[2] == 0){B[2] += 0.00001}
 
     let A = [
                 [ Math.cos(phi), -Math.sin(phi), 0 ],
@@ -495,6 +480,27 @@ export function get_perp(v1: number[],v2: number[])
 
     return NormalizeV([i,j,k]);
 }
+
+
+
+export function GridVdek(phiAngle: number, lmbdAngle: number)
+{
+
+    let r: number = 1;
+    let phi: number = phiAngle * Math.PI / 180;
+    let lmbd: number = lmbdAngle * Math.PI / 180;
+
+    let X: number = r * Math.cos(phi) * Math.cos(lmbd);
+    let Y: number = r * Math.cos(phi) * Math.sin(lmbd);
+    let Z: number = r * Math.sin(phi);
+    
+    // let C: number[] = RotateAroundV([X, Y, Z], [1,0,0], 90);
+    let C: number[] = [X, Y, Z];
+
+    return C;
+
+}
+
 
 //-----------------------------------------------------------------------
 // circle plot func
@@ -609,6 +615,7 @@ export function centering(in_points: number[][], dir: number[]){
     }
 
     return res;
+    // return in_points;
 }
 
 export function make_coords(points: number[][]){
@@ -657,17 +664,18 @@ export function lineSphereIntersect(v: number[]) {
 
 export function convertToLambert(v: number[], fish_dir: number[]) {
     // let my_perp = get_perp([0, 0, 1], fish_dir);
-    return lineSphereIntersect(v);
-    // return v;
+    // return lineSphereIntersect(v);
+    return v;
 }
 
 export function lambertMass(points: number[][], fish_dir: number[]){
 
-    let result = [];
-    for (let i = 0; i < points.length; i++)
-    {
-        result.push(convertToLambert(points[i], fish_dir));
-    }
+    let result = points;
+    // let result = [];
+    // for (let i = 0; i < points.length; i++)
+    // {
+    //     result.push(convertToLambert(points[i], fish_dir));
+    // }
 
     return result;
 }
@@ -829,7 +837,10 @@ export function getViewBoxSize(dirMass: number[][], anglesMass: number[], lamber
         }
     }
 
-
+    // if (max > 0.8){max = 0.8};
+    // if (max < -0.8){max = -0.8};
+    if (padding > 0.8){padding = 0.55};
+    if (padding < -0.8){padding = -0.55};
 
     let viewBoxSize: string = String(-max - padding) + ' ';
     viewBoxSize += String(-max - padding) + ' ';
@@ -978,59 +989,87 @@ export function centerToBack(input: number[], dir: number[]){
     dir = NormalizeV(dir);
 
     if (dir[0] >= 0 && dir[1] >= 0 && dir[2] >= 0) {
-
+        point = input;
         let diryrot = RotateAroundY(dir, -angle_between_v([0, 0, 1], [dir[0], 0, dir[2]]) * 180 / Math.PI);
         let xrot = RotateAroundX(point, -angle_between_v(diryrot, [0, 0, 1]) * 180 / Math.PI);
         let yrot = RotateAroundY(xrot, angle_between_v([0, 0, 1], [dir[0], 0,dir[2]]) * 180 / Math.PI);
         point = yrot;
+        console.log(1);
+        return point;
     }
 
     if (dir[0] >= 0 && dir[1] >= 0 && dir[2] <= 0) {
-
+        point = input;
         let diryrot = RotateAroundY(dir, -(0 + angle_between_v([0, 0, 1], [dir[0], 0, dir[2]]) * 180 / Math.PI));
         let xrot = RotateAroundX(point, -angle_between_v(diryrot, [0, 0, 1]) * 180 / Math.PI);
         let yrot = RotateAroundY(xrot, (0 + angle_between_v([0, 0, 1], [dir[0], 0,dir[2]]) * 180 / Math.PI));
         point = yrot;
+        console.log(2);
+        return point;
 
     }
 
     if (dir[0] >= 0 && dir[1] <= 0 && dir[2] <= 0) {
+        point = input;
         let diryrot = RotateAroundY(dir, -(0 + angle_between_v([0, 0, 1], [dir[0], 0, dir[2]]) * 180 / Math.PI));
         let xrot = RotateAroundX(point, angle_between_v(diryrot, [0, 0, 1]) * 180 / Math.PI);
         let yrot = RotateAroundY(xrot, (0 + angle_between_v([0, 0, 1], [dir[0], 0,dir[2]]) * 180 / Math.PI));
         point = yrot;
+        console.log(3);
+        // return [1, 1, 1];
+        return point;
     }
 
     if (dir[0] >= 0 && dir[1] <= 0 && dir[2] >= 0) {
+        point = input;
         let diryrot = RotateAroundY(dir, -angle_between_v([0, 0, 1], [dir[0], 0, dir[2]]) * 180 / Math.PI);
         let xrot = RotateAroundX(point, angle_between_v(diryrot, [0, 0, 1]) * 180 / Math.PI);
         let yrot = RotateAroundY(xrot, angle_between_v([0, 0, 1], [dir[0], 0,dir[2]]) * 180 / Math.PI);
         point = yrot;
+        console.log(4);
+        // return [1, 1, 1];
+        return point;
     }
 
-    if (dir[0] <= 0 && dir[1] >= 0 && dir[2] >= 0) {
-        let diryrot = RotateAroundY(dir, angle_between_v([0, 0, 1], [dir[0], 0, dir[2]]) * 180 / Math.PI);
-        let xrot = RotateAroundX(point, -angle_between_v(diryrot, [0, 0, 1]) * 180 / Math.PI);
-        let yrot = RotateAroundY(xrot, -angle_between_v([0, 0, 1], [dir[0], 0,dir[2]]) * 180 / Math.PI);
-        point = yrot;
-    }
+                if (dir[0] <= 0 && dir[1] >= 0 && dir[2] >= 0) {
+                    point = input;
+                    let diryrot = RotateAroundY(dir, angle_between_v([0, 0, 1], [dir[0], 0, dir[2]]) * 180 / Math.PI);
+                    let xrot = RotateAroundX(point, -angle_between_v(diryrot, [0, 0, 1]) * 180 / Math.PI);
+                    let yrot = RotateAroundY(xrot, -angle_between_v([0, 0, 1], [dir[0], 0,dir[2]]) * 180 / Math.PI);
+                    point = yrot;
+                    console.log(5);
+                    // return [0, 0, 1];
+                    return point;
+                }
     if (dir[0] <= 0 && dir[1] <= 0 && dir[2] >= 0) {
+        point = input;
         let diryrot = RotateAroundY(dir, angle_between_v([0, 0, 1], [dir[0], 0, dir[2]]) * 180 / Math.PI);
         let xrot = RotateAroundX(point, angle_between_v(diryrot, [0, 0, 1]) * 180 / Math.PI);
         let yrot = RotateAroundY(xrot, -angle_between_v([0, 0, 1], [dir[0], 0,dir[2]]) * 180 / Math.PI);
         point = yrot;
+        console.log(6);
+        // return [1, 1, 1];
+        return point;
     }
-    if (dir[0] <= 0 && dir[1] >= 0 && dir[2] <= 0) {
-        let diryrot = RotateAroundY(dir, (0 + angle_between_v([0, 0, 1], [dir[0], 0, dir[2]]) * 180 / Math.PI));
-        let xrot = RotateAroundX(point, -angle_between_v(diryrot, [0, 0, 1]) * 180 / Math.PI);
-        let yrot = RotateAroundY(xrot, -(0 + angle_between_v([0, 0, 1], [dir[0], 0,dir[2]]) * 180 / Math.PI));
-        point = yrot;
-    }
+                if (dir[0] <= 0 && dir[1] >= 0 && dir[2] <= 0) {
+                    point = input;
+                    let diryrot = RotateAroundY(dir, (0 + angle_between_v([0, 0, 1], [dir[0], 0, dir[2]]) * 180 / Math.PI));
+                    let xrot = RotateAroundX(point, -angle_between_v(diryrot, [0, 0, 1]) * 180 / Math.PI);
+                    let yrot = RotateAroundY(xrot, -(0 + angle_between_v([0, 0, 1], [dir[0], 0,dir[2]]) * 180 / Math.PI));
+                    point = yrot;
+                    console.log(7);
+                    
+                    return point; 
+                }
     if (dir[0] <= 0 && dir[1] <= 0 && dir[2] <= 0) {
+        point = input;
         let diryrot = RotateAroundY(dir, (0 + angle_between_v([0, 0, 1], [dir[0], 0, dir[2]]) * 180 / Math.PI));
         let xrot = RotateAroundX(point, angle_between_v(diryrot, [0, 0, 1]) * 180 / Math.PI);
         let yrot = RotateAroundY(xrot, -(0 + angle_between_v([0, 0, 1], [dir[0], 0,dir[2]]) * 180 / Math.PI));
         point = yrot;
+        console.log(8);
+        
+        return point;
     }
 
     return point;

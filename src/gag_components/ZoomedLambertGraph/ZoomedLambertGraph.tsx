@@ -34,13 +34,14 @@ import {
     getPointSize,
     angle_between_v,
     vector_length,
+    centerToBack
 } from "../gag_functions";
 
 import { DataGridDIRFromDIRRow, IDirData } from "../../../src/utils/GlobalTypes";
 
 const dotSettings: DotSettings = {
-    annotations: true,
-    tooltips: true,
+    annotations: false,
+    tooltips: false,
     // Другие свойства
   };
 
@@ -83,9 +84,13 @@ export function ZoomedLambertGraph({
 
 
     dirList = centering(dirList, meanDir);
-    let viewBoxSize = getViewBoxSize(dirList, angleList, meanDir, 0.1);
+    // let viewBoxSize = getViewBoxSize(dirList, angleList, meanDir, 1.0);
+    let viewBoxSize = getViewBoxSize(dirList, angleList, meanDir, 0.15);
+    console.log('viewBoxSize');
+    console.log(viewBoxSize);
     let fullViewBoxSize = viewBoxSize;
     // let fullViewBoxSize = getViewBoxSize(dirList, angleList, meanDir, 0);
+    // fullViewBoxSize = getViewBoxSize(dirList, angleList, meanDir, 0.6);
 
     let parallelsCount = 36;
     let meridianCount = 36;
@@ -108,6 +113,11 @@ export function ZoomedLambertGraph({
     // setRZ(gmaxRad);
 
 
+      
+      
+
+
+      
 
     // to see all sphere
     // fullViewBoxSize = '-0.5 -0.5 1 1';
@@ -115,52 +125,6 @@ export function ZoomedLambertGraph({
     // fullViewBoxSize = '-1 -1 2 2';
     // viewBoxSize = '-1 -1 2 2';
 
-
-    // const theme = useTheme();
-    // const dispatch = useAppDispatch();
-
-    // let { dirStatData, currentDataDIRid } = useAppSelector(state => state.parsedDataReducer);
-    // const [dataToShow, setDataToShow] = useState<IDirData | null>(null);
-
-
-    // useEffect(() => {
-
-
-    //     if (dirStatData && dirStatData.length > 0) {
-    //         if (!currentDataDIRid) {
-    //           dispatch(setCurrentDIRid(0));
-    //         }
-
-            
-    //     let dirID = currentDataDIRid || 0;
-          
-    //     let interpretationToUpdate = { ...dirStatData[dirID] };
-
-    //     let output = interpretationToUpdate.interpretations.map((direction) => {
-    
-    //         return {
-    //             ...direction, 
-    //             RZ:99, 
-
-    //         };
-          
-    //     });
-
-    //     interpretationToUpdate.interpretations = output;
-
-    //     setDataToShow(interpretationToUpdate);
-
-
-    //     console.log('grdgggggggggg');
-    //     console.log(interpretationToUpdate);
-
-    // } else setDataToShow(null);
-    // dispatch(setStatisticsMode('fisher'));
-
-
-    // }, [dirStatData]);
-
-  
 
     // if (angleList[0] == 0) {
     //   return (
@@ -274,25 +238,26 @@ export function ZoomedLambertGraph({
     // DEGREE GRID
     //---------------------------------------------------------------------------------------
     
-    let degreeGrid = [];
+    let degreeGrid: number[][][] = [];
 
-    let point = [1, 0, 0];
+    let point = [0, 0, 1];
 
 
     for (let i = 0; i < meridianCount; i++) {
         point = RotateAroundV(point, [0, 1, 0], 360/ meridianCount );
+        point = RotateAroundV(point, [1, 0, 0], 89);
         const meridian = lambertMass(centering(PlotCircle(point, 90, 90), meanDir), meanDir);
-        degreeGrid.push(make_coords(meridian));
+        // degreeGrid.push(meridian);
     }
 
 
-    for (let i = 0; i < parallelsCount; i++) {
-        const parallel = lambertMass(centering(PlotCircle([0, 1, 0], i * (360 / meridianCount), 90), meanDir), meanDir);
-        degreeGrid.push(make_coords(parallel));
-    }
+    // for (let i = 0; i < parallelsCount; i++) {
+    //     const parallel = lambertMass(centering(PlotCircle([0, 0, 1], i * (360 / meridianCount), 90), meanDir), meanDir);
+    //     degreeGrid.push(parallel);
+    // }
 
-    let paralel = lambertMass(PlotCircle([0, 0, 1], 90, 90), meanDir);
-    degreeGrid.push(make_coords(paralel));
+    // let paralel = lambertMass(PlotCircle([0, 1, 0], 90, 90), meanDir);
+    // degreeGrid.push(paralel);
 
     //---------------------------------------------------------------------------------------
     // RUMBS
@@ -342,9 +307,6 @@ export function ZoomedLambertGraph({
             }
 
             {/* Спиральный грид в зоне пересечения */}
-
-
-
             { showGrid && gridPointsCentered.map((gridPoints) => (
                 <Dot 
                     x={gridPoints[0]} 
@@ -354,7 +316,7 @@ export function ZoomedLambertGraph({
                     type={'cac'}
                     annotation={{id: '', label: ''}}
                     fillColor={gridColor}
-                    strokeColor={'purple'}
+                    strokeColor={gridColor}
                     strokeWidth={0}
                     settings={dotSettings}
                 />
@@ -372,7 +334,7 @@ export function ZoomedLambertGraph({
                     type={'cac'}
                     annotation={{id: '', label: ''}}
                     fillColor={"black"}
-                    strokeColor={'green'}
+                    strokeColor={"black"}
                     strokeWidth={0}
                     settings={dotSettings}
                 />
@@ -388,7 +350,7 @@ export function ZoomedLambertGraph({
                 type={'cac'}
                 annotation={{id: '', label: ''}}
                 fillColor={"black"}
-                strokeColor={'green'}
+                strokeColor={"black"}
                 strokeWidth={0}
                 settings={dotSettings}
             />
@@ -401,7 +363,7 @@ export function ZoomedLambertGraph({
                 type={'cac'}
                 annotation={{id: '', label: ''}}
                 fillColor={"white"}
-                strokeColor={'green'}
+                strokeColor={"white"}
                 strokeWidth={0}
                 settings={dotSettings}
             />
@@ -415,7 +377,7 @@ export function ZoomedLambertGraph({
                 type={'cac'}
                 annotation={{id: '', label: ''}}
                 fillColor={'red'}
-                strokeColor={'purple'}
+                strokeColor={'red'}
                 strokeWidth={0}
                 settings={dotSettings}
             />
@@ -440,6 +402,18 @@ export function ZoomedLambertGraph({
                 strokeDasharray={"0.01px, 0.003px"}
             /> */}
 
+            
+            { degreeGrid.map((line) => (
+                <polyline 
+                    points={ make_coords(line) } 
+                    stroke={ "red" }
+                    fill={'none'}
+                    strokeWidth={alphaCircleWidth} 
+                    strokeDasharray={"0.01px, 0.003px"}
+                />
+            ))}
+
+
             {/* Истинное направление по Хохлову */}
             <Dot 
                 x={rotationCenterZone[0]} 
@@ -453,6 +427,18 @@ export function ZoomedLambertGraph({
                 strokeWidth={0}
                 settings={dotSettings}
             />
+            {/* <Dot 
+                x={centerToBack(rotationCenterZone, meanDir)[0]} 
+                y={centerToBack(rotationCenterZone, meanDir)[1]} 
+                r={centerZoneRadius}
+                id={'1'} 
+                type={'cac'}
+                annotation={{id: '', label: ''}}
+                fillColor={centerZoneColor}
+                strokeColor={'purple'}
+                strokeWidth={0}
+                settings={dotSettings}
+            /> */}
 
         </svg>
     );

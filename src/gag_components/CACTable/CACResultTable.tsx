@@ -172,8 +172,8 @@ interface IStatisticsDataTableDIR {
         valueFormatter: (params: GridValueFormatterParams) => (params.value as number)?.toFixed(1)
       },
 
-    { field: 'lat', headerName: 'lat', type: 'number', width: 40},
-    { field: 'lon', headerName: 'lon', type: 'number', width: 40},
+    { field: 'lat', headerName: 'lat', type: 'string', width: 55},
+    { field: 'lon', headerName: 'lon', type: 'string', width: 55},
 
     { field: 'RZ', headerName: 'RZ', type: 'number', width: 40},
 
