@@ -126,93 +126,188 @@ export function getRandomfloat(min: number, max: number) {
 export function GridVdek(phiAngle: number, lmbdAngle: number)
 {
 
-    let r: number = 1;
-    let phi: number = phiAngle * Math.PI / 180;
-    let lmbd: number = lmbdAngle * Math.PI / 180;
+    // let r: number = 1;
+    // let phi: number = phiAngle * Math.PI / 180;
+    // let lmbd: number = lmbdAngle * Math.PI / 180;
 
-    let X: number = r * Math.cos(phi) * Math.cos(lmbd);
-    let Y: number = r * Math.cos(phi) * Math.sin(lmbd);
-    let Z: number = r * Math.sin(phi);
+    // let X: number = r * Math.cos(phi) * Math.cos(lmbd);
+    // let Y: number = r * Math.cos(phi) * Math.sin(lmbd);
+    // let Z: number = r * Math.sin(phi);
     
-    let C: number[] = RotateAroundV([X, Y, Z], [1,0,0], 90);
+    // //!!
+    // let C: number[] = RotateAroundV([X, Y, Z], [1,0,0], 90);
 
-    return C;
+    // return C;
+    return GeoVdek(phiAngle, lmbdAngle);
 
 }
 
+
+
+export function GeoVdek(phiAngle: number, lmbdAngle: number)
+{
+
+    let r: number = 1;
+    let phi: number = phiAngle;
+    let lmbd: number = lmbdAngle;
+    // let phi: number = phiAngle * Math.PI / 180;
+    // let lmbd: number = lmbdAngle * Math.PI / 180;
+
+    if (phi == 0){phi += 0.00001}
+    if (lmbd == 0){lmbd += 0.00001}
+    if (phi == 0.0){phi += 0.00001}
+    if (lmbd == 0.0){lmbd += 0.00001}
+
+    let dir: number[] = [0, -1, 0];
+
+
+    if (phi > 0 && lmbd >= 0 && lmbd <= 90) {
+        console.log(1);
+        dir = RotateAroundX(dir, -phi);
+        dir = RotateAroundZ(dir, lmbd);
+        return dir;
+    }
+
+    if (phi < 0 && lmbd >= 0 && lmbd <= 90) {
+        console.log(2);
+        dir = RotateAroundX(dir, -phi);
+        dir = RotateAroundZ(dir, lmbd);
+        return dir;
+    }
+
+    if (phi > 0 && lmbd > 90 && lmbd <= 180) {
+        console.log(3);
+        dir = RotateAroundX(dir, -phi);
+        dir = RotateAroundZ(dir, lmbd);
+        return dir;
+    }
+
+    if (phi < 0 && lmbd > 90 && lmbd <= 180) {
+        console.log(4);
+        dir = RotateAroundX(dir, -phi);
+        dir = RotateAroundZ(dir, lmbd);
+        return dir;
+    }
+
+    if (phi > 0 && lmbd > 180 && lmbd <= 270) {
+        console.log(5);
+        dir = RotateAroundX(dir, -phi);
+        dir = RotateAroundZ(dir, lmbd);
+        return dir;
+    }
+
+    if (phi < 0 && lmbd > 180 && lmbd <= 270) {
+        console.log(6);
+        dir = RotateAroundX(dir, -phi);
+        dir = RotateAroundZ(dir, lmbd);
+        return dir;
+    }
+
+    if (phi > 0 && lmbd > 270 && lmbd <= 360) {
+        console.log(7);
+        dir = RotateAroundX(dir, -phi);
+        dir = RotateAroundZ(dir, lmbd);
+        return dir;
+    }
+
+    if (phi < 0 && lmbd > 270 && lmbd <= 360) {
+        console.log(8);
+        dir = RotateAroundX(dir, -phi);
+        dir = RotateAroundZ(dir, lmbd);
+        return dir;
+    }
+
+    
+    return dir;
+};
 
 
 export function DekVgeo(point: number[])
 {
-    
-    // point = RotateAroundX(point, 90);
-    // point = RotateAroundZ(point, 90);
-    
-    // let x = point[0];
-    // let y = point[1];
-    // let z = point[2];
-
-    // let R = 1;
-    // let phi = Math.asin(z / R) * 180 / Math.PI;
-    // let lmbd = Math.atan(y / x) * 180 / Math.PI;
-
-    // return [-phi, lmbd];
 
 
     let dir: number[] = NormalizeV(point);
+
+
+    // if (dir[0] == 0){dir[0] += 0.00000001}
+    // if (dir[1] == 0){dir[1] += 0.00000001}
+    // if (dir[2] == 0){dir[2] += 0.00000001}
+
+
     let phi: number = 0;
     let lmbd: number = 90;
 
     if (dir[0] > 0 && dir[1] > 0 && dir[2] > 0) {
-        phi = angle_between_v([0, 0, 1], [dir[0], 0, dir[2]])  * 180 / Math.PI;
-        lmbd = -angle_between_v([dir[0], dir[1], dir[2]], [dir[0], 0, dir[2]]) * 180 / Math.PI;
+
+        phi = angle_between_v([dir[0], dir[1], dir[2]], [dir[0], dir[1], 0]) * 180 / Math.PI;
+        lmbd = angle_between_v([0, -1, 0], [dir[0], dir[1], 0])  * 180 / Math.PI;
+        console.log(1);
         return [phi, lmbd];
     }
 
     if (dir[0] > 0 && dir[1] > 0 && dir[2] < 0) {
-        phi = angle_between_v([0, 0, 1], [dir[0], 0, dir[2]]) * 180 / Math.PI;
-        lmbd = -angle_between_v([dir[0], dir[1], dir[2]], [dir[0], 0, dir[2]]) * 180 / Math.PI;
+
+        phi = -angle_between_v([dir[0], dir[1], dir[2]], [dir[0], dir[1], 0]) * 180 / Math.PI;
+        lmbd = angle_between_v([0, -1, 0], [dir[0], dir[1], 0]) * 180 / Math.PI;
+        console.log(2);
         return [phi, lmbd];
     }
 
     if (dir[0] > 0 && dir[1] < 0 && dir[2] > 0) {
-        phi = angle_between_v([0, 0, 1], [dir[0], 0, dir[2]]) * 180 / Math.PI;
-        lmbd = angle_between_v([dir[0], dir[1], dir[2]], [dir[0], 0, dir[2]]) * 180 / Math.PI;
+
+        phi = angle_between_v([dir[0], dir[1], dir[2]], [dir[0], dir[1], 0]) * 180 / Math.PI;
+        lmbd = angle_between_v([0, -1, 0], [dir[0], dir[1], 0]) * 180 / Math.PI;
+        console.log(3);
         return [phi, lmbd];
     }
 
     if (dir[0] > 0 && dir[1] < 0 && dir[2] < 0) {
-        phi =  angle_between_v([0, 0, 1], [dir[0], 0, dir[2]]) * 180 / Math.PI;
-        lmbd = angle_between_v([dir[0], dir[1], dir[2]], [dir[0], 0, dir[2]]) * 180 / Math.PI;
+
+        phi = -angle_between_v([dir[0], dir[1], dir[2]], [dir[0], dir[1], 0]) * 180 / Math.PI;
+        lmbd =  angle_between_v([0, -1, 0], [dir[0], dir[1], 0]) * 180 / Math.PI;
+        console.log(4);
         return [phi, lmbd];
     }
 
     if (dir[0] < 0 && dir[1] > 0 && dir[2] > 0) {
-        phi =  -angle_between_v([0, 0, 1], [dir[0], 0, dir[2]]) * 180 / Math.PI;
-        lmbd = -angle_between_v([dir[0], dir[1], dir[2]], [dir[0], 0, dir[2]]) * 180 / Math.PI;
+
+        phi = angle_between_v([dir[0], dir[1], dir[2]], [dir[0], dir[1], 0]) * 180 / Math.PI;
+        lmbd =  90 + angle_between_v([0, -1, 0], [dir[0], dir[1], 0]) * 180 / Math.PI;
+        console.log(5);
         return [phi, lmbd];
     }
 
     if (dir[0] < 0 && dir[1] > 0 && dir[2] < 0) {
-        phi = -angle_between_v([0, 0, 1], [dir[0], 0, dir[2]]) * 180 / Math.PI;
-        lmbd = -angle_between_v([dir[0], dir[1], dir[2]], [dir[0], 0, dir[2]]) * 180 / Math.PI;
+
+        phi = -angle_between_v([dir[0], dir[1], dir[2]], [dir[0], dir[1], 0]) * 180 / Math.PI;
+        lmbd = 90 + angle_between_v([0, -1, 0], [dir[0], dir[1], 0]) * 180 / Math.PI;
+        console.log(6);
         return [phi, lmbd];
     }
 
     if (dir[0] < 0 && dir[1] < 0 && dir[2] > 0) {
-        phi = -angle_between_v([0, 0, 1], [dir[0], 0, dir[2]]) * 180 / Math.PI;
-        lmbd = angle_between_v([dir[0], dir[1], dir[2]], [dir[0], 0, dir[2]]) * 180 / Math.PI;
+
+        phi = angle_between_v([dir[0], dir[1], dir[2]], [dir[0], dir[1], 0]) * 180 / Math.PI;
+        lmbd = 360 - angle_between_v([0, -1, 0], [dir[0], dir[1], 0]) * 180 / Math.PI;
+        console.log(7);
         return [phi, lmbd];
     }
 
     if (dir[0] < 0 && dir[1] < 0 && dir[2] < 0) {
-        phi = -angle_between_v([0, 0, 1], [dir[0], 0, dir[2]]) * 180 / Math.PI;
-        lmbd = angle_between_v([dir[0], dir[1], dir[2]], [dir[0], 0, dir[2]]) * 180 / Math.PI;
+
+        phi = -angle_between_v([dir[0], dir[1], dir[2]], [dir[0], dir[1], 0]) * 180 / Math.PI;
+        lmbd = 360 - angle_between_v([0, -1, 0], [dir[0], dir[1], 0]) * 180 / Math.PI;
+        console.log(8);
         return [phi, lmbd];
     }
     // TODO: if dir[0] = 0 || dir[1] == 0 ???!
+
+
     return [phi, lmbd];
+
+
 }
+
 
 export function getOcto(point: number[]){
 
@@ -256,81 +351,6 @@ export function getOcto(point: number[]){
     return 0;
 }
 
-export function GeoVdek(phiAngle: number, lmbdAngle: number)
-{
-
-    // let r: number = 1;
-    // let phi: number = phiAngle * Math.PI / 180;
-    // let lmbd: number = lmbdAngle * Math.PI / 180;
-
-    // let X: number = r * Math.cos(phi) * Math.cos(lmbd);
-    // let Y: number = r * Math.cos(phi) * Math.sin(lmbd);
-    // let Z: number = r * Math.sin(phi);
-    
-    // let C: number[] = RotateAroundV([X, Y, Z], [1,0,0], 90);
-    // return C;
-
-
-
-    let point: number[] = [0, 0, 1];
-
-
-
-
-    
-    if (phiAngle > 0 && phiAngle < 90 && lmbdAngle > -90 && lmbdAngle < 0){
-        point = RotateAroundY(point, phiAngle);
-        point = RotateAroundV(point, get_perp(point, [0, 1, 0]), -lmbdAngle);
-    }
-
-    else if (phiAngle > 90 && phiAngle < 180 && lmbdAngle > -90 && lmbdAngle < 0){
-        point = RotateAroundY(point, phiAngle);
-        point = RotateAroundV(point, get_perp(point, [0, 1, 0]), -lmbdAngle);
-    }
-
-    else if (phiAngle > 0 && phiAngle < 90 && lmbdAngle > 0 && lmbdAngle < 90){
-        point = RotateAroundY(point, phiAngle);
-        point = RotateAroundV(point, get_perp(point, [0, -1, 0]), lmbdAngle);
-    }
-
-    else if (phiAngle > 90 && phiAngle < 180 && lmbdAngle > 0 && lmbdAngle < 90){
-        point = RotateAroundY(point, phiAngle);
-        point = RotateAroundV(point, get_perp(point, [0, -1, 0]), lmbdAngle);
-    }
-
-    else if (phiAngle > -90 && phiAngle < 0 && lmbdAngle > -90 && lmbdAngle < 0){
-        point = RotateAroundY(point, phiAngle);
-        point = RotateAroundV(point, get_perp(point, [0, 1, 0]), -lmbdAngle);
-    }
-
-    else if (phiAngle > -180 && phiAngle < -90 && lmbdAngle > -90 && lmbdAngle < 0){
-        point = RotateAroundY(point, phiAngle);
-        point = RotateAroundV(point, get_perp(point, [0, -1, 0]), lmbdAngle);
-    }
-
-    else if (phiAngle > -90 && phiAngle < 0 && lmbdAngle > 0 && lmbdAngle < 90){
-        point = RotateAroundY(point, phiAngle);
-        point = RotateAroundV(point, get_perp(point, [0, -1, 0]), lmbdAngle);
-    }
-
-    else if (phiAngle > -180 && phiAngle < -90 && lmbdAngle > 0 && lmbdAngle < 90){
-        point = RotateAroundY(point, phiAngle);
-        point = RotateAroundV(point, get_perp(point, [0, -1, 0]), lmbdAngle);
-    }
-    else {
-        point = [1, 1, 1]
-    }
-    // TODO: if dir[0] = 0 || dir[1] == 0 ???!
-    // point = RotateAroundX(point, 90);
-
-    // if (phiAngle < 0){
-    //     phiAngle += 360;
-    //     let g = DekVgeo([point[0], point[1], point[2]]);
-    //     point = 
-    // }
-
-    return point;
-}
 
 
 export function vector_length(v:number[]) { return Math.sqrt( v[0] * v[0] + v[1] * v[1] + v[2] * v[2] ); }

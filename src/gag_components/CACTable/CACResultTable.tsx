@@ -178,8 +178,8 @@ interface IStatisticsDataTableDIR {
     { field: 'RZ', headerName: 'RZ', type: 'number', width: 40},
 
     { field: 'alpha95', headerName: 'α95', type: 'number', width: 40},
-    { field: 'alpha95Square', headerName: 'Sα95', type: 'number', width: 40},
-    { field: 'zoneSquare', headerName: 'zoneSquare', type: 'number', width: 40},
+    // { field: 'alpha95Square', headerName: 'Sα95', type: 'number', width: 40},
+    // { field: 'zoneSquare', headerName: 'zoneSquare', type: 'number', width: 40},
 
     { field: 'PCaPC', headerName: 'PC/aPC', type: 'string', width: 60},
 
@@ -266,8 +266,8 @@ interface IStatisticsDataTableDIR {
         q: q,
         selectedD:d,
         gridN:gridN,
-        alpha95Square:alpha95Square, 
-        zoneSquare:zoneSquare,
+        // alpha95Square:alpha95Square, 
+        // zoneSquare:zoneSquare,
 
       };
     }).reverse();

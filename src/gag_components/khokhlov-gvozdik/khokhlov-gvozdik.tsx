@@ -35,7 +35,7 @@ import {
     get_quantiles,
     DekVgeo,
     get_perp,
-    GridVdek
+   
     } from "../gag_functions";
 
 import HelpCenterOutlinedIcon from '@mui/icons-material/HelpCenterOutlined';
@@ -435,7 +435,7 @@ export function Khokhlov_Gvozdik() {
         x = (i * phi - Math.round(i * phi)) * 360;
         y = (i / points_numb - Math.round(i / points_numb)) * 360;
 
-        m = GridVdek(x, y);
+        m = GeoVdek(x, y);
 
 
         for (var j = 0; j < dir_list.length; j++ )
@@ -748,12 +748,10 @@ export function Khokhlov_Gvozdik() {
 
     // debug panel
     // rotate grid
-    // result table ra a95 lat lon N
+    // result table lat lon 
     // fix zoom graph 
     // margin between cacfisher and debug
 
-    // load file dont work
-    // add graph with find points
     // select points dont work
     // fix size of fisher graph
     // del cac reducer
