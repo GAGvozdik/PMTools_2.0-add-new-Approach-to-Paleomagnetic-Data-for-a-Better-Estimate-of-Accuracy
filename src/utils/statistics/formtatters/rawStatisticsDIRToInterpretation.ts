@@ -57,6 +57,7 @@ const rawStatisticsDIRToInterpretation = (
     gridN: selectedDirections[0].gridN, 
     alpha95Square: selectedDirections[0].alpha95Square,
     zoneSquare: selectedDirections[0].zoneSquare,
+    probability:selectedDirections[0].probability,
 
 
     comment,

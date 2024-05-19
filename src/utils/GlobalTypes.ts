@@ -89,6 +89,7 @@ export interface IDirData extends IObjectKeys {
     gridN?: number | null | undefined;
     alpha95Square?: number | null | undefined,
     zoneSquare?: number | null | undefined,
+    probability?: number | null | undefined,
 
 
     comment: string;
@@ -170,6 +171,7 @@ export type StatisitcsInterpretationFromDIR = {
   gridN?: number | null;
   alpha95Square?: number | null | undefined,
   zoneSquare?: number | null | undefined,
+  probability?: number | null | undefined,
 
 
 

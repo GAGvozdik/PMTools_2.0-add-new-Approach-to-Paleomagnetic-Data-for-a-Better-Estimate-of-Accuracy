@@ -83,6 +83,7 @@ export function Khokhlov_Gvozdik() {
     const [alpha95, setAlpha95] = useState<number>(0);
     const [alpha95Square, setAlpha95Square] = useState<number>(0);
     const [zoneSquare, setZoneSquare] = useState<number>(0);
+    const [probability, setProbability] = useState<number>(0);
     const [sred_dir, setSredDir] = useState<number[]>([0,0,1]);
 
 
@@ -228,6 +229,7 @@ export function Khokhlov_Gvozdik() {
                 q:selectedP, 
                 selectedD:selectedD, 
                 gridN:selectedNumber,
+                probability:probability
             };
           
         });
@@ -351,8 +353,12 @@ export function Khokhlov_Gvozdik() {
         // setZoneSquare(2 * Math.PI * (1 - Math.cos(RZ)));
         // setZoneSquare((grid_points.length / selectedNumber) * 4 * Math.PI);
 
+
+
+
         dispatch(setStatisticsMode('fisher'));
 
+        setProbability(Math.pow(selectedP / 1000, dir_list.length));
         // dirStatData[-1].lat = 99;
         // dirStatData[0].lat = 99;
 
@@ -738,14 +744,14 @@ export function Khokhlov_Gvozdik() {
     // TODO 
 
     // debug panel
-    // rotate grid
-    // result table lat lon 
     // fix zoom graph 
     // margin between cacfisher and debug
 
     // select points dont work
     // fix size of fisher graph
     // del cac reducer
+
+    // export table
 
     // button on main window
     // tooltips

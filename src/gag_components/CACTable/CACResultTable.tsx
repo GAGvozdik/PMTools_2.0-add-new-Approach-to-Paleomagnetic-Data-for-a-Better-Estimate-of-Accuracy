@@ -152,18 +152,18 @@ interface IStatisticsDataTableDIR {
       { field: 'codeCAC', headerName: 'Code', type: 'string', width: 60 },
       { field: 'stepRange', headerName: 'StepRange', type: 'string', width: 90 },
       { field: 'stepCount', headerName: 'N', type: 'number', minWidth: 30, width: 30 },
-      { field: 'Dgeo', headerName: 'Dgeo', type: 'number', width: 60,
-        valueFormatter: (params: GridValueFormatterParams) => (params.value as number)?.toFixed(1)
-      },
-      { field: 'Igeo', headerName: 'Igeo', type: 'number', width: 60,
-        valueFormatter: (params: GridValueFormatterParams) => (params.value as number)?.toFixed(1)
-      },
-      { field: 'accuracyGeo', headerName: 'Kgeo', type: 'string', width: 60,
-        valueFormatter: (params: GridValueFormatterParams) => (params.value as number)?.toFixed(1)
-      },
-      { field: 'confidenceRadiusGeo', headerName: 'MADgeo', type: 'string', width: 70,
-        valueFormatter: (params: GridValueFormatterParams) => (params.value as number)?.toFixed(1)
-      },
+      // { field: 'Dgeo', headerName: 'Dgeo', type: 'number', width: 60,
+      //   valueFormatter: (params: GridValueFormatterParams) => (params.value as number)?.toFixed(1)
+      // },
+      // { field: 'Igeo', headerName: 'Igeo', type: 'number', width: 60,
+      //   valueFormatter: (params: GridValueFormatterParams) => (params.value as number)?.toFixed(1)
+      // },
+      // { field: 'accuracyGeo', headerName: 'Kgeo', type: 'string', width: 60,
+      //   valueFormatter: (params: GridValueFormatterParams) => (params.value as number)?.toFixed(1)
+      // },
+      // { field: 'confidenceRadiusGeo', headerName: 'MADgeo', type: 'string', width: 70,
+        // valueFormatter: (params: GridValueFormatterParams) => (params.value as number)?.toFixed(1)
+      // },
 
       { field: 'accuracyStrat', headerName: 'Kstrat', type: 'string', width: 60,
         valueFormatter: (params: GridValueFormatterParams) => (params.value as number)?.toFixed(1)
@@ -172,8 +172,8 @@ interface IStatisticsDataTableDIR {
         valueFormatter: (params: GridValueFormatterParams) => (params.value as number)?.toFixed(1)
       },
 
-    { field: 'lat', headerName: 'lat', type: 'string', width: 55},
-    { field: 'lon', headerName: 'lon', type: 'string', width: 55},
+    { field: 'lat', headerName: 'lat', type: 'string', width: 65},
+    { field: 'lon', headerName: 'lon', type: 'string', width: 65},
 
     { field: 'RZ', headerName: 'RZ', type: 'number', width: 40},
 
@@ -188,6 +188,7 @@ interface IStatisticsDataTableDIR {
 
     { field: 'selectedD', headerName: 'd', type: 'number', width: 25},
     { field: 'gridN', headerName: 'gridN', type: 'number', width: 25},
+    { field: 'probability', headerName: 'probability', type: 'number', width: 70},
 
     
 
@@ -240,7 +241,8 @@ interface IStatisticsDataTableDIR {
         gridN, 
         d,
         alpha95Square,
-        zoneSquare
+        zoneSquare,
+        probability
       } = statistics;
 
 
@@ -258,14 +260,15 @@ interface IStatisticsDataTableDIR {
         confidenceRadiusStrat: +confidenceRadiusStrat.toFixed(1),
         accuracyStrat: +(Kstrat || 0).toFixed(1),
         comment, 
-        lat: lat,
-        lon: lon,
-        RZ: RZ, 
-        alpha95: alpha95, 
+        lat: Number(lat?.toFixed(1)),
+        lon: Number(lon?.toFixed(1)),
+        RZ: Number(RZ?.toFixed(1)), 
+        alpha95: Number(alpha95?.toFixed(1)), 
         PCaPC: PCaPC, 
         q: q,
         selectedD:d,
         gridN:gridN,
+        probability:Number(probability?.toFixed(3)),
         // alpha95Square:alpha95Square, 
         // zoneSquare:zoneSquare,
 
