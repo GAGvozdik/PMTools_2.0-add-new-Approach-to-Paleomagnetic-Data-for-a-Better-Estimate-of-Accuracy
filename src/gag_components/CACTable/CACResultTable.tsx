@@ -152,12 +152,12 @@ interface IStatisticsDataTableDIR {
       { field: 'codeCAC', headerName: 'Code', type: 'string', width: 60 },
       { field: 'stepRange', headerName: 'StepRange', type: 'string', width: 90 },
       { field: 'stepCount', headerName: 'N', type: 'number', minWidth: 30, width: 30 },
-      // { field: 'Dgeo', headerName: 'Dgeo', type: 'number', width: 60,
-      //   valueFormatter: (params: GridValueFormatterParams) => (params.value as number)?.toFixed(1)
-      // },
-      // { field: 'Igeo', headerName: 'Igeo', type: 'number', width: 60,
-      //   valueFormatter: (params: GridValueFormatterParams) => (params.value as number)?.toFixed(1)
-      // },
+        { field: 'Dgeo', headerName: 'Dgeo', type: 'number', width: 60,
+          valueFormatter: (params: GridValueFormatterParams) => (params.value as number)?.toFixed(1)
+        },
+        { field: 'Igeo', headerName: 'Igeo', type: 'number', width: 60,
+          valueFormatter: (params: GridValueFormatterParams) => (params.value as number)?.toFixed(1)
+        },
       // { field: 'accuracyGeo', headerName: 'Kgeo', type: 'string', width: 60,
       //   valueFormatter: (params: GridValueFormatterParams) => (params.value as number)?.toFixed(1)
       // },

@@ -82,9 +82,9 @@ export function PointsWithLabels({
 
 
     // делаю подписи через одну рядос с северным полюсом
-    if (meanDir[1] > 0.95){
+    if (labelsValues && labelsValues?.length > 7){
         for ( let i = 0; i < points.length; i ++){
-            if ((i + 1) % 3 != 0) {
+            if ((i + 1) % 2 != 0) {
                 if(points[i][0] > -width){
                     labels[i] = '';
                 }

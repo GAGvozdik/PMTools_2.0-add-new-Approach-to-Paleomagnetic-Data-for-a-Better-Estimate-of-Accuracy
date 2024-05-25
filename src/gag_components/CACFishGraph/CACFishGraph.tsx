@@ -72,13 +72,13 @@ const CACFishGraph: FC<IGraphs> = ({ dataToShow }) => {
     return newDirsToHideIDs;
   }, [currentInterpretation, dataToShow])
 
-  useEffect(() => {
-    if (dataToShow && enableCutoff && !showCutoffOuterDots) {
-      dispatch(addHiddenDirectionsIDs(cutoffOuterDotsIDs));
-    } else if ((dataToShow && !enableCutoff) || (dataToShow && showCutoffOuterDots)) {
-      dispatch(removeHiddenDirectionsIDs(cutoffOuterDotsIDs));
-    }
-  }, [enableCutoff, showCutoffOuterDots, dataToShow]);
+  // useEffect(() => {
+  //   if (dataToShow && enableCutoff && !showCutoffOuterDots) {
+  //     dispatch(addHiddenDirectionsIDs(cutoffOuterDotsIDs));
+  //   } else if ((dataToShow && !enableCutoff) || (dataToShow && showCutoffOuterDots)) {
+  //     dispatch(removeHiddenDirectionsIDs(cutoffOuterDotsIDs));
+  //   }
+  // }, [enableCutoff, showCutoffOuterDots, dataToShow]);
 
   if (!dataToShow) return (
     <CACGraphSkeleton 
@@ -88,6 +88,7 @@ const CACFishGraph: FC<IGraphs> = ({ dataToShow }) => {
   );
 
   return (
+    // <></>
     <CACGraphSkeleton 
       graph={{
         node: <CACStereoGraphDIR 

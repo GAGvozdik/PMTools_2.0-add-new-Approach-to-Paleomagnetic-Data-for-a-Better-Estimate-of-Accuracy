@@ -776,6 +776,9 @@ export function Khokhlov_Gvozdik() {
 
                 <div className={styles.graph_container + ' ' + styles.commonContainer}>
                     <CACFishGraph dataToShow={dataToShow}/>
+
+
+                    
                 </div>
             ) : (
 
@@ -976,9 +979,16 @@ export function Khokhlov_Gvozdik() {
                     </select>
 
                     <div className={styles.buttonItem + ' ' + styles.item}>
-                        <button className={styles.button} onClick={getData}>Calculate results</button>
+                        
+                        {isCACGraphVisible ? (
+                            <></>
+                        ) : (
+
+                            <button className={styles.button} onClick={getData}>Calculate results</button>
+                        )}
+
                         {/* <button className={styles.button} onClick={calculateResultTable}>Calculate result table</button> */}
-                    </div>
+                        </div>
                         {/* <b>The percentage of the zone from the sphere:</b>
                         {" " + String((zone_square(grid_points.length, points_numb) * 100).toFixed(3))}%.
                         <br/>

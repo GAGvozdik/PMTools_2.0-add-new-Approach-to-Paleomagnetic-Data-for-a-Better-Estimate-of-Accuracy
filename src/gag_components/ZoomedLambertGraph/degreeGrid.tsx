@@ -189,7 +189,7 @@ export function DegreeGrid({
             }      
         }
     }
-console.log(degreeMerLabels);
+
 
     // делаю подписи через одну рядос с северным полюсом
 
