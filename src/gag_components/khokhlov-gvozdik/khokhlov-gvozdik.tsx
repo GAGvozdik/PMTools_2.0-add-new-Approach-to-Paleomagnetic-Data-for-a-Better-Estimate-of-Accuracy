@@ -65,10 +65,10 @@ import CACToolDIR from '../CACToolDIR/CACToolDIR';
 
     import { Button, Typography } from '@mui/material';
 
-
+    import { setColorMode } from "../../services/reducers/appSettings";
 
     import { StatisticsModeDIR } from '../../../src/utils/graphs/types';
-    
+
 interface IStatModeButton {
     mode: StatisticsModeDIR;
     hotkey: string;
@@ -186,6 +186,8 @@ export function Khokhlov_Gvozdik() {
 
     let paleo_data: number[] = [];
     
+    
+    
 
     //---------------------------------------------------------------------------------------
     // Ванин код из DIRTable
@@ -201,6 +203,8 @@ export function Khokhlov_Gvozdik() {
     let { dirStatData, currentDataDIRid } = useAppSelector(state => state.parsedDataReducer);
     const { hiddenDirectionsIDs } = useAppSelector(state => state.dirPageReducer);
   
+
+    
 
     const [showUploadModal, setShowUploadModal] = useState<boolean>(false);
   
@@ -764,8 +768,35 @@ export function Khokhlov_Gvozdik() {
     // drag on dot turn on random point. del it
 
     // if (unsupportedResolution) return <>Размер окна должен быть не меньше чем 720x560</>
+
+    let isDarkTheme = false;
+    if (theme.palette.mode == 'dark'){
+        isDarkTheme = false;
+    }
+    else {
+        isDarkTheme = true;
+    }
+
+    const [isDarkMode, setIsDarkMode] = useState(isDarkTheme); //  false - светлая тема по умолчанию
+
+    const toggleTheme = () => {
+      setIsDarkMode(prevMode => !prevMode);
+    };
+
+
+    useEffect(() => {
+
+        toggleTheme();
+
+    }, [theme.palette.mode]);
+    
+
+
+    
+
     return (
-        <div className={styles.main_container}>
+        <div className={`${styles.main_container} ${isDarkMode ? styles.dark : ''}`}>
+
             <h3 className={styles.lowScreen}>Размер окна должен быть не меньше чем 720x560</h3>
     
             
@@ -781,6 +812,8 @@ export function Khokhlov_Gvozdik() {
                     
                 </div>
             ) : (
+                
+
 
                 <div className={styles.graph_container + ' ' + styles.commonContainer}>
                             
