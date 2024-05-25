@@ -58,6 +58,8 @@ interface HGGraph {
     showDegreeGrid: boolean,
     showPolygon: boolean,
     setRZ: React.Dispatch<React.SetStateAction<number>>;
+    handleDownload?: () => void;
+    svgRef?: React.RefObject<SVGSVGElement>;
 }
 
 
@@ -74,7 +76,10 @@ export function ZoomedLambertGraph({
     showGrid,
     showDegreeGrid,
     showPolygon,
-    setRZ
+    setRZ,
+    svgRef,
+    handleDownload,
+
 }: HGGraph) {
 
 
@@ -285,7 +290,8 @@ export function ZoomedLambertGraph({
     //---------------------------------------------------------------------------------------
     
     return (
-        <svg className={styles.graph_interface} viewBox={ fullViewBoxSize }>
+        <div>
+        <svg className={styles.graph_interface} ref={svgRef} viewBox={ fullViewBoxSize }>
             {/* <InterpretationSetter dataToShow={dataToShow} /> */}
             {/* Градусная сетка */}
             { showDegreeGrid && 
@@ -441,6 +447,7 @@ export function ZoomedLambertGraph({
             /> */}
 
         </svg>
+        </div>
     );
 }
 

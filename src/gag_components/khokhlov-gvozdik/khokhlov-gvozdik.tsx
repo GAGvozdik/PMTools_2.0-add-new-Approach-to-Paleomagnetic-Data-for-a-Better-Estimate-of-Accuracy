@@ -485,27 +485,43 @@ export function Khokhlov_Gvozdik() {
     // Download picture
     //---------------------------------------------------------------------------------------
 
-    const svgRef = useRef<HTMLDivElement>(null); // Ссылка на контейнер SVG
-    const [isDownloading, setIsDownloading] = useState(false);
-  
-    const handleDownload = () => {
-      setIsDownloading(true);
-  
+    const svgRef = useRef<SVGSVGElement>(null);
+
+    const handleDownloadSVG = () => {
       if (svgRef.current) {
-        // Получаем SVG-данные из элемента
-        const svgData = svgRef.current.innerHTML;
-        const downloadLink = document.createElement('a');
-        downloadLink.href = 'data:image/svg+xml;charset=utf-8,' + encodeURIComponent(svgData);
-        downloadLink.download = 'my-svg.svg';
-        document.body.appendChild(downloadLink);
-        downloadLink.click();
-        document.body.removeChild(downloadLink);
-      }
+        const svgData = new XMLSerializer().serializeToString(svgRef.current);
+        const blob = new Blob([svgData], { type: 'image/svg+xml' });
+        const url = URL.createObjectURL(blob);
   
-      setIsDownloading(false);
+        const link = document.createElement('a');
+        link.href = url;
+        link.download = 'image.svg';
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
+      }
     };
   
-    
+        // // Функция для загрузки SVG
+        // const handleDownloadSVG = () => {
+            
+        //     // const svgElement = document.querySelector('.svg.graph_interface');
+        //     const svgElement = document.querySelector('.graph_interface');
+        //     if (!svgElement) {
+        //         console.error('SVG element not found');
+        //         return;
+        //     }
+        //     const svgData = new XMLSerializer().serializeToString(svgElement);
+        //     const downloadLink = document.createElement('a');
+        //     const blob = new Blob([svgData], { type: 'image/svg+xml' });
+        //     const url = URL.createObjectURL(blob);
+        //     downloadLink.href = url;
+        //     downloadLink.download = 'graph.svg';
+        //     document.body.appendChild(downloadLink);
+        //     downloadLink.click();
+        //     document.body.removeChild(downloadLink);
+        //     URL.revokeObjectURL(url);
+        // };
 
     // TODO 
 
@@ -554,13 +570,13 @@ export function Khokhlov_Gvozdik() {
                     <div className={styles.interfaceTooltip}>
                         <HelpCenterOutlinedIcon className={styles.question}/>
                         
-
-                            <FileDownloadOutlinedIcon onClick={handleDownload} className={styles.question}/>
+                    
+                            <FileDownloadOutlinedIcon onClick={handleDownloadSVG} className={styles.question}/>
 
                         
                     </div>
 
-                    <div ref={svgRef}>
+               
                         <ZoomedLambertGraph
                             centerZone={center_zone}
                             dirList={dir_list}
@@ -574,9 +590,12 @@ export function Khokhlov_Gvozdik() {
                             showDegreeGrid={degree_grid_isvis}
                             showPolygon={isvis}
                             setRZ={setRZ}
+                            // handleDownload={handleDownloadSVG}
+                            svgRef={svgRef}
                         />
-                    </div>
+  
 
+                
                 </div>
 
             )}
@@ -589,14 +608,17 @@ export function Khokhlov_Gvozdik() {
                     <CACGraphButton mode='Fisher' changeGraph={() => handleButtonSelection('Fisher')}/>
                 </ButtonGroupWithLabel>
 
-                            <ModalWrapper
+                <ModalWrapper
                     open={showUploadModal}
                     setOpen={setShowUploadModal}
                     size={{width: '60vw', height: widthLessThan720 ? 'fit-content' : '60vh'}}
                     showBottomClose
                 >
-                    <UploadModal page='cac' />
+
+                <UploadModal page='cac' />
+
                 </ModalWrapper>
+                
                 <InterpretationSetter dataToShow={dataToShow} />
 
             </div>        
