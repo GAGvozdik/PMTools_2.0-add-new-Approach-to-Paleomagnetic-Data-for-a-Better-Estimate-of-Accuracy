@@ -28,9 +28,6 @@ interface ITables {
 
 const CACResTable: FC<ITables> = ({ dataToShow}) => {
 
-
-// export function CACTable({ dataToShow }) {
-
   const theme = useTheme();
   
   const { currentInterpretation, currentFileInterpretations } = useAppSelector(state => state.dirPageReducer);
@@ -58,22 +55,9 @@ const CACResTable: FC<ITables> = ({ dataToShow}) => {
 
   return (
     <>
-
-      
-        {/* <DataTableDIR data={dataToShow}/> */}
         <CACResultTable 
           currentFileInterpretations={interpretations}
-        //   RZ={RZ}
-        //   lat={lat}
-        //   lon={lon}
-        //   alpha95={alpha95}
-        //   PCaPC={PCaPC}
-        //   q={q}
-        //   dir_number={dir_number}
-        //   selectedD={selectedD}
-        //  gridN={gridN}
         />
-      
     </>
   )
 };

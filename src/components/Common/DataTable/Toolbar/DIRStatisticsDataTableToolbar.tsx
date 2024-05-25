@@ -31,7 +31,18 @@ const DIRStatisticsDataTableToolbar = () => {
         MADstrat: interpretation.confidenceRadiusGeo,
         Kstrat: interpretation.Kgeo || 0,
         comment: interpretation.comment,
-        demagType: interpretation.demagType
+        demagType: interpretation.demagType,
+        d: interpretation.d || null || undefined,
+        lat: interpretation.lat || null || undefined,
+        lon: interpretation.lon || null || undefined,
+        RZ: interpretation.RZ || null || undefined,
+        alpha95: interpretation.alpha95 || null || undefined,
+        PCaPC: interpretation.PCaPC || null || undefined,
+        q: interpretation.q || null || undefined,
+        gridN: interpretation.gridN || null || undefined,
+        alpha95Square: interpretation.alpha95Square || null || undefined,
+        zoneSquare: interpretation.zoneSquare || null || undefined,
+        probability: interpretation.probability || null || undefined,
       };
     }),
     format: '',
@@ -45,6 +56,7 @@ const DIRStatisticsDataTableToolbar = () => {
       <GridToolbarDensitySelector />
       <ExportDIRFromDIR data={data}/>
     </GridToolbarContainer>
+    // <></>
   );
 };
 
