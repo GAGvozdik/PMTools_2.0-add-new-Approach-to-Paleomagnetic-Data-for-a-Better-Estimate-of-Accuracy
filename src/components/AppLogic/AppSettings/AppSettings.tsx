@@ -49,7 +49,7 @@ const AppSettings: FC<IAppSettings> = ({
   const availableFormats = {
     pca: ['.pmd', '.squid', '.rs3', '.csv', '.xlsx'],
     dir: ['.dir', '.pmm', '.csv', '.xlsx'], 
-    cac: ['.dir', '.pmm', '.csv', '.xlsx'], 
+    cac: ['.dir', '.pmm', '.csv', '.xlsx'],
   };
 
   const [showSettings, setShowSettings] = useState(false);
@@ -72,11 +72,13 @@ const AppSettings: FC<IAppSettings> = ({
 
     if (currentPage === 'dir') {
       setShowDIRTotalStatisticsOutput(true);
+      console.log('dirdirdirdirid');
     }
 
     
     if (currentPage === 'cac') {
       setShowDIRTotalStatisticsOutput(true);
+      console.log('cacacacacaca');
     }
   }
 

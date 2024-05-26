@@ -97,6 +97,7 @@ const CurrentDIRFileSelector: FC = () => {
       onDelete={handleFileDelete}
       onDeleteAll={handleAllFilesDelete}
     />
+
   )
 }
 

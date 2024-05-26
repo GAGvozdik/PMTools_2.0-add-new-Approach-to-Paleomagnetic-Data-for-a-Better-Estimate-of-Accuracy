@@ -29,6 +29,7 @@ const AppLayout: FC<RouteProps> = () => {
     const acceptedFiles: File[] = files ? files : Array.from(event.currentTarget.files);
     if (currentPage === 'pca') dispatch(filesToData({files: acceptedFiles, format: 'pmd'}));
     if (currentPage === 'dir') dispatch(filesToData({files: acceptedFiles, format: 'dir'}));
+    if (currentPage === 'cac') dispatch(filesToData({files: acceptedFiles, format: 'dir'}));
   };
 
   const onDrop = useCallback(acceptedFiles => {
@@ -36,7 +37,7 @@ const AppLayout: FC<RouteProps> = () => {
   }, [currentPage]);
 
   const {getRootProps, getInputProps, isDragActive} = useDropzone({onDrop, noClick: true})
-  const rootProps = (currentPage === 'pca' || currentPage === 'dir' ? {...getRootProps()} : undefined);
+  const rootProps = (currentPage === 'pca' || currentPage === 'dir' || currentPage === 'cac' ? {...getRootProps()} : undefined);
  
   return (
     <>
