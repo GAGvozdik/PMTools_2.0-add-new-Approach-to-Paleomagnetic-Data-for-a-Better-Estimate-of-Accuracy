@@ -554,9 +554,10 @@ export function Khokhlov_Gvozdik() {
     // сетку отладить
 
     // экспорт таблицы результатов
-    // load file don`t work at cac page
     // select points dont work on fisher view
     // fix size of fisher graph
+
+    // в деплое вылет при расчетах без первой строчки
 
     // почисти код
     // анимация фишер/cac
@@ -631,7 +632,7 @@ export function Khokhlov_Gvozdik() {
                     <CACGraphButton mode='Fisher' changeGraph={() => handleButtonSelection('Fisher')}/>
                 </ButtonGroupWithLabel>
 
-                <ModalWrapper
+                {/* <ModalWrapper
                     open={showUploadModal}
                     setOpen={setShowUploadModal}
                     size={{width: '60vw', height: widthLessThan720 ? 'fit-content' : '60vh'}}
@@ -640,7 +641,7 @@ export function Khokhlov_Gvozdik() {
 
                 <UploadModal page='cac' />
 
-                </ModalWrapper>
+                </ModalWrapper> */}
                 
                 <InterpretationSetter dataToShow={dataToShow} />
 
