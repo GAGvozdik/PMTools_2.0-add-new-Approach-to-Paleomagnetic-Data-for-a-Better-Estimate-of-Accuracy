@@ -502,44 +502,64 @@ export function Khokhlov_Gvozdik() {
       }
     };
   
-        // // Функция для загрузки SVG
-        // const handleDownloadSVG = () => {
-            
-        //     // const svgElement = document.querySelector('.svg.graph_interface');
-        //     const svgElement = document.querySelector('.graph_interface');
-        //     if (!svgElement) {
-        //         console.error('SVG element not found');
-        //         return;
-        //     }
-        //     const svgData = new XMLSerializer().serializeToString(svgElement);
-        //     const downloadLink = document.createElement('a');
-        //     const blob = new Blob([svgData], { type: 'image/svg+xml' });
-        //     const url = URL.createObjectURL(blob);
-        //     downloadLink.href = url;
-        //     downloadLink.download = 'graph.svg';
-        //     document.body.appendChild(downloadLink);
-        //     downloadLink.click();
-        //     document.body.removeChild(downloadLink);
-        //     URL.revokeObjectURL(url);
-        // };
+
+
+    useEffect(() => {
+        let svgElement = svgRef.current;
+    
+        const handleWheel = (event: WheelEvent) => {
+          event.preventDefault();
+          const scaleAmount = event.deltaY > 0 ? 0.9 : 1.1; // Уменьшаем масштаб при прокрутке вниз, увеличиваем - при прокрутке вверх
+          if (svgElement) {
+            const point = svgElement.createSVGPoint();
+            point.x = 0;
+            point.y = 0;
+    
+            const ctm = svgElement.getScreenCTM();
+            if (ctm) {
+              const invertedPoint = point.matrixTransform(ctm.inverse());
+              const oldScale = 1;
+              const newScale = oldScale * scaleAmount;
+    
+              const dx = (point.x - svgElement.viewBox.baseVal.width / 2) * (1 - scaleAmount);
+              const dy = (point.y - svgElement.viewBox.baseVal.height / 2) * (1 - scaleAmount);
+    
+              svgElement.setAttribute('viewBox', `${svgElement.viewBox.baseVal.x - dx} ${svgElement.viewBox.baseVal.y - dy} ${svgElement.viewBox.baseVal.width * newScale} ${svgElement.viewBox.baseVal.height * newScale}`);
+            //   svgElement.setAttribute('viewBox', `${0} ${0} ${1} ${1}`);
+            //   svgElement.setAttribute('viewBox', '0 0 1 1');
+            }
+          }
+        };
+    
+        if (svgElement) {
+          svgElement.addEventListener('wheel', handleWheel, { passive: false });
+        }
+    
+        return () => {
+          if (svgElement) {
+            svgElement.removeEventListener('wheel', handleWheel);
+          }
+        };
+      }, []);
+
+    
+
+    
 
     // TODO 
 
-    // при переходе на cac переход с одной темы на другую
     // сетку отладить
-    // почисти код
-    // анимация фишер/cac
+
     // экспорт таблицы результатов
     // load file don`t work at cac page
-    // download ico
     // select points dont work on fisher view
-
-    // debug panel
-    // fix zoom graph 
-    // margin between cacfisher and debug
-
-
     // fix size of fisher graph
+
+    // почисти код
+    // анимация фишер/cac
+
+    // fix zoom graph 
+
     // del cac reducer
 
     // button on main window
