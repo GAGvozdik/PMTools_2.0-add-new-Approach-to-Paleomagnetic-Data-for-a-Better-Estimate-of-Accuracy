@@ -23,11 +23,13 @@ export const getDirectionalData = (file: File, as: string) => {
           case 'csv': {
             if (as === 'pmd') return pmFile.parseCSV_PMD();
             if (as === 'dir') return pmFile.parseCSV_DIR();
+            if (as === 'cac') return pmFile.parseCSV_DIR();
             return exampleDir;
           }
           case 'xlsx': {
             if (as === 'pmd') return pmFile.parseXLSX_PMD();
             if (as === 'dir') return pmFile.parseXLSX_DIR();
+            if (as === 'cac') return pmFile.parseXLSX_DIR();
             return exampleDir;
           }
           default: return exampleDir;

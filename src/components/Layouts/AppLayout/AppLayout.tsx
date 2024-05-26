@@ -25,13 +25,14 @@ const AppLayout: FC<RouteProps> = () => {
   const location = useLocation();
   const currentPage = location.pathname.split('/').pop() || location.pathname;
 
-  const handleFileUpload = (event: any, files?: Array<File>) => {;
+  const handleFileUpload = (event: any, files?: Array<File>) => {
     const acceptedFiles: File[] = files ? files : Array.from(event.currentTarget.files);
     if (currentPage === 'pca') dispatch(filesToData({files: acceptedFiles, format: 'pmd'}));
     if (currentPage === 'dir') dispatch(filesToData({files: acceptedFiles, format: 'dir'}));
     if (currentPage === 'cac') dispatch(filesToData({files: acceptedFiles, format: 'dir'}));
   };
-
+  console.log(currentPage);
+  console.log('currentPage');
   const onDrop = useCallback(acceptedFiles => {
     handleFileUpload(undefined, acceptedFiles);
   }, [currentPage]);

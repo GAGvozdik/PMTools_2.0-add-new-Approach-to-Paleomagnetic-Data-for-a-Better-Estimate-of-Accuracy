@@ -196,7 +196,10 @@ export function Khokhlov_Gvozdik() {
           
         let interpretationToUpdate = { ...dirStatData[dirID] };
 
-        const output = interpretationToUpdate.interpretations.map((direction, index) => {
+
+        const output = interpretationToUpdate && interpretationToUpdate.interpretations ? interpretationToUpdate.interpretations.map((direction, index) => {
+
+        // const output = interpretationToUpdate.interpretations.map((direction, index) => {
 
             return {
                 ...direction, 
@@ -215,7 +218,7 @@ export function Khokhlov_Gvozdik() {
                 probability:probability
             };
           
-        });
+        }) : [];
 
         interpretationToUpdate.interpretations = output;
 
