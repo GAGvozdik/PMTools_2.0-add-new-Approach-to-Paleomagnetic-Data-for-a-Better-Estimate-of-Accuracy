@@ -440,13 +440,13 @@ export function RotateAroundX(B: number[], angle: number)
 
 export function NormalizeV(V: number[])
 {
-    var x = V[0];
-    var y = V[1];
-    var z = V[2];
+    let x: number | undefined | null = V[0];
+    let y: number | undefined | null = V[1];
+    let z: number | undefined | null = V[2];
 
-    var L = Math.sqrt(x * x + y * y + z * z);
+    let L = Math.sqrt(x * x + y * y + z * z);
 
-    var C = [x / L, y / L, z / L];
+    let C = [x / L, y / L, z / L];
 
     return C;
 }

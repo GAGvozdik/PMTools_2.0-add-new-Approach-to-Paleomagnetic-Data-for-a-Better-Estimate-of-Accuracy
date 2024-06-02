@@ -104,9 +104,7 @@ export function DegreeGrid({
 
         
         centeredMeridian = PlotArcInBox(to_center(point, meanDir), 90, width, 200);
-  
-        console.log('----------');
-        console.log(i, DekVgeo(centeredMeridian[0]));
+
         // console.log(i, DekVgeo(centeredMeridian[-1]));
         // слабое место. здесь происходит вылет, без ошибки если убрать это условие, не знаю почему
         if (centeredMeridian.length > 3){

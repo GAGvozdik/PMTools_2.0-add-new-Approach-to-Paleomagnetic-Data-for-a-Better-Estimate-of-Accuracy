@@ -543,7 +543,7 @@ export function Khokhlov_Gvozdik() {
             svgElement.removeEventListener('wheel', handleWheel);
           }
         };
-      }, []);
+      }, [svgRef, isCACGraphVisible]);
 
     
 
@@ -551,11 +551,14 @@ export function Khokhlov_Gvozdik() {
 
     // TODO 
 
+    // зум не работает после переключения на fisher mode
     // сетку отладить
+    // подпись кто выпустил и благодарности
 
     // экспорт таблицы результатов
-    // select points dont work on fisher view
-    // fix size of fisher graph
+
+    // подписи штрихов сетки в полярной области слишком близко
+ 
 
     // в деплое вылет при расчетах без первой строчки
 
@@ -565,7 +568,8 @@ export function Khokhlov_Gvozdik() {
     // fix zoom graph 
 
     // del cac reducer
-
+    // select points dont work on fisher view
+    // fix size of fisher graph
     // button on main window
     // tooltips
     
@@ -592,11 +596,9 @@ export function Khokhlov_Gvozdik() {
                 <div className={styles.graph_container + ' ' + styles.commonContainer}>
                             
                     <div className={styles.interfaceTooltip}>
-                        <HelpCenterOutlinedIcon className={styles.question}/>
-                        
-                    
-                            <FileDownloadOutlinedIcon onClick={handleDownloadSVG} className={styles.question}/>
 
+                        <HelpCenterOutlinedIcon className={styles.question}/>
+                        <FileDownloadOutlinedIcon onClick={handleDownloadSVG} className={styles.question}/>
                         
                     </div>
 
@@ -617,8 +619,6 @@ export function Khokhlov_Gvozdik() {
                             // handleDownload={handleDownloadSVG}
                             svgRef={svgRef}
                         />
-  
-
                 
                 </div>
 
@@ -723,7 +723,5 @@ export function Khokhlov_Gvozdik() {
         </div>
     );
 }
-
-
 
 
