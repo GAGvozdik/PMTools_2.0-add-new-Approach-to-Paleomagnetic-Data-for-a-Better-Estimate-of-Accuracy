@@ -55,6 +55,7 @@ const CACResTable: FC<ITables> = ({ dataToShow}) => {
 
   return (
     <>
+
         <CACResultTable 
           currentFileInterpretations={interpretations}
         />

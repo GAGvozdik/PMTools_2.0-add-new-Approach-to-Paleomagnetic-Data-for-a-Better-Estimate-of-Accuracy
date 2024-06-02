@@ -209,7 +209,7 @@ interface IStatisticsDataTableDIR {
       col.disableColumnMenu = true;
     });
   
-    if (!currentFileInterpretations || !currentFileInterpretations.length) return <div className={styles.table2_container + ' ' + styles.commonContainer}></div>;
+    if (!currentFileInterpretations || !currentFileInterpretations.length) return <div className={styles.table2_container + ' ' + styles.commonContainer}>Работа выполнена в рамках государственного задания Геофизического центра РАН, утвержденного Минобрнауки России.</div>;
   
     const rows: StatisticsDataTableRow[] = currentFileInterpretations.map((statistics) => {
 
