@@ -171,11 +171,11 @@ interface IStatisticsDataTableDIR {
 
     { field: 'RZ', headerName: 'RZ', type: 'number', width: 40},
 
-    { field: 'Igeo', headerName: 'FishI', type: 'number', width: 60,
+    { field: 'Igeo', headerName: 'FishD', type: 'number', width: 60,
       valueFormatter: (params: GridValueFormatterParams) => (params.value as number)?.toFixed(1)
     },
 
-    { field: 'Dgeo', headerName: 'FishD', type: 'number', width: 60,
+    { field: 'Dgeo', headerName: 'FishI', type: 'number', width: 60,
       valueFormatter: (params: GridValueFormatterParams) => (params.value as number)?.toFixed(1)
     },
 
