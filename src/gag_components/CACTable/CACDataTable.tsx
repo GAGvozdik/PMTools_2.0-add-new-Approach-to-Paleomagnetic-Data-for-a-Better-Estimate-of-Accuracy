@@ -23,13 +23,7 @@ import SettingsBackupRestoreIcon from '@mui/icons-material/SettingsBackupRestore
 import DIRInputDataTableToolbar from "../../components/Common/DataTable/Toolbar/DIRInputDataTableToolbar";
 import Direction from "../../utils/graphs/classes/Direction";
 
-
-
 import { GridRowSelectionModel } from '@mui/x-data-grid';
-
-
-
-
 import { useTheme } from '@mui/material/styles';
 import {
   primaryColor,
@@ -170,7 +164,7 @@ const DataTableDIR: FC<IDataTableDIR> = ({ data }) => {
     col.hideSortIcons = true;
   });
   
-  if (!data) return <DataTableDIRSkeleton />;
+  if (!data) return <div className={styles.tool_container + ' ' + styles.commonContainer}></div>;
   let visibleIndex = 1;
   const rows: Array<DataGridDIRFromDIRRow> = data.interpretations.map((interpretation, index) => {
     const { id, label, code, stepRange, stepCount, Dgeo, Igeo, Dstrat, Istrat, MADgeo, Kgeo, MADstrat, Kstrat, comment } = interpretation;
@@ -207,8 +201,6 @@ const DataTableDIR: FC<IDataTableDIR> = ({ data }) => {
     
     <div className={styles.tool_container + ' ' + styles.commonContainer}>
 
-
-  
       <DataGrid 
         rows={rows} 
         columns={columns} 

@@ -34,28 +34,20 @@ const CACResTable: FC<ITables> = ({ dataToShow}) => {
   const [interpretations, setInterpretations] = useState<StatisitcsInterpretationFromDIR[] | null>(null);
 
   useEffect(() => {
-
-
     if (currentFileInterpretations && currentFileInterpretations.length) 
       {
-
-
         setInterpretations(currentFileInterpretations);
       }
     else if (currentInterpretation && currentInterpretation != null) 
       {
-
         setInterpretations([currentInterpretation])
       }
 
     else setInterpretations(null);
   }, [currentInterpretation, currentFileInterpretations]);
 
-
-
   return (
     <>
-
         <CACResultTable 
           currentFileInterpretations={interpretations}
         />

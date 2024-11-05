@@ -70,6 +70,11 @@ const NavPanel = () => {
       to={'/app/dir'}
     />,
     <NavButton 
+      label={'CAC'}
+      to={'/app/cac'}
+    />,
+    
+    <NavButton 
       label={t('mainLayout.navPanel.projectRepo')}
       to={'https://github.com/I194/PMTools_2.0'}
       external={true}
@@ -100,6 +105,12 @@ const NavPanel = () => {
             label={isTabletScreen ? 'DIR' : t('mainLayout.navPanel.DIR')}
             to={'/app/dir'}
           />
+
+          <NavButton 
+            label={'CAC'}
+            to={'/app/cac'}
+          />,
+
           <NavButton 
             label={t('mainLayout.navPanel.projectRepo')}
             to={'https://github.com/I194/PMTools_2.0'}

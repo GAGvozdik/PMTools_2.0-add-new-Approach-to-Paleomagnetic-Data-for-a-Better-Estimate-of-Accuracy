@@ -26,6 +26,8 @@ import { useCellModesModel } from "../../components/AppLogic/hooks";
 import { StatisticsDataTableRow, StatisticsDataTableColumns } from "../../components/AppLogic/DataTablesDIR/types";
 import { useScrollToInterpretationRow } from "../../components/AppLogic/hooks/useScrollToInterpretationRow";
 
+
+
 interface IStatisticsDataTableDIR {
   currentFileInterpretations?: Array<StatisitcsInterpretationFromDIR> | null;
   lat?: number | null;
@@ -50,8 +52,6 @@ interface IStatisticsDataTableDIR {
 
 
   const CACDataTable: FC<IStatisticsDataTableDIR> = ({ currentFileInterpretations}) => {
-    
-    
 
     const dispatch = useAppDispatch();
     const theme = useTheme();
@@ -150,14 +150,10 @@ interface IStatisticsDataTableDIR {
       },
       { field: 'id', headerName: 'Label', type: 'string', width: 80 },
       { field: 'codeCAC', headerName: 'Code', type: 'string', width: 60 },
-      { field: 'stepRange', headerName: 'StepRange', type: 'string', width: 90 },
+      // { field: 'stepRange', headerName: 'StepRange', type: 'string', width: 90 },
       { field: 'stepCount', headerName: 'N', type: 'number', minWidth: 30, width: 30 },
-        { field: 'Dgeo', headerName: 'Dgeo', type: 'number', width: 60,
-          valueFormatter: (params: GridValueFormatterParams) => (params.value as number)?.toFixed(1)
-        },
-        { field: 'Igeo', headerName: 'Igeo', type: 'number', width: 60,
-          valueFormatter: (params: GridValueFormatterParams) => (params.value as number)?.toFixed(1)
-        },
+
+
       // { field: 'accuracyGeo', headerName: 'Kgeo', type: 'string', width: 60,
       //   valueFormatter: (params: GridValueFormatterParams) => (params.value as number)?.toFixed(1)
       // },
@@ -165,17 +161,27 @@ interface IStatisticsDataTableDIR {
         // valueFormatter: (params: GridValueFormatterParams) => (params.value as number)?.toFixed(1)
       // },
 
-      { field: 'accuracyStrat', headerName: 'Kstrat', type: 'string', width: 60,
-        valueFormatter: (params: GridValueFormatterParams) => (params.value as number)?.toFixed(1)
-      },
-      { field: 'confidenceRadiusStrat', headerName: 'MADstrat', type: 'string', width: 75,
-        valueFormatter: (params: GridValueFormatterParams) => (params.value as number)?.toFixed(1)
-      },
+      // { field: 'accuracyStrat', headerName: 'Kstrat', type: 'string', width: 60,
+      //   valueFormatter: (params: GridValueFormatterParams) => (params.value as number)?.toFixed(1)
+      // },
+
 
     { field: 'lat', headerName: 'lat', type: 'string', width: 65},
     { field: 'lon', headerName: 'lon', type: 'string', width: 65},
 
     { field: 'RZ', headerName: 'RZ', type: 'number', width: 40},
+
+    { field: 'Igeo', headerName: 'FishI', type: 'number', width: 60,
+      valueFormatter: (params: GridValueFormatterParams) => (params.value as number)?.toFixed(1)
+    },
+
+    { field: 'Dgeo', headerName: 'FishD', type: 'number', width: 60,
+      valueFormatter: (params: GridValueFormatterParams) => (params.value as number)?.toFixed(1)
+    },
+
+    { field: 'confidenceRadiusStrat', headerName: 'MADstrat', type: 'string', width: 75,
+      valueFormatter: (params: GridValueFormatterParams) => (params.value as number)?.toFixed(1)
+    },
 
     { field: 'alpha95', headerName: 'α95', type: 'number', width: 40},
     // { field: 'alpha95Square', headerName: 'Sα95', type: 'number', width: 40},
@@ -190,16 +196,9 @@ interface IStatisticsDataTableDIR {
     { field: 'gridN', headerName: 'gridN', type: 'number', width: 25},
     { field: 'probability', headerName: 'probability', type: 'number', width: 70},
 
-    
-
     { field: 'comment', headerName: 'Comment', type: 'string', minWidth: 40, flex: 1, 
     editable: true, cellClassName: styles[`editableCell_${theme.palette.mode}`] },
-
-
-   
-
-
-
+  
     ];
   
     columns.forEach((col) => {
@@ -209,7 +208,15 @@ interface IStatisticsDataTableDIR {
       col.disableColumnMenu = true;
     });
   
-    if (!currentFileInterpretations || !currentFileInterpretations.length) return <div className={styles.table2_container + ' ' + styles.commonContainer}>Работа выполнена в рамках государственного задания Геофизического центра РАН, утвержденного Минобрнауки России.</div>;
+    if (!currentFileInterpretations || !currentFileInterpretations.length) {
+      return (
+        <div className={styles.table2_container + ' ' + styles.commonContainer + ' ' +  styles.grant}>
+          This work was carried out in the framework of budgetary funding of the Geophysical Center of RAS 
+          [grant <a className={styles.grantLink} href="https://rscf.ru/project/22-17-00114/">22-17-00114</a>], adopted by the Ministry 
+          of Science and Higher Education of the Russian Federation. 
+        </div>
+      )
+    };
   
     const rows: StatisticsDataTableRow[] = currentFileInterpretations.map((statistics) => {
 
@@ -218,7 +225,6 @@ interface IStatisticsDataTableDIR {
       // let PCaPCInRow: string = 'aPC';
       // let qInRow: number = 10; 
   
-
       const { 
         label, 
         stepRange, 

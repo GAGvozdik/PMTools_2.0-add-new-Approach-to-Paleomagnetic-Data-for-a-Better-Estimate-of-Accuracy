@@ -58,11 +58,10 @@ const AppNavigation: FC = ({}) => {
       />
 
       <NavButton 
-        label={t('')}
+        label={''}
         icon={'CAC'}
         to={'/app/cac'}
       />
-
 
       <NavButton 
         label={t('appLayout.navPanel.projectRepo')}

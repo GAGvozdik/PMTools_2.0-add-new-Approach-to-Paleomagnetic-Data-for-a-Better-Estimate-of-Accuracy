@@ -25,7 +25,7 @@ import {
   deleteAllInterpretations,
 } from '../../services/reducers/dirPage';
 import { Reference } from '../../utils/graphs/types';
-import OutputDataTableDIR from '../../components/AppLogic/DataTablesDIR/OutputDataTable/OutputDataTableDIR';
+// import OutputDataTableDIR from '../../components/AppLogic/DataTablesDIR/OutputDataTable/OutputDataTableDIR';
 import VGPModalContent from '../../components/AppLogic/VGP/VGPmodalContent';
 // import { setDirStatFiles } from '../../services/reducers/files';
 import FoldTestContainer from '../../components/AppLogic/ToolsDIR/PMTests/FoldTestContainer';
