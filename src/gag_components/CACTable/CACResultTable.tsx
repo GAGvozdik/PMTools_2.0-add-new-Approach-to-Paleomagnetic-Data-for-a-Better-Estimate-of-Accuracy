@@ -212,7 +212,7 @@ interface IStatisticsDataTableDIR {
       return (
         <div className={styles.table2_container + ' ' + styles.commonContainer + ' ' +  styles.grant}>
           This work was carried out in the framework of budgetary funding of the Geophysical Center of RAS 
-          [grant <a className={styles.grantLink} href="https://rscf.ru/project/22-17-00114/">22-17-00114-----</a>], adopted by the Ministry 
+          [grant <a className={styles.grantLink} href="https://rscf.ru/project/22-17-00114/">22-17-00114</a>], adopted by the Ministry 
           of Science and Higher Education of the Russian Federation. 
         </div>
       )
