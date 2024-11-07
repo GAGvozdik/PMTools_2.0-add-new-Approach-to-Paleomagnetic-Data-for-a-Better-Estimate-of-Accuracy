@@ -109,7 +109,7 @@ const NavPanel = () => {
           <NavButton 
             label={'CAC'}
             to={'/app/cac'}
-          />,
+          />
 
           <NavButton 
             label={t('mainLayout.navPanel.projectRepo')}
