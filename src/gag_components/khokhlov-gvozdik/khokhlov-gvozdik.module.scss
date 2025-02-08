@@ -69,6 +69,7 @@
     float: right;
   }
   
+
   .debug{
     border: 3px solid var(--my-grey);
     border-radius: 6px;
@@ -107,7 +108,7 @@
     display: grid;
     grid-template-columns: 10fr 2fr 3fr;
     grid-template-rows: 1.1fr 8fr 4fr;
-    grid-gap: 20px;
+    grid-gap: 2vh;
     height: 100vh;
 
     padding: 2vh;
@@ -230,7 +231,32 @@
     // overflow: hidden;
   }
 
-  
+//   .tool_container {
+//     scrollbar-color: red transparent; /* Firefox */
+// }
+
+
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+    background: var(--my-grey); 
+    border-radius: 8px;
+    transition: 0.5s;
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+    background: #868686; 
+    border-radius: 8px;
+    transition: 0.5s;
+}
+
+::-webkit-scrollbar-corner {
+  background-color: transparent;
+}
+
+
+
   .cac_fish_container {
     padding-top: 0vh;
     display: flex;

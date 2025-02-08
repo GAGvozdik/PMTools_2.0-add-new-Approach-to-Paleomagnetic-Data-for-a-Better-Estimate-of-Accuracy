@@ -228,6 +228,7 @@ const DataTableDIR: FC<IDataTableDIR> = ({ data }) => {
           },
             '& .MuiDataGrid-root': {
             overflow: 'auto',
+
             },
 
         }}

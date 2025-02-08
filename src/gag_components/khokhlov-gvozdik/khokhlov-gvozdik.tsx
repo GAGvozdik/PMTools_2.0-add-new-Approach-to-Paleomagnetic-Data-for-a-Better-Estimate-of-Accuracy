@@ -301,37 +301,6 @@ export function Khokhlov_Gvozdik() {
 
 
     //---------------------------------------------------------------------------------------
-    // Dark theme
-    //---------------------------------------------------------------------------------------
-    
-    let isDarkTheme = false;
-    if (theme.palette.mode == 'dark'){
-        isDarkTheme = false;
-    }
-    else {
-        isDarkTheme = true;
-    }
-
-    const [isDarkMode, setIsDarkMode] = useState(isDarkTheme); //  false - светлая тема по умолчанию
-
-    const toggleTheme = () => {
-
-        if (theme.palette.mode == 'dark'){
-            setIsDarkMode(true);
-        }
-        else {
-            setIsDarkMode(false);
-        }
-      
-    };
-
-
-    useEffect(() => {
-        toggleTheme();
-    }, [theme.palette.mode]);
-    
-
-    //---------------------------------------------------------------------------------------
     // Download picture
     //---------------------------------------------------------------------------------------
 
@@ -391,7 +360,7 @@ export function Khokhlov_Gvozdik() {
       }, [svgRef, isCACGraphVisible]);
 
     return (
-        <div className={`${styles.main_container} ${isDarkMode ? styles.dark : ''}`}>
+        <div className={`${styles.main_container} ${theme.palette.mode == 'dark' ? styles.dark : ''}`}>
 
             <h3 className={styles.lowScreen}>Размер окна должен быть не меньше чем 720x560</h3>
 
