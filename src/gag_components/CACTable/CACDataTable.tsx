@@ -222,9 +222,14 @@ const DataTableDIR: FC<IDataTableDIR> = ({ data }) => {
           '& .MuiDataGrid-cell': {
             padding: '0px 0px',
           },
+          overflowY: 'hidden',
           '& .MuiDataGrid-columnHeader': {
             padding: '0px 0px',
-          }
+          },
+            '& .MuiDataGrid-root': {
+            overflow: 'auto',
+            },
+
         }}
         density={'compact'}
         hideFooter={rows.length < 100}

@@ -1,0 +1,322 @@
+
+.container {
+    grid-column-start: 2;
+    grid-column-end: 4;
+    grid-row-start: 3;
+    grid-row-end: 3;
+}
+
+.container {
+    grid-column-start: 2;
+    grid-column-end: 4;
+    grid-row-start: 3;
+    grid-row-end: 3;
+}
+
+.commonContainer {
+    background-color: var(--my-white);
+    box-shadow: var(--my-shadow) 0px 0px 10px 1px;
+    overflow: auto;
+    position: relative;
+    padding: 10px;
+    transition: 0.4s ease-in-out;
+}
+
+.interfaceTooltip{
+    color: var(--menu-blue);
+    display: block;
+    width: 100%;
+    float: right;
+}
+
+.question{
+    float: right;
+}
+
+// .interface{
+//     padding: 5px;
+//     height: 100vh;
+//     display: grid;
+//     grid-template-columns: 5fr 5fr 5fr;
+//     grid-template-rows: 1fr 1fr 2fr;
+//     grid-gap: 10px;
+// }
+
+.interface{
+    border: 3px solid var(--my-grey);
+    border-radius: 6px;
+    padding: 1vh;
+    height: 17.5vh;
+    display: grid;
+    grid-template-columns: 6fr 6fr 5fr;
+    grid-template-rows: 1fr 1fr 1fr 1fr;
+    grid-gap: 10px;
+}
+
+.interface:hover{
+    border: 3px solid var(--menu-blue);
+    /* border-radius: 12px; */
+    transition: 0.4s ease-in-out;
+}
+
+
+.item{
+    border-radius: 5px;
+}
+
+.select1Item {
+    grid-column-start: 1;
+    grid-column-end: 1;
+    grid-row-start: 1;
+    grid-row-end: 1;
+}
+.select2Item {
+    grid-column-start: 2;
+    grid-column-end: 2;
+    grid-row-start: 1;
+    grid-row-end: 1;
+}
+
+.select3Item {
+    grid-column-start: 1;
+    grid-column-end: 1;
+    grid-row-start: 2;
+    grid-row-end: 2;
+}
+
+.select4Item {
+    grid-column-start: 2;
+    grid-column-end: 2;
+    grid-row-start: 2;
+    grid-row-end: 2;
+}
+
+.buttonItem {
+    grid-column-start: 1;
+    grid-column-end: 3;
+    grid-row-start: 3;
+    grid-row-end: 5;
+    justify-self: center;
+    align-self: center;
+}
+
+.chooseButtonItem {
+    grid-column-start: 2;
+    grid-column-end: 3;
+    grid-row-start: 3;
+    grid-row-end: 5;
+    justify-self: center;
+    align-self: center;
+    // margin-top: -2vh;
+    // margin-left: -1.5vh;
+}
+
+.infoItem1 {
+    grid-column-start: 3;
+    grid-column-end: 3;
+    grid-row-start: 1;
+    grid-row-end: 1;
+    align-self: center;
+
+}
+.infoItem2 {
+    grid-column-start: 3;
+    grid-column-end: 3;
+    grid-row-start: 2;
+    grid-row-end: 2;
+    align-self: center;
+}
+
+.infoItem3 {
+    grid-column-start: 3;
+    grid-column-end: 3;
+    grid-row-start: 3;
+    grid-row-end: 3;
+    align-self: center;
+}
+
+.infoItem4 {
+    grid-column-start: 3;
+    grid-column-end: 3;
+    grid-row-start: 4;
+    grid-row-end: 4;
+    align-self: center;
+}
+
+.my_text {
+    text-align: center;
+    margin-bottom: 10px;
+    margin-top: 0px;
+    font-size: 18px;
+}
+
+.info {
+    /* background-color: #1975d2; */
+    font-size: 12px;
+    display: flex;
+    align-items: center;
+    /* flex-direction: column; */
+}
+
+.button {
+    font-size: 16px;
+    font-family: 'Open Sans', sans-serif;
+    transition-duration: 0.15s;
+    border: none;
+    color: white;
+    background: var(--button-blue3);
+    padding: 6px;
+    text-align: center;
+    border-radius: 8px;
+    height: 5.5vh;
+    transition: transform 0.6s ease-in-out;
+}
+
+@media screen and (max-width: 900px){
+    .button {
+        font-size: 13px;
+    }
+}
+
+.button:hover {
+    background-color: var(--button-blue);
+    color: var(--my-white);
+    border-radius: 6px;
+    box-shadow: 0px 2px 7px var(--my-shadow2);
+    transition: transform 0.6s ease-in-out;
+}
+
+.button:active {
+    background-color: var(--my-select);
+    box-shadow: none;
+    transition: transform 0.6s ease-in-out;
+}
+
+.my_select {
+    font-size: 14px;
+    font-family: 'Open Sans', sans-serif;
+    -webkit-appearance:none;
+    -moz-appearance:none;
+    -ms-appearance:none;
+    appearance:none;
+    outline:0;
+    box-shadow:none;
+    border:0!important;
+    background: var(--my-select);
+    background-image: none;
+    flex: 1;
+    padding: 5px 12px;
+    color: var(--my-black);
+    cursor:pointer;
+    border-radius: 3px;
+    transition: transform 0.6s ease-in-out;
+}
+
+.my_select:hover {
+    transition: transform 0.6s ease-in-out;
+    box-shadow: 0px 2px 7px var(--my-shadow2);
+}
+
+.my_select option {
+    border-radius: 5px;
+    outline: none;
+}
+
+.my_select option:checked {
+    background-color: var(--checkmark-hover);
+    color: var(--my-white);
+}
+
+.selectOption:hover {
+    background-color: var(--checkmark-hover);
+    color: var(--my-white);
+}
+
+.my_select.decorated option:hover {
+    background-color: var(--checkmark-hover);
+    color: var(--my-white);
+}
+
+
+/* --------------------------------------------------------------*/
+/* CHECKBOX */
+/* --------------------------------------------------------------*/
+
+.my_input {
+    display: block;
+    position: relative;
+    padding-left: 27px;
+    /* margin-bottom: 30px; */
+    /* margin-top: 0px; */
+    font-family: 'Open Sans', sans-serif;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+    display: flex;
+    align-items: center;
+    /* height: 100%; */
+    transition: 0.4s ease-in-out;
+}
+
+/* Hide the browser's default checkbox */
+.my_input input {
+    position: absolute;
+    opacity: 0;
+    cursor: pointer;
+    height: 0;
+    width: 0;
+    transition: 0.4s ease-in-out;
+}
+
+/* Create a custom checkbox */
+.checkmark {
+    position: absolute;
+    left: 0px;
+    height: 20px;
+    width: 20px;
+    background-color: var(--my-checkmark);
+    border-radius: 5px;
+}
+
+/* On mouse-over, add a g rey background color */
+.my_input:hover input ~ .checkmark {
+    background-color: var(--checkmark-hover);
+    transition: 0.4s ease-in-out;
+}
+
+/* When the checkbox is checked, add a blue background */
+.my_input input:checked ~ .checkmark {
+    background-color: var(--checkbox-hover);
+    transition: 0.4s ease-in-out;
+}
+.my_input input:checked:hover ~ .checkmark {
+    background-color: var(--button-blue2);
+    border-radius: 2px;
+    transition: 0.4s ease-in-out;
+}
+
+/* Create the checkmark/indicator (hidden when not checked) */
+.checkmark:after {
+    content: "";
+    position: absolute;
+    display: none;
+}
+
+/* Show the checkmark when checked */
+.my_input input:checked ~ .checkmark:after {
+    display: block;
+}
+
+/* Style the checkmark/indicator */
+.my_input .checkmark:after {
+    left: 7px;
+    top: 2px;
+    width: 3px;
+    height: 10px;
+    border: solid var(--my-white);
+    border-width: 0 3px 3px 0;
+    -webkit-transform: rotate(45deg);
+    -ms-transform: rotate(45deg);
+    transform: rotate(45deg);
+}

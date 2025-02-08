@@ -1,4 +1,7 @@
-import React, { useState, useEffect } from 'react';
+
+
+
+    import React, { useState, useEffect } from 'react';
 
 import { useTheme } from '@mui/material/styles';
 import { Cutoff } from "../../utils/GlobalTypes";
@@ -47,55 +50,51 @@ const dotSettings: DotSettings = {
 
 interface HGGraph {
     centerZone: number[],
-    dirList: number[][],
-    angleList: number[],
     gridPoints: number[][],
-    meanDir: number[],
-    alpha95: number,
-    gridColor: string,
-    polygonColor: string,
-    showGrid: boolean,
-    showDegreeGrid: boolean,
-    showPolygon: boolean,
+    // gridColor: string,
+    // polygonColor: string,
     setRZ: React.Dispatch<React.SetStateAction<number>>;
-    handleDownload?: () => void;
     svgRef?: React.RefObject<SVGSVGElement>;
 }
 
 
-
 export function ZoomedLambertGraph({
     centerZone,
-    dirList,
-    angleList,
     gridPoints,
-    meanDir,
-    alpha95,
-    gridColor,
-    polygonColor,
-    showGrid,
-    showDegreeGrid,
-    showPolygon,
     setRZ,
     svgRef,
-    handleDownload,
-
 }: HGGraph) {
 
-
+    const { 
+        // centerZone,
+        // gridPoints,
+        dirList,
+        angleList,
+        meanDir,
+        alpha95,
+        isGrid,
+        isDegreeVisible,
+        isVis,
+    } = useAppSelector(state => state.cacParamsReducer);
 
     const centerZoneColor = '#2b3bb3';
     let plotPointsCount = 150; 
+    const dispatch = useAppDispatch();
+
+    // dispatch(centering(dirList, meanDir));
+    let centeredDirList = centering(dirList, meanDir);
 
 
-    dirList = centering(dirList, meanDir);
-    // let viewBoxSize = getViewBoxSize(dirList, angleList, meanDir, 1.0);
-    let viewBoxSize = getViewBoxSize(dirList, angleList, meanDir, 0.15);
+    let polyColor = "#5badff";
+    let gridColor = '#1975d2';
+
+    // let viewBoxSize = getViewBoxSize(centeredDirList, angleList, meanDir, 1.0);
+    let viewBoxSize = getViewBoxSize(centeredDirList, angleList, meanDir, 0.15);
     console.log('viewBoxSize');
     console.log(viewBoxSize);
     let fullViewBoxSize = viewBoxSize;
-    // let fullViewBoxSize = getViewBoxSize(dirList, angleList, meanDir, 0);
-    // fullViewBoxSize = getViewBoxSize(dirList, angleList, meanDir, 0.6);
+    // let fullViewBoxSize = getViewBoxSize(centeredDirList, angleList, meanDir, 0);
+    // fullViewBoxSize = getViewBoxSize(centeredDirList, angleList, meanDir, 0.6);
 
     let parallelsCount = 36;
     let meridianCount = 36;
@@ -155,11 +154,11 @@ export function ZoomedLambertGraph({
     let smallCircles: number[][] = [];
     let circle: number[][] = [];
 
-    for (let i = 0; i < dirList.length; i++) {
+    for (let i = 0; i < centeredDirList.length; i++) {
         
         circle = lambertMass(
                         PlotCircle(
-                            dirList[i], 
+                            centeredDirList[i], 
                             angleList[i], 
                             plotPointsCount
                         ), 
@@ -184,10 +183,10 @@ export function ZoomedLambertGraph({
     let circlePoints = [];
     let circlePoint = [];
 
-    for (let i = 0; i < dirList.length; i++) {
+    for (let i = 0; i < centeredDirList.length; i++) {
           circlePoint = lambertMass(
                             PlotCircle(
-                                dirList[i], 
+                                centeredDirList[i], 
                                 angleList[i], 
                                 circlePointsToCalculateCount
                             ), 
@@ -294,26 +293,27 @@ export function ZoomedLambertGraph({
         <svg className={styles.graph_interface} ref={svgRef} viewBox={ fullViewBoxSize }>
             {/* <InterpretationSetter dataToShow={dataToShow} /> */}
             {/* Градусная сетка */}
-            { showDegreeGrid && 
+            { isGrid && 
                 <DegreeGrid
                     viewBoxSize={viewBoxSize}
                     meridianCount={meridianCount}
                     parallelsCount={parallelsCount}
                     meanDir={meanDir}
+                    gridColor={gridColor}
                 />
             }
 
 
             {/* Закраска зоны пересечения кругов */}
-            { showPolygon && 
+            { isVis && 
                 <polygon 
                     points={ polygonPoints } 
-                    fill={ polygonColor } 
+                    fill={ polyColor } 
                 />
             }
 
             {/* Спиральный грид в зоне пересечения */}
-            { showGrid && gridPointsCentered.map((gridPoints) => (
+            { isDegreeVisible && gridPointsCentered.map((gridPoints) => (
                 <Dot 
                     x={gridPoints[0]} 
                     y={gridPoints[1]} 
@@ -454,6 +454,27 @@ export function ZoomedLambertGraph({
 
 
     
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

@@ -9,12 +9,9 @@ import {
   bgColorMain,
 } from '../../utils/ThemeConstants';
 
-
 // import styles from './DIRPage.module.scss';
 
-
 // export function CACTable() {
-
 
 //   return (
 //     <div style={{ height: 400, width: '100%' }}>
@@ -23,16 +20,11 @@ import {
 //   );
 // }
 
-
-
-
-
 interface ITables {
   dataToShow: IDirData | null;
 };
 
 const CACTable: FC<ITables> = ({ dataToShow }) => {
-
 
   const theme = useTheme();
   

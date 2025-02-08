@@ -32,6 +32,7 @@ import {
 import { Axis, Data, Dot } from "../../components/Common/Graphs";
 import {PointsWithLabels} from "./pointsWithLabels";
 import { PlaneData, DotSettings, DotType} from "../../utils/graphs/types";
+import { useTheme } from '@mui/material/styles';
 
 const dotSettings: DotSettings = {
     annotations: false,
@@ -42,17 +43,19 @@ interface degreeGraticules {
     viewBoxSize: string,
     meridianCount: number,
     parallelsCount: number,
-    meanDir: number[]
+    meanDir: number[],
+    gridColor: string,
 }
 
 export function DegreeGrid({
-                                viewBoxSize,
-                                meridianCount,
-                                parallelsCount,
-                                meanDir
-                            }: degreeGraticules) {
+        viewBoxSize,
+        meridianCount,
+        parallelsCount,
+        meanDir,
+        gridColor,
+    }: degreeGraticules) {
    
-
+    const theme = useTheme();
     //---------------------------------------------------------------------------------------
     // RAM
     //---------------------------------------------------------------------------------------
@@ -295,7 +298,7 @@ export function DegreeGrid({
             { merTicks.map((tick) => (
                 <polyline 
                     points={ make_coords(tick) } 
-                    stroke={ "black" }
+                    stroke={ theme.palette.mode == 'dark' ? 'grey' : "black" }
                     fill={'none'}
                     strokeWidth={width / 80} 
                 />
@@ -331,7 +334,7 @@ export function DegreeGrid({
             { parTicks.map((tick) => (
                 <polyline 
                     points={ make_coords(tick) } 
-                    stroke={ "black" }
+                    stroke={ theme.palette.mode == 'dark' ? 'grey' : "black" }
                     fill={'none'}
                     strokeWidth={width / 80} 
                 />
@@ -344,7 +347,7 @@ export function DegreeGrid({
             {/* ram */}
             <polyline 
                 points={ ram } 
-                stroke={ "black" }
+                stroke={ theme.palette.mode == 'dark' ? 'grey' : "black" }
                 fill={'none'}
                 strokeWidth={width / 100} 
             />

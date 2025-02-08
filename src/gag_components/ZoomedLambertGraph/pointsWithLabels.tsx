@@ -25,6 +25,7 @@ import {
     GeoVdek,
 
 } from "../gag_functions";
+import { useTheme } from '@mui/material/styles';
 
 interface PointsWithLabels {
     points: number[][],
@@ -52,6 +53,8 @@ export function PointsWithLabels({
                                 meanDir
                             }: PointsWithLabels) {
    
+    
+    const theme = useTheme();
     //---------------------------------------------------------------------------------------
     // 
     //---------------------------------------------------------------------------------------
@@ -117,6 +120,7 @@ export function PointsWithLabels({
                         x={ xShift? point[0] + xShift : point[0] } 
                         y={ yShift? point[1] + yShift : point[1] }  
                         font-size={fontSize? fontSize : radius * 10}
+                        fill={theme.palette.mode == 'dark' ? 'lightGrey' : "black"}
                     > 
                         {labels[index]} 
                     </text>
