@@ -33,6 +33,7 @@ interface IInitialState {
         isVis: boolean; // ????
 
         gridPoints: number[][];
+        alpha95Square: number;
     interpretation: number;
 };
 
@@ -63,6 +64,7 @@ const initialState: IInitialState = {
         isVis: true,
         gridPoints: [],
         centerZone: [],
+        alpha95Square: 0,
 
     interpretation: 0,
 
@@ -156,6 +158,9 @@ const cacParams = createSlice({
     setIsVis(state, action) {
         state.isVis = action.payload;
     },
+    setAlpha95Square(state, action) {
+        state.alpha95Square = action.payload;
+    },
 
   },
 
@@ -183,6 +188,7 @@ export const {
     setGridPoints,
     setIsGrid,
     setIsVis,
+    setAlpha95Square,
 
 } = cacParams.actions;
 

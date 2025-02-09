@@ -1,33 +1,11 @@
 import React, { createElement as e, useEffect, useState, useRef } from 'react';
-import { ZoomedLambertGraph } from "../ZoomedLambertGraph/ZoomedLambertGraph";
 import styles from "./khokhlov-gvozdik.module.scss" 
 import CACTable from "../CACTable/CACTable";
-
-import { 
-    addInterpretation, 
-    setStatisticsMode, 
-    showSelectionInput,
-  } from '../../services/reducers/dirPage';
-
+import {GraphContainer} from "./graphContainer";
+import {Calculations} from "./calculations";
+import { setStatisticsMode } from '../../services/reducers/dirPage';
 import ButtonGroupWithLabel from '../../components/Common/Buttons/ButtonGroupWithLabel/ButtonGroupWithLabel';
-
-import {
-    GeoVdek,
-    getRandomfloat,
-    NormalizeV,
-    RotateAroundV,
-    angle_between_v,
-    fisherStat,
-    getRandomInt,
-    get_quantiles,
-    DekVgeo,
-    get_perp,
-    GridVdek,
-    centering,
-} from "../gag_functions";
-
 import HelpCenterOutlinedIcon from '@mui/icons-material/HelpCenterOutlined';  
-import FileDownloadOutlinedIcon from '@mui/icons-material/FileDownloadOutlined';
 import { useMediaQuery } from 'react-responsive';
 import CACResTable from '../CACTable/CACResTable';
 import { DataGridDIRFromDIRRow, IDirData } from "../../../src/utils/GlobalTypes";
@@ -37,60 +15,63 @@ import { useAppDispatch, useAppSelector } from '../../services/store/hooks';
 import { useTheme } from '@mui/material/styles';
 import { setCurrentDIRid } from '../../services/reducers/parsedData';
 import InterpretationSetter from '../../../src/pages/DIRPage/InterpretationSetter';
+import ChooseParameters from './chooseParameters';
 
 import { 
     setDirList,
     setAngleList,
     setMeanDir,
-    setAlpha95,
     setDirNumber,
     setZoneSquare,
     setProbability,
     setIsCACGraphVisible,
 } from '../../services/reducers/cacParams';
 
-import ChooseParameters from './chooseParameters';
+import {
+    GeoVdek,
+    NormalizeV,
+    fisherStat,
+    get_quantiles,
+    DekVgeo,
+} from "../gag_functions";
 
 export function Khokhlov_Gvozdik() {
 
     const { 
         centerZone,
-        gridPoints,
         selectedD,
         selectedP,
         selectedNumber,
         PCaPCString,
         apc,
-        dirList,
-        angleList,
-        meanDir,
         alpha95,
         dirNumber,  
         zoneSquare,
         probability,
         isCACGraphVisible,
-        isGrid,
-        isDegreeVisible,
-        isVis,
-
+        RZ,
+        alpha95Square,
     } = useAppSelector(state => state.cacParamsReducer);
 
-        const [alpha95Square, setAlpha95Square] = useState<number>(0);
-        const [dataToShow, setDataToShow] = useState<IDirData | null>(null);
-        let [stepList, setStepList] = useState<number[] | undefined >([]);
-	    const [RZ, setRZ] = useState<number>(999);
-
-    const outsideVariable = selectedNumber;
-    var points_numb = outsideVariable;
-
+    const [dataToShow, setDataToShow] = useState<IDirData | null>(null);
+    let [stepList, setStepList] = useState<number[] | undefined >([]);
     const [showUploadModal, setShowUploadModal] = useState<boolean>(false);
 
     //---------------------------------------------------------------------------------------
     // Interface
     //---------------------------------------------------------------------------------------
 
-
-
+    useEffect(() => {
+        let quantiles = get_quantiles(selectedD, apc, selectedP);
+        let new_ang_list = [];
+        
+        if (stepList != undefined){
+            for ( let i = 0; i < dirNumber; i ++ ) {
+                new_ang_list.push(quantiles[stepList[i] - 3]);
+            }
+            dispatch(setAngleList(new_ang_list));
+        }
+    }, [selectedD, apc, selectedP, dirNumber, stepList]);
 
     const [selectedButton, setSelectedButton] = useState<string | null>(null);
 
@@ -103,21 +84,7 @@ export function Khokhlov_Gvozdik() {
             dispatch(setIsCACGraphVisible(false));
         }
     };
-
-    useEffect(() => {
-        var quantiles = get_quantiles(selectedD, apc, selectedP);
-        // setQuantiles(quantiles);
-
-        var new_ang_list = [];
-        
-        if (stepList != undefined){
-            for ( var i = 0; i < dirNumber; i ++ ) {
-                new_ang_list.push(quantiles[stepList[i] - 3]);
-            }
-            dispatch(setAngleList(new_ang_list));
-        }
-    }, [selectedD, apc, selectedP, dirNumber, stepList]);
-
+    
     stepList = dataToShow?.interpretations.map(interpretation => interpretation.stepCount);
 
     let igeoList: number[] | undefined = dataToShow?.interpretations.map(interpretation => interpretation.Igeo);
@@ -139,7 +106,6 @@ export function Khokhlov_Gvozdik() {
     let { dirStatData, currentDataDIRid } = useAppSelector(state => state.parsedDataReducer);
     const { hiddenDirectionsIDs } = useAppSelector(state => state.dirPageReducer);
 
-
     useEffect(() => {
       if (dirStatData && dirStatData.length > 0) {
         if (!currentDataDIRid) {
@@ -151,14 +117,12 @@ export function Khokhlov_Gvozdik() {
 
             return {
                 ...direction, 
-                lat: isNaN(RZ) ? null : DekVgeo(center_zone)[0], 
-                lon: isNaN(RZ) ? null : DekVgeo(center_zone)[1],
-
+                lat: isNaN(RZ) ? null : DekVgeo(centerZone)[0], 
+                lon: isNaN(RZ) ? null : DekVgeo(centerZone)[1],
                 RZ:RZ, 
                 alpha95:alpha95, 
                 alpha95Square:alpha95Square, 
                 zoneSquare:zoneSquare, 
-                
                 PCaPC:PCaPCString, 
                 q:selectedP, 
                 selectedD:selectedD, 
@@ -189,14 +153,7 @@ export function Khokhlov_Gvozdik() {
       else setShowUploadModal(false);
     }, [dataToShow]);
 
-
-    const { 
-        statisticsMode, 
-        selectedDirectionsIDs, 
-        reversedDirectionsIDs,
-        currentFileInterpretations,
-        allInterpretations
-    } = useAppSelector(state => state.dirPageReducer);
+    const { selectedDirectionsIDs } = useAppSelector(state => state.dirPageReducer);
 
     const getData = () => {
         
@@ -207,10 +164,10 @@ export function Khokhlov_Gvozdik() {
 
             dirNumber = igeoList.length;
 
-            for ( var i = 0; i < igeoList.length; i ++ ) {   
+            for ( let i = 0; i < igeoList.length; i ++ ) {   
                 
                 if (selectedDirectionsIDs != null){
-                    for ( var j = 0; j < selectedDirectionsIDs.length; j ++ ) { 
+                    for ( let j = 0; j < selectedDirectionsIDs.length; j ++ ) { 
                         if (idList[i] == selectedDirectionsIDs[j]){
                             paleo_data = NormalizeV(GeoVdek(igeoList[i], dgeoList[i]));
                             // НУЖНО ЛИ НОРМАЛИЗОВЫВАТЬ???
@@ -218,12 +175,9 @@ export function Khokhlov_Gvozdik() {
                         }
                     }
                 }
-
             }
         }
         dispatch(setDirList(dirList));
-        
-
         setStepList(stepList);
         dispatch(setDirNumber(dirNumber));
         dispatch(setAngleList([0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]));
@@ -231,137 +185,11 @@ export function Khokhlov_Gvozdik() {
         dispatch(setZoneSquare(2 * Math.PI * (1 - Math.cos(RZ * Math.PI / 180))));
         dispatch(setStatisticsMode('fisher'));
         dispatch(setProbability(Math.pow(selectedP / 1000, dirList.length)));
-
-        dispatch(setDirList(centering(dirList, meanDir)));
     };
-
-    //-----------------------------------------------------------------------
-    // fisher stat
-    //-----------------------------------------------------------------------
-
-    useEffect(() => {
-        let a95:number = fisherStat(dirList)[1];
-        dispatch(setAlpha95(a95));
-        setAlpha95Square( 2 * Math.PI * (1 - Math.cos(a95 * Math.PI / 180)));
-
-        // setMeanDir(fisherStat(dirList)[0]);
-
-    }, [dirList]);
-
-    //-----------------------------------------------------------------------
-    // making grid dots
-    //-----------------------------------------------------------------------
-    
-    var x;
-    var y;
-    var m;
-    var grid_points = [];
-
-    var print_point = 0;
-    var print_point = 0;
-
-    var phi = 0.013;
-    
-    for (var i = 0; i < points_numb; i++)
-    {
-        x = (i * phi - Math.round(i * phi)) * 360;
-        y = (i / points_numb - Math.round(i / points_numb)) * 360;
-
-        m = GridVdek(x, y);
-
-        for (var j = 0; j < dirList.length; j++ )
-        {
-            if (angle_between_v(dirList[j], m) < angleList[j] * Math.PI / 180)
-            {
-                print_point = 1;
-            }
-            else { print_point = 0; break; }
-        }
-        if (print_point == 1)
-        {
-            grid_points.push(m);
-
-        }
-        print_point = 0;
-    }
-
-    //---------------------------------------------------------------------------------------
-    // center zone calc
-    //---------------------------------------------------------------------------------------
-
-    var center_zone = [0,0,0];
-
-    for (var i = 0; i < grid_points.length; i++)
-    {
-        center_zone[0] += grid_points[i][0];
-        center_zone[1] += grid_points[i][1];
-        center_zone[2] += grid_points[i][2];
-    }
-    center_zone = NormalizeV(center_zone);
-
-
-    //---------------------------------------------------------------------------------------
-    // Download picture
-    //---------------------------------------------------------------------------------------
-
-    const svgRef = useRef<SVGSVGElement>(null);
-
-    const handleDownloadSVG = () => {
-      if (svgRef.current) {
-        const svgData = new XMLSerializer().serializeToString(svgRef.current);
-        const blob = new Blob([svgData], { type: 'image/svg+xml' });
-        const url = URL.createObjectURL(blob);
-  
-        const link = document.createElement('a');
-        link.href = url;
-        link.download = 'image.svg';
-        document.body.appendChild(link);
-        link.click();
-        document.body.removeChild(link);
-      }
-    };
-  
-    useEffect(() => {
-        let svgElement = svgRef.current;
-    
-        const handleWheel = (event: WheelEvent) => {
-          event.preventDefault();
-          const scaleAmount = event.deltaY > 0 ? 0.9 : 1.1; // Уменьшаем масштаб при прокрутке вниз, увеличиваем - при прокрутке вверх
-          if (svgElement) {
-            const point = svgElement.createSVGPoint();
-            point.x = 0;
-            point.y = 0;
-    
-            const ctm = svgElement.getScreenCTM();
-            if (ctm) {
-              const invertedPoint = point.matrixTransform(ctm.inverse());
-              const oldScale = 1;
-              const newScale = oldScale * scaleAmount;
-    
-              const dx = (point.x - svgElement.viewBox.baseVal.width / 2) * (1 - scaleAmount);
-              const dy = (point.y - svgElement.viewBox.baseVal.height / 2) * (1 - scaleAmount);
-    
-              svgElement.setAttribute('viewBox', `${svgElement.viewBox.baseVal.x - dx} ${svgElement.viewBox.baseVal.y - dy} ${svgElement.viewBox.baseVal.width * newScale} ${svgElement.viewBox.baseVal.height * newScale}`);
-            //   svgElement.setAttribute('viewBox', `${0} ${0} ${1} ${1}`);
-            //   svgElement.setAttribute('viewBox', '0 0 1 1');
-            }
-          }
-        };
-    
-        if (svgElement) {
-          svgElement.addEventListener('wheel', handleWheel, { passive: false });
-        }
-    
-        return () => {
-          if (svgElement) {
-            svgElement.removeEventListener('wheel', handleWheel);
-          }
-        };
-      }, [svgRef, isCACGraphVisible]);
 
     return (
         <div className={`${styles.main_container} ${theme.palette.mode == 'dark' ? styles.dark : ''}`}>
-
+            <Calculations />
             <h3 className={styles.lowScreen}>Размер окна должен быть не меньше чем 720x560</h3>
 
             {isCACGraphVisible ? (
@@ -371,43 +199,20 @@ export function Khokhlov_Gvozdik() {
                 </div>
 
             ) : (
-
-                <div className={styles.graph_container + ' ' + styles.commonContainer}>
-                            
-                    <div className={styles.interfaceTooltip}>
-
-                        <HelpCenterOutlinedIcon className={styles.question}/>
-                        <FileDownloadOutlinedIcon onClick={handleDownloadSVG} className={styles.question}/>
-                        
-                    </div>
-                        <ZoomedLambertGraph
-                            centerZone={center_zone}
-                            gridPoints={grid_points}
-                            // gridColor={grid_color}
-                            // polygonColor={poly_color}
-                            setRZ={setRZ}
-                            svgRef={svgRef}
-                        />
-                
-                </div>
+                <GraphContainer />
             )}
 
             <div className={styles.cac_fish_container + ' ' + styles.commonContainer}>
-
                 <ButtonGroupWithLabel label={'Change show mode'}>
                     <CACGraphButton mode='CAC' changeGraph={() => handleButtonSelection('CAC')}/>
                     <CACGraphButton mode='Fisher' changeGraph={() => handleButtonSelection('Fisher')}/>
                 </ButtonGroupWithLabel>
-                
                 <InterpretationSetter dataToShow={dataToShow} />
-
             </div>        
 
             <CACTable dataToShow={dataToShow}/> 
-
             <CACResTable dataToShow={dataToShow}/>  
             
-
             <div className={styles.container + ' ' + styles.commonContainer}>
 
                 <div className={styles.interfaceTooltip}>
@@ -429,6 +234,8 @@ export function Khokhlov_Gvozdik() {
         </div>
     );
 }
+
+
 
 
 
@@ -464,3 +271,17 @@ export function Khokhlov_Gvozdik() {
 
 // mouse zone select of points don`t work
 // drag on dot turn on random point. del it
+
+
+
+
+
+
+
+
+  
+
+    
+
+
+

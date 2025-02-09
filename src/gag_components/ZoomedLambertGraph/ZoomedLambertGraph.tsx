@@ -15,7 +15,7 @@ import { setCurrentDIRid } from '../../services/reducers/parsedData';
 // import { Rumbs } from "./rumbs";
 import InterpretationSetter from '../../../src/pages/DIRPage/InterpretationSetter';
 import { DegreeGrid } from "./degreeGrid";
-
+import { setRZ } from '../../services/reducers/cacParams';
 import styles from "./ZoomedLabertGraph.module.scss" 
 import { 
     addInterpretation, 
@@ -53,7 +53,6 @@ interface HGGraph {
     gridPoints: number[][],
     // gridColor: string,
     // polygonColor: string,
-    setRZ: React.Dispatch<React.SetStateAction<number>>;
     svgRef?: React.RefObject<SVGSVGElement>;
 }
 
@@ -61,7 +60,6 @@ interface HGGraph {
 export function ZoomedLambertGraph({
     centerZone,
     gridPoints,
-    setRZ,
     svgRef,
 }: HGGraph) {
 
@@ -107,11 +105,11 @@ export function ZoomedLambertGraph({
 
 
     let gmaxRad: number = 888;
-
+    
     useEffect(() => {
         // Логика для вычисления результатов 2 на основе calculationResult1
         
-        setRZ(gmaxRad);
+        dispatch(setRZ(gmaxRad));
       }, [gmaxRad, centerZone]);
 
     // setRZ(gmaxRad);
@@ -454,13 +452,6 @@ export function ZoomedLambertGraph({
 
 
     
-
-
-
-
-
-
-
 
 
 

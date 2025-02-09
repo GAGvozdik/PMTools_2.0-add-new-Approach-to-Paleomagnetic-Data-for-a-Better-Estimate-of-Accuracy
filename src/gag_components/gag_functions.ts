@@ -144,56 +144,56 @@ export function GeoVdek(phiAngle: number, lmbdAngle: number)
 
 
     if (phi > 0 && lmbd >= 0 && lmbd <= 90) {
-        console.log(1);
+        // console.log(1);
         dir = RotateAroundX(dir, -phi);
         dir = RotateAroundZ(dir, lmbd);
         return dir;
     }
 
     if (phi < 0 && lmbd >= 0 && lmbd <= 90) {
-        console.log(2);
+        // console.log(2);
         dir = RotateAroundX(dir, -phi);
         dir = RotateAroundZ(dir, lmbd);
         return dir;
     }
 
     if (phi > 0 && lmbd > 90 && lmbd <= 180) {
-        console.log(3);
+        // console.log(3);
         dir = RotateAroundX(dir, -phi);
         dir = RotateAroundZ(dir, lmbd);
         return dir;
     }
 
     if (phi < 0 && lmbd > 90 && lmbd <= 180) {
-        console.log(4);
+        // console.log(4);
         dir = RotateAroundX(dir, -phi);
         dir = RotateAroundZ(dir, lmbd);
         return dir;
     }
 
     if (phi > 0 && lmbd > 180 && lmbd <= 270) {
-        console.log(5);
+        // console.log(5);
         dir = RotateAroundX(dir, -phi);
         dir = RotateAroundZ(dir, lmbd);
         return dir;
     }
 
     if (phi < 0 && lmbd > 180 && lmbd <= 270) {
-        console.log(6);
+        // console.log(6);
         dir = RotateAroundX(dir, -phi);
         dir = RotateAroundZ(dir, lmbd);
         return dir;
     }
 
     if (phi > 0 && lmbd > 270 && lmbd <= 360) {
-        console.log(7);
+        // console.log(7);
         dir = RotateAroundX(dir, -phi);
         dir = RotateAroundZ(dir, lmbd);
         return dir;
     }
 
     if (phi < 0 && lmbd > 270 && lmbd <= 360) {
-        console.log(8);
+        // console.log(8);
         dir = RotateAroundX(dir, -phi);
         dir = RotateAroundZ(dir, lmbd);
         return dir;
@@ -223,7 +223,7 @@ export function DekVgeo(point: number[])
 
         phi = angle_between_v([dir[0], dir[1], dir[2]], [dir[0], dir[1], 0]) * 180 / Math.PI;
         lmbd = angle_between_v([0, -1, 0], [dir[0], dir[1], 0])  * 180 / Math.PI;
-        console.log(1);
+        // console.log(1);
         return [phi, lmbd];
     }
 
@@ -231,7 +231,7 @@ export function DekVgeo(point: number[])
 
         phi = -angle_between_v([dir[0], dir[1], dir[2]], [dir[0], dir[1], 0]) * 180 / Math.PI;
         lmbd = angle_between_v([0, -1, 0], [dir[0], dir[1], 0]) * 180 / Math.PI;
-        console.log(2);
+        // console.log(2);
         return [phi, lmbd];
     }
 
@@ -239,7 +239,7 @@ export function DekVgeo(point: number[])
 
         phi = angle_between_v([dir[0], dir[1], dir[2]], [dir[0], dir[1], 0]) * 180 / Math.PI;
         lmbd = angle_between_v([0, -1, 0], [dir[0], dir[1], 0]) * 180 / Math.PI;
-        console.log(3);
+        // console.log(3);
         return [phi, lmbd];
     }
 
@@ -247,7 +247,7 @@ export function DekVgeo(point: number[])
 
         phi = -angle_between_v([dir[0], dir[1], dir[2]], [dir[0], dir[1], 0]) * 180 / Math.PI;
         lmbd =  angle_between_v([0, -1, 0], [dir[0], dir[1], 0]) * 180 / Math.PI;
-        console.log(4);
+        // console.log(4);
         return [phi, lmbd];
     }
 
@@ -255,7 +255,7 @@ export function DekVgeo(point: number[])
 
         phi = angle_between_v([dir[0], dir[1], dir[2]], [dir[0], dir[1], 0]) * 180 / Math.PI;
         lmbd =  90 + angle_between_v([0, -1, 0], [dir[0], dir[1], 0]) * 180 / Math.PI;
-        console.log(5);
+        // console.log(5);
         return [phi, lmbd];
     }
 
@@ -263,7 +263,7 @@ export function DekVgeo(point: number[])
 
         phi = -angle_between_v([dir[0], dir[1], dir[2]], [dir[0], dir[1], 0]) * 180 / Math.PI;
         lmbd = 90 + angle_between_v([0, -1, 0], [dir[0], dir[1], 0]) * 180 / Math.PI;
-        console.log(6);
+        // console.log(6);
         return [phi, lmbd];
     }
 
@@ -271,7 +271,7 @@ export function DekVgeo(point: number[])
 
         phi = angle_between_v([dir[0], dir[1], dir[2]], [dir[0], dir[1], 0]) * 180 / Math.PI;
         lmbd = 360 - angle_between_v([0, -1, 0], [dir[0], dir[1], 0]) * 180 / Math.PI;
-        console.log(7);
+        // console.log(7);
         return [phi, lmbd];
     }
 
@@ -279,7 +279,7 @@ export function DekVgeo(point: number[])
 
         phi = -angle_between_v([dir[0], dir[1], dir[2]], [dir[0], dir[1], 0]) * 180 / Math.PI;
         lmbd = 360 - angle_between_v([0, -1, 0], [dir[0], dir[1], 0]) * 180 / Math.PI;
-        console.log(8);
+        // console.log(8);
         return [phi, lmbd];
     }
     // TODO: if dir[0] = 0 || dir[1] == 0 ???!
@@ -994,7 +994,7 @@ export function centerToBack(input: number[], dir: number[]){
         let xrot = RotateAroundX(point, -angle_between_v(diryrot, [0, 0, 1]) * 180 / Math.PI);
         let yrot = RotateAroundY(xrot, angle_between_v([0, 0, 1], [dir[0], 0,dir[2]]) * 180 / Math.PI);
         point = yrot;
-        console.log(1);
+        // console.log(1);
         return point;
     }
 
@@ -1004,7 +1004,7 @@ export function centerToBack(input: number[], dir: number[]){
         let xrot = RotateAroundX(point, -angle_between_v(diryrot, [0, 0, 1]) * 180 / Math.PI);
         let yrot = RotateAroundY(xrot, (0 + angle_between_v([0, 0, 1], [dir[0], 0,dir[2]]) * 180 / Math.PI));
         point = yrot;
-        console.log(2);
+        // console.log(2);
         return point;
 
     }
@@ -1015,7 +1015,7 @@ export function centerToBack(input: number[], dir: number[]){
         let xrot = RotateAroundX(point, angle_between_v(diryrot, [0, 0, 1]) * 180 / Math.PI);
         let yrot = RotateAroundY(xrot, (0 + angle_between_v([0, 0, 1], [dir[0], 0,dir[2]]) * 180 / Math.PI));
         point = yrot;
-        console.log(3);
+        // console.log(3);
         // return [1, 1, 1];
         return point;
     }
@@ -1026,7 +1026,7 @@ export function centerToBack(input: number[], dir: number[]){
         let xrot = RotateAroundX(point, angle_between_v(diryrot, [0, 0, 1]) * 180 / Math.PI);
         let yrot = RotateAroundY(xrot, angle_between_v([0, 0, 1], [dir[0], 0,dir[2]]) * 180 / Math.PI);
         point = yrot;
-        console.log(4);
+        // console.log(4);
         // return [1, 1, 1];
         return point;
     }
@@ -1037,7 +1037,7 @@ export function centerToBack(input: number[], dir: number[]){
                     let xrot = RotateAroundX(point, -angle_between_v(diryrot, [0, 0, 1]) * 180 / Math.PI);
                     let yrot = RotateAroundY(xrot, -angle_between_v([0, 0, 1], [dir[0], 0,dir[2]]) * 180 / Math.PI);
                     point = yrot;
-                    console.log(5);
+                    // console.log(5);
                     // return [0, 0, 1];
                     return point;
                 }
@@ -1047,7 +1047,7 @@ export function centerToBack(input: number[], dir: number[]){
         let xrot = RotateAroundX(point, angle_between_v(diryrot, [0, 0, 1]) * 180 / Math.PI);
         let yrot = RotateAroundY(xrot, -angle_between_v([0, 0, 1], [dir[0], 0,dir[2]]) * 180 / Math.PI);
         point = yrot;
-        console.log(6);
+        // console.log(6);
         // return [1, 1, 1];
         return point;
     }
@@ -1057,7 +1057,7 @@ export function centerToBack(input: number[], dir: number[]){
                     let xrot = RotateAroundX(point, -angle_between_v(diryrot, [0, 0, 1]) * 180 / Math.PI);
                     let yrot = RotateAroundY(xrot, -(0 + angle_between_v([0, 0, 1], [dir[0], 0,dir[2]]) * 180 / Math.PI));
                     point = yrot;
-                    console.log(7);
+                    // console.log(7);
                     
                     return point; 
                 }
@@ -1067,7 +1067,7 @@ export function centerToBack(input: number[], dir: number[]){
         let xrot = RotateAroundX(point, angle_between_v(diryrot, [0, 0, 1]) * 180 / Math.PI);
         let yrot = RotateAroundY(xrot, -(0 + angle_between_v([0, 0, 1], [dir[0], 0,dir[2]]) * 180 / Math.PI));
         point = yrot;
-        console.log(8);
+        // console.log(8);
         
         return point;
     }
