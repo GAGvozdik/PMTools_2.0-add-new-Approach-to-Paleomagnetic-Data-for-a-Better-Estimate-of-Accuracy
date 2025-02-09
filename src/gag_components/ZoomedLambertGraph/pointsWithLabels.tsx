@@ -41,18 +41,18 @@ interface PointsWithLabels {
 }
 
 export function PointsWithLabels({
-                                points,
-                                radius,
-                                color,
-                                labelsValues,
-                                type,
-                                fontSize,
-                                xShift,
-                                yShift,
-                                width,
-                                meanDir
-                            }: PointsWithLabels) {
-   
+        points,
+        radius,
+        color,
+        labelsValues,
+        type,
+        fontSize,
+        xShift,
+        yShift,
+        width,
+        meanDir
+    }: PointsWithLabels) {
+
     
     const theme = useTheme();
     //---------------------------------------------------------------------------------------
@@ -94,12 +94,6 @@ export function PointsWithLabels({
             }
         }
     }
-
-
-
-
-
-
 
     return (
         <g>

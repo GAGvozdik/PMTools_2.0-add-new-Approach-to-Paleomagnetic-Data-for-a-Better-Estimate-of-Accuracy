@@ -2,24 +2,28 @@ import styles from "./khokhlov-gvozdik.module.scss"
 import { generateGrid, calculateCenterZone } from "./gridCalculation";
 import { useAppDispatch, useAppSelector } from '../../services/store/hooks';
 import React, { createElement as e, useEffect, useState, useRef } from 'react';
-import { fisherStat } from "../gag_functions";
+import { fisherStat, get_quantiles } from "../gag_functions";
 import { 
     setAlpha95,
     setGridPoints,
     setCenterZone,
-    setAlpha95Square
+    setAlpha95Square,
+    setAngleList
 } from '../../services/reducers/cacParams';
 
 export function Calculations() {
 
     const dispatch = useAppDispatch();
-
     const { 
+        selectedD,
+        selectedP,
         selectedNumber,
         dirList,
         angleList,
+        apc,
+        dirNumber,  
+        stepList
     } = useAppSelector(state => state.cacParamsReducer);
-
     //-----------------------------------------------------------------------
     // fisher stat
     //-----------------------------------------------------------------------
@@ -46,6 +50,19 @@ export function Calculations() {
             dispatch(setCenterZone(newCenterZone));
         }
     }, [selectedNumber, dirList, angleList, dispatch]); // Зависимости
+
+    //-----------------------------------------------------------------------
+    // 
+    //-----------------------------------------------------------------------
+    useEffect(() => {
+        if (stepList && stepList.length > 0) { // ✅ Проверяем, что stepList определён
+            let quantiles = get_quantiles(selectedD, apc, selectedP);
+            let new_ang_list = stepList.map(step => quantiles[step - 3]); // ✅ Безопасная работа с `stepList`
+
+            dispatch(setAngleList(new_ang_list));
+        }
+    }, [selectedD, apc, selectedP, dirNumber, stepList, dispatch]);
+
 
     return null
 }

@@ -40,13 +40,11 @@ export function generateGrid(
                 break;
             }
         }
-
         if (printPoint === 1) {
             gridPoints.push(m);
         }
         printPoint = 0;
     }
-
     return gridPoints;
 }
 

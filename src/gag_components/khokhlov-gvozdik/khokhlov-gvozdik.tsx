@@ -24,7 +24,7 @@ import {
     setDirNumber,
     setZoneSquare,
     setProbability,
-    setIsCACGraphVisible,
+    setIsCACGraphVisible, setStepList
 } from '../../services/reducers/cacParams';
 
 import {
@@ -36,7 +36,7 @@ import {
 } from "../gag_functions";
 
 export function Khokhlov_Gvozdik() {
-
+    const dispatch = useAppDispatch();
     const { 
         centerZone,
         selectedD,
@@ -50,11 +50,11 @@ export function Khokhlov_Gvozdik() {
         probability,
         isCACGraphVisible,
         RZ,
-        alpha95Square,
+        alpha95Square, 
+        stepList
     } = useAppSelector(state => state.cacParamsReducer);
 
     const [dataToShow, setDataToShow] = useState<IDirData | null>(null);
-    let [stepList, setStepList] = useState<number[] | undefined >([]);
     const [showUploadModal, setShowUploadModal] = useState<boolean>(false);
 
     //---------------------------------------------------------------------------------------
@@ -62,43 +62,62 @@ export function Khokhlov_Gvozdik() {
     //---------------------------------------------------------------------------------------
 
     useEffect(() => {
-        let quantiles = get_quantiles(selectedD, apc, selectedP);
-        let new_ang_list = [];
-        
-        if (stepList != undefined){
-            for ( let i = 0; i < dirNumber; i ++ ) {
-                new_ang_list.push(quantiles[stepList[i] - 3]);
-            }
-            dispatch(setAngleList(new_ang_list));
+        if (dataToShow?.interpretations) {
+            const steps = dataToShow.interpretations.map(interpretation => interpretation.stepCount);
+            dispatch(setStepList(steps || [])); 
         }
-    }, [selectedD, apc, selectedP, dirNumber, stepList]);
-
-    const [selectedButton, setSelectedButton] = useState<string | null>(null);
-
-    const handleButtonSelection = (mode: string) => {
-        if (mode === 'Fisher' && !isCACGraphVisible) {
-            setSelectedButton(mode);
-            dispatch(setIsCACGraphVisible(true));
-        } else if (mode === 'CAC' && isCACGraphVisible) {
-            setSelectedButton(mode);
-            dispatch(setIsCACGraphVisible(false));
-        }
-    };
-    
-    stepList = dataToShow?.interpretations.map(interpretation => interpretation.stepCount);
+    }, [dataToShow, dispatch]); 
 
     let igeoList: number[] | undefined = dataToShow?.interpretations.map(interpretation => interpretation.Igeo);
     let dgeoList: number[] | undefined = dataToShow?.interpretations.map(interpretation => interpretation.Dgeo);
     let idList: number[] | undefined = dataToShow?.interpretations.map(interpretation => interpretation.id);
-    
     let paleo_data: number[] = [];
-    
+
+    useEffect(() => {
+        if (!dataToShow) setShowUploadModal(true);
+        else setShowUploadModal(false);
+    }, [dataToShow]);
+
+    const { selectedDirectionsIDs } = useAppSelector(state => state.dirPageReducer);
+
+    const getData = () => {
+        
+        let dirNumber = 0;
+        let dirList: [number, number, number][] = [];
+
+        if (igeoList != undefined && dgeoList != undefined && idList != undefined){
+
+            dirNumber = igeoList.length;
+
+            for ( let i = 0; i < igeoList.length; i ++ ) {   
+                
+                if (selectedDirectionsIDs != null){
+                    for ( let j = 0; j < selectedDirectionsIDs.length; j ++ ) { 
+                        if (idList[i] == selectedDirectionsIDs[j]){
+                            paleo_data = NormalizeV(GeoVdek(igeoList[i], dgeoList[i]));
+                            // НУЖНО ЛИ НОРМАЛИЗОВЫВАТЬ???
+                            dirList.push([paleo_data[0], paleo_data[1], paleo_data[2]]);
+                        }
+                    }
+                }
+            }
+        }
+        dispatch(setDirList(dirList));
+        dispatch(setStepList(stepList));
+        dispatch(setDirNumber(dirNumber));
+        dispatch(setAngleList([0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]));
+        dispatch(setMeanDir(fisherStat(dirList)[0]));
+        dispatch(setZoneSquare(2 * Math.PI * (1 - Math.cos(RZ * Math.PI / 180))));
+        dispatch(setStatisticsMode('fisher'));
+        dispatch(setProbability(Math.pow(selectedP / 1000, dirList.length)));
+    };
+
     //---------------------------------------------------------------------------------------
     // Ванин код из DIRTable
     //---------------------------------------------------------------------------------------
     
     const theme = useTheme();
-    const dispatch = useAppDispatch();
+    
     const widthLessThan720 = useMediaQuery({ maxWidth: 719 });
     const heightLessThan560 = useMediaQuery({ maxHeight: 559 });
     const unsupportedResolution = widthLessThan720 || heightLessThan560;
@@ -148,43 +167,17 @@ export function Khokhlov_Gvozdik() {
         RZ
     ]);
 
-    useEffect(() => {
-      if (!dataToShow) setShowUploadModal(true);
-      else setShowUploadModal(false);
-    }, [dataToShow]);
 
-    const { selectedDirectionsIDs } = useAppSelector(state => state.dirPageReducer);
+    const [selectedButton, setSelectedButton] = useState<string | null>(null);
 
-    const getData = () => {
-        
-        let dirNumber = 0;
-        let dirList: [number, number, number][] = [];
-
-        if (igeoList != undefined && dgeoList != undefined && idList != undefined){
-
-            dirNumber = igeoList.length;
-
-            for ( let i = 0; i < igeoList.length; i ++ ) {   
-                
-                if (selectedDirectionsIDs != null){
-                    for ( let j = 0; j < selectedDirectionsIDs.length; j ++ ) { 
-                        if (idList[i] == selectedDirectionsIDs[j]){
-                            paleo_data = NormalizeV(GeoVdek(igeoList[i], dgeoList[i]));
-                            // НУЖНО ЛИ НОРМАЛИЗОВЫВАТЬ???
-                            dirList.push([paleo_data[0], paleo_data[1], paleo_data[2]]);
-                        }
-                    }
-                }
-            }
+    const handleButtonSelection = (mode: string) => {
+        if (mode === 'Fisher' && !isCACGraphVisible) {
+            setSelectedButton(mode);
+            dispatch(setIsCACGraphVisible(true));
+        } else if (mode === 'CAC' && isCACGraphVisible) {
+            setSelectedButton(mode);
+            dispatch(setIsCACGraphVisible(false));
         }
-        dispatch(setDirList(dirList));
-        setStepList(stepList);
-        dispatch(setDirNumber(dirNumber));
-        dispatch(setAngleList([0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]));
-        dispatch(setMeanDir(fisherStat(dirList)[0]));
-        dispatch(setZoneSquare(2 * Math.PI * (1 - Math.cos(RZ * Math.PI / 180))));
-        dispatch(setStatisticsMode('fisher'));
-        dispatch(setProbability(Math.pow(selectedP / 1000, dirList.length)));
     };
 
     return (
@@ -230,16 +223,9 @@ export function Khokhlov_Gvozdik() {
                     </div>
                 </div>
             </div>
-
         </div>
     );
 }
-
-
-
-
-
-
 
 
 // TODO 
@@ -251,7 +237,6 @@ export function Khokhlov_Gvozdik() {
 // экспорт таблицы результатов
 
 // подписи штрихов сетки в полярной области слишком близко
-
 
 // в деплое вылет при расчетах без первой строчки
 

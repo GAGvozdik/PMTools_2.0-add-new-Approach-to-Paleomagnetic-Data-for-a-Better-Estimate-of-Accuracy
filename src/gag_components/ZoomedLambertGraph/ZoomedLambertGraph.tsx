@@ -1,8 +1,4 @@
-
-
-
-    import React, { useState, useEffect } from 'react';
-
+import React, { useState, useEffect } from 'react';
 import { useTheme } from '@mui/material/styles';
 import { Cutoff } from "../../utils/GlobalTypes";
 import { DotsData, GraphSettings, MeanDirection, TooltipDot } from "../../utils/graphs/types";
@@ -114,13 +110,6 @@ export function ZoomedLambertGraph({
 
     // setRZ(gmaxRad);
 
-
-      
-      
-
-
-      
-
     // to see all sphere
     // fullViewBoxSize = '-0.5 -0.5 1 1';
     // viewBoxSize = '-0.5 -0.5 1 1';
@@ -135,9 +124,6 @@ export function ZoomedLambertGraph({
     //     </div>
     //   );
     // }
-
-
-
 
     //---------------------------------------------------------------------------------------
     // CENTER ZONE
@@ -218,9 +204,7 @@ export function ZoomedLambertGraph({
         }
     }
     
-
     // maxRad
-
 
     let maxRPt: number[] = rotationCenterZone;
     if (onePointNumb != -1){
@@ -228,7 +212,6 @@ export function ZoomedLambertGraph({
 
     }
     gmaxRad = angle_between_v(rotationCenterZone, maxRPt) * 180 / Math.PI;
-
 
     // if (gmaxRad > 180) { gmaxRad -= 180; }
 

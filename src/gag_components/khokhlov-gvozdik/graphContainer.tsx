@@ -6,7 +6,6 @@ import { useAppDispatch, useAppSelector } from '../../services/store/hooks';
 import React, { createElement as e, useEffect, useState, useRef } from 'react';
 import FileDownloadOutlinedIcon from '@mui/icons-material/FileDownloadOutlined';
 
-
 export function GraphContainer() {
 
     const { 
