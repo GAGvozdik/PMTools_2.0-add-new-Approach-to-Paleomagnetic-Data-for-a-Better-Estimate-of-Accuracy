@@ -10,10 +10,24 @@ import {
     setAlpha95Square,
     setAngleList
 } from '../../services/reducers/cacParams';
+import { NormalizeV, GeoVdek } from "../gag_functions";
+import {  setDirList, setDirNumber, setZoneSquare, setProbability } from '../../services/reducers/cacParams';
 
-export function Calculations() {
+interface CalculationsProps {
+    igeoList: number[] | undefined;
+    dgeoList: number[] | undefined;
+    idList: number[] | undefined;
+    selectedDirectionsIDs: number[] | null;
+    stepList: number[] | undefined;
+    dispatch: any;
+}
 
-    const dispatch = useAppDispatch();
+export function Calculations({ igeoList, dgeoList, idList, selectedDirectionsIDs, stepList, dispatch }: CalculationsProps) {
+
+
+// export function Calculations() {
+
+    // const dispatch = useAppDispatch();
     const { 
         selectedD,
         selectedP,
@@ -22,7 +36,7 @@ export function Calculations() {
         angleList,
         apc,
         dirNumber,  
-        stepList
+        // stepList
     } = useAppSelector(state => state.cacParamsReducer);
     //-----------------------------------------------------------------------
     // fisher stat
@@ -49,20 +63,19 @@ export function Calculations() {
             const newCenterZone = calculateCenterZone(newGridPoints);
             dispatch(setCenterZone(newCenterZone));
         }
-    }, [selectedNumber, dirList, angleList, dispatch]); // Зависимости
+    }, [selectedNumber, dirList, angleList, dispatch]); 
 
     //-----------------------------------------------------------------------
     // 
     //-----------------------------------------------------------------------
     useEffect(() => {
-        if (stepList && stepList.length > 0) { // ✅ Проверяем, что stepList определён
+        if (stepList && stepList.length > 0) { 
             let quantiles = get_quantiles(selectedD, apc, selectedP);
-            let new_ang_list = stepList.map(step => quantiles[step - 3]); // ✅ Безопасная работа с `stepList`
+            let new_ang_list = stepList.map(step => quantiles[step - 3]); 
 
             dispatch(setAngleList(new_ang_list));
         }
     }, [selectedD, apc, selectedP, dirNumber, stepList, dispatch]);
-
 
     return null
 }

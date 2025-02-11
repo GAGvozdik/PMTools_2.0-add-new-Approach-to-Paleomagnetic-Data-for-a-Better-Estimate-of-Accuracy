@@ -182,7 +182,14 @@ export function Khokhlov_Gvozdik() {
 
     return (
         <div className={`${styles.main_container} ${theme.palette.mode == 'dark' ? styles.dark : ''}`}>
-            <Calculations />
+            <Calculations 
+                igeoList={dataToShow?.interpretations.map(interpretation => interpretation.Igeo)}
+                dgeoList={dataToShow?.interpretations.map(interpretation => interpretation.Dgeo)}
+                idList={dataToShow?.interpretations.map(interpretation => interpretation.id)} 
+                selectedDirectionsIDs={selectedDirectionsIDs}
+                stepList={stepList}
+                dispatch={dispatch}
+            />
             <h3 className={styles.lowScreen}>Размер окна должен быть не меньше чем 720x560</h3>
 
             {isCACGraphVisible ? (

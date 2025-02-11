@@ -284,7 +284,6 @@ export function ZoomedLambertGraph({
                 />
             }
 
-
             {/* Закраска зоны пересечения кругов */}
             { isVis && 
                 <polygon 
@@ -309,8 +308,6 @@ export function ZoomedLambertGraph({
                 />
             ))}
 
-
-
             {/* Круги вокруг палеонаправлений */}
             { smallCircles.map((circles) => (
                 <Dot 
@@ -326,7 +323,6 @@ export function ZoomedLambertGraph({
                     settings={dotSettings}
                 />
             ))}  
-
 
             {/* Точка max rad */}
             <Dot 
@@ -369,7 +365,6 @@ export function ZoomedLambertGraph({
                 settings={dotSettings}
             />
 
-
             {/* Круг альфа 95 */}
             <polyline 
                 points={ make_coords(PlotCircle([0, 0, 1], alpha95, 90)) } 
@@ -378,7 +373,6 @@ export function ZoomedLambertGraph({
                 strokeWidth={alphaCircleWidth} 
                 strokeDasharray={"0.01px, 0.003px"}
             />
-
 
             {/* Круг альфа 95
             <polyline 
@@ -389,7 +383,6 @@ export function ZoomedLambertGraph({
                 strokeDasharray={"0.01px, 0.003px"}
             /> */}
 
-            
             { degreeGrid.map((line) => (
                 <polyline 
                     points={ make_coords(line) } 
@@ -399,7 +392,6 @@ export function ZoomedLambertGraph({
                     strokeDasharray={"0.01px, 0.003px"}
                 />
             ))}
-
 
             {/* Истинное направление по Хохлову */}
             <Dot 
