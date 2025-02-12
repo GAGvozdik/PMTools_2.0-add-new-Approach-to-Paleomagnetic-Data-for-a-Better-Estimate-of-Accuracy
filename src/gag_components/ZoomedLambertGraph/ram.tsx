@@ -1,0 +1,56 @@
+import { useTheme } from '@mui/material/styles';
+
+interface RamProps {
+    scale: number;
+    viewBox: { x: number; y: number; width: number; height: number };
+}
+
+export function Ram({ scale, viewBox }: RamProps) {
+    const theme = useTheme();
+
+    const baseSize = 0.4; // Фиксированный размер рамки на экране
+
+    // Новый способ расчета рамки, чтобы она оставалась неизменной
+    const lamberWidth = (baseSize * viewBox.width) / 1; // Теперь зависим от viewBox.width
+
+    // Центр viewBox
+    const centerX = viewBox.x + viewBox.width / 2;
+    const centerY = viewBox.y + viewBox.height / 2;
+
+    // Координаты рамки относительно центра
+    const ram = [
+        [centerX + lamberWidth, centerY + lamberWidth],
+        [centerX + lamberWidth, centerY - lamberWidth],
+        [centerX - lamberWidth, centerY - lamberWidth],
+        [centerX - lamberWidth, centerY + lamberWidth],
+        [centerX + lamberWidth, centerY + lamberWidth]
+    ]
+        .map(([x, y]) => `${x},${y}`)
+        .join(' ');
+    const ram1 = [
+        [centerX + lamberWidth * 1.5, centerY + lamberWidth * 1.5],
+        [centerX + lamberWidth * 1.5, centerY - lamberWidth * 1.5],
+        [centerX - lamberWidth * 1.5, centerY - lamberWidth * 1.5],
+        [centerX - lamberWidth * 1.5, centerY + lamberWidth * 1.5],
+        [centerX + lamberWidth * 1.5, centerY + lamberWidth * 1.5]
+    ]
+        .map(([x, y]) => `${x},${y}`)
+        .join(' ');
+
+    return (
+        <g>
+            <polyline
+                points={ram}
+                stroke={theme.palette.mode === 'dark' ? 'grey' : 'black'}
+                fill="none"
+                strokeWidth={viewBox.width * 0.006} // Толщина тоже пропорциональна viewBox
+            />
+            <polyline
+                points={ram1}
+                stroke={theme.palette.mode === 'dark' ? '#424242' : 'white'}
+                fill="none"
+                strokeWidth={lamberWidth} // Толщина тоже пропорциональна viewBox
+            />
+        </g>
+    );
+}

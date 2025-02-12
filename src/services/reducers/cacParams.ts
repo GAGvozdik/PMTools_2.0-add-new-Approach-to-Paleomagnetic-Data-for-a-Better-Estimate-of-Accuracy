@@ -34,6 +34,8 @@ interface IInitialState {
 
         gridPoints: number[][];
         alpha95Square: number;
+        scale: number;
+        viewBox: { x: number; y: number; width: number; height: number };
     interpretation: number;
 };
 
@@ -65,6 +67,8 @@ const initialState: IInitialState = {
         gridPoints: [],
         centerZone: [],
         alpha95Square: 0,
+        scale: 1,
+        viewBox: { x: -0.5, y: -0.5, width: 1, height: 1 },
 
     interpretation: 0,
 
@@ -161,6 +165,12 @@ const cacParams = createSlice({
     setAlpha95Square(state, action) {
         state.alpha95Square = action.payload;
     },
+    setScale(state, action) {
+        state.scale = action.payload;
+    },
+    setViewBox(state, action) {
+        state.viewBox = action.payload;
+    },
 
   },
 
@@ -189,6 +199,8 @@ export const {
     setIsGrid,
     setIsVis,
     setAlpha95Square,
+    setViewBox,
+    setScale,
 
 } = cacParams.actions;
 

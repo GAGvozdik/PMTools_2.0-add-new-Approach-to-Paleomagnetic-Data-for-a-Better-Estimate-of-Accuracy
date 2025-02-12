@@ -31,6 +31,7 @@ import {
 } from "../gag_functions";
 import { Axis, Data, Dot } from "../../components/Common/Graphs";
 import {PointsWithLabels} from "./pointsWithLabels";
+import {Ram} from "./ram";
 import { PlaneData, DotSettings, DotType} from "../../utils/graphs/types";
 import { useTheme } from '@mui/material/styles';
 
@@ -45,14 +46,18 @@ interface degreeGraticules {
     parallelsCount: number,
     meanDir: number[],
     gridColor: string,
+    scale: number,
+    viewBox: { x: number; y: number; width: number; height: number };
 }
 
 export function DegreeGrid({
         viewBoxSize,
+        viewBox,
         meridianCount,
         parallelsCount,
         meanDir,
         gridColor,
+        scale,
     }: degreeGraticules) {
    
     const theme = useTheme();
@@ -263,11 +268,6 @@ export function DegreeGrid({
     return (
         <g>
 
-
-
-
-
-
             {/* ------------------------------------------- */}
             {/* ------------------MERIDIANS---------------- */}
             {/* ------------------------------------------- */}
@@ -352,10 +352,7 @@ export function DegreeGrid({
                 strokeWidth={width / 100} 
             />
 
-
-
-
-
+            <Ram scale={scale} viewBox={viewBox}/>
 
         </g>
     );

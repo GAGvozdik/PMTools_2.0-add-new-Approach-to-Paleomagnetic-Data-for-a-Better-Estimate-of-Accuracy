@@ -49,7 +49,10 @@ interface HGGraph {
     gridPoints: number[][],
     // gridColor: string,
     // polygonColor: string,
-    svgRef?: React.RefObject<SVGSVGElement>;
+    viewBox: { x: number, y: number, width: number, height: number },
+    scale: number,
+    svgRef?: React.RefObject<SVGSVGElement>,
+
 }
 
 
@@ -57,6 +60,8 @@ export function ZoomedLambertGraph({
     centerZone,
     gridPoints,
     svgRef,
+    viewBox,
+    scale
 }: HGGraph) {
 
     const { 
@@ -271,7 +276,7 @@ export function ZoomedLambertGraph({
     
     return (
         <div>
-        <svg className={styles.graph_interface} ref={svgRef} viewBox={ fullViewBoxSize }>
+        <svg className={styles.graph_interface} ref={svgRef} viewBox={`${viewBox.x} ${viewBox.y} ${viewBox.width} ${viewBox.height}`}>
             {/* <InterpretationSetter dataToShow={dataToShow} /> */}
             {/* Градусная сетка */}
             { isGrid && 
@@ -281,6 +286,8 @@ export function ZoomedLambertGraph({
                     parallelsCount={parallelsCount}
                     meanDir={meanDir}
                     gridColor={gridColor}
+                    scale={scale}
+                    viewBox={viewBox}
                 />
             }
 
@@ -390,6 +397,7 @@ export function ZoomedLambertGraph({
                     fill={'none'}
                     strokeWidth={alphaCircleWidth} 
                     strokeDasharray={"0.01px, 0.003px"}
+                    scale={scale}
                 />
             ))}
 
