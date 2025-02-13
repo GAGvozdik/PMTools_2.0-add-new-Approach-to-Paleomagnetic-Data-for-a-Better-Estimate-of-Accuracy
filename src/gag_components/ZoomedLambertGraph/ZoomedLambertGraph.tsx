@@ -47,10 +47,6 @@ const dotSettings: DotSettings = {
 interface HGGraph {
     centerZone: number[],
     gridPoints: number[][],
-    // gridColor: string,
-    // polygonColor: string,
-    viewBox: { x: number, y: number, width: number, height: number },
-    scale: number,
     svgRef?: React.RefObject<SVGSVGElement>,
 
 }
@@ -60,8 +56,6 @@ export function ZoomedLambertGraph({
     centerZone,
     gridPoints,
     svgRef,
-    viewBox,
-    scale
 }: HGGraph) {
 
     const { 
@@ -74,6 +68,8 @@ export function ZoomedLambertGraph({
         isGrid,
         isDegreeVisible,
         isVis,
+        scale, 
+        viewBox 
     } = useAppSelector(state => state.cacParamsReducer);
 
     const centerZoneColor = '#2b3bb3';
@@ -286,8 +282,6 @@ export function ZoomedLambertGraph({
                     parallelsCount={parallelsCount}
                     meanDir={meanDir}
                     gridColor={gridColor}
-                    scale={scale}
-                    viewBox={viewBox}
                 />
             }
 

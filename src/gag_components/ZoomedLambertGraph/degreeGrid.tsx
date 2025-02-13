@@ -46,18 +46,14 @@ interface degreeGraticules {
     parallelsCount: number,
     meanDir: number[],
     gridColor: string,
-    scale: number,
-    viewBox: { x: number; y: number; width: number; height: number };
 }
 
 export function DegreeGrid({
         viewBoxSize,
-        viewBox,
         meridianCount,
         parallelsCount,
         meanDir,
         gridColor,
-        scale,
     }: degreeGraticules) {
    
     const theme = useTheme();
@@ -352,7 +348,7 @@ export function DegreeGrid({
                 strokeWidth={width / 100} 
             />
 
-            <Ram scale={scale} viewBox={viewBox}/>
+            <Ram/>
 
         </g>
     );

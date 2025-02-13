@@ -5,6 +5,7 @@ import { generateGrid, calculateCenterZone } from "./gridCalculation";
 import { useAppDispatch, useAppSelector } from '../../services/store/hooks';
 import React, { createElement as e, useEffect, useState, useRef } from 'react';
 import FileDownloadOutlinedIcon from '@mui/icons-material/FileDownloadOutlined';
+import { setRZ, setScale, setViewBox } from '../../services/reducers/cacParams';
 
 export function GraphContainer() {
 
@@ -12,6 +13,8 @@ export function GraphContainer() {
         centerZone,
         gridPoints,
         isCACGraphVisible,
+        scale, 
+        viewBox 
     } = useAppSelector(state => state.cacParamsReducer);
 
     //---------------------------------------------------------------------------------------
@@ -19,8 +22,7 @@ export function GraphContainer() {
     //---------------------------------------------------------------------------------------
 
     const svgRef = useRef<SVGSVGElement>(null);
-    const [scale, setScale] = useState(1);
-    const [viewBox, setViewBox] = useState({ x: -0.5, y: -0.5, width: 1, height: 1 });
+    const dispatch = useAppDispatch();
 
     const handleDownloadSVG = () => {
         if (svgRef.current) {
@@ -48,13 +50,13 @@ export function GraphContainer() {
         const newWidth = viewBox.width * scaleAmount;
         const newHeight = viewBox.height * scaleAmount;
 
-        setScale(newScale);
-        setViewBox({
+        dispatch(setScale(newScale));
+        dispatch(setViewBox({
             x: centerX - newWidth / 2,
             y: centerY - newHeight / 2,
             width: newWidth,
             height: newHeight,
-        });
+        }));
     };
 
     useEffect(() => {
@@ -81,8 +83,6 @@ export function GraphContainer() {
                 centerZone={centerZone}
                 gridPoints={gridPoints}
                 svgRef={svgRef}
-                viewBox={viewBox}
-                scale={scale}
             />
         </div>
     )

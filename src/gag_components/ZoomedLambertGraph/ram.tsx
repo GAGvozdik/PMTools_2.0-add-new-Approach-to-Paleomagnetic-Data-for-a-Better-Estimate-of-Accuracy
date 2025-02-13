@@ -1,12 +1,14 @@
 import { useTheme } from '@mui/material/styles';
+import { useAppDispatch, useAppSelector } from '../../services/store/hooks';
 
-interface RamProps {
-    scale: number;
-    viewBox: { x: number; y: number; width: number; height: number };
-}
 
-export function Ram({ scale, viewBox }: RamProps) {
+export function Ram() {
     const theme = useTheme();
+
+    const { 
+        scale, 
+        viewBox
+    } = useAppSelector(state => state.cacParamsReducer);
 
     const baseSize = 0.4; // Фиксированный размер рамки на экране
 
