@@ -31,7 +31,7 @@ import {
 } from "../gag_functions";
 import { Axis, Data, Dot } from "../../components/Common/Graphs";
 import {PointsWithLabels} from "./pointsWithLabels";
-import {Ram} from "./ram";
+
 import { PlaneData, DotSettings, DotType} from "../../utils/graphs/types";
 import { useTheme } from '@mui/material/styles';
 
@@ -294,7 +294,7 @@ export function DegreeGrid({
             { merTicks.map((tick) => (
                 <polyline 
                     points={ make_coords(tick) } 
-                    stroke={ theme.palette.mode == 'dark' ? 'grey' : "black" }
+                    stroke={ theme.palette.mode == 'dark' ? 'grey' : "grey" }
                     fill={'none'}
                     strokeWidth={width / 80} 
                 />
@@ -330,7 +330,7 @@ export function DegreeGrid({
             { parTicks.map((tick) => (
                 <polyline 
                     points={ make_coords(tick) } 
-                    stroke={ theme.palette.mode == 'dark' ? 'grey' : "black" }
+                    stroke={ theme.palette.mode == 'dark' ? 'grey' : "grey" }
                     fill={'none'}
                     strokeWidth={width / 80} 
                 />
@@ -343,12 +343,12 @@ export function DegreeGrid({
             {/* ram */}
             <polyline 
                 points={ ram } 
-                stroke={ theme.palette.mode == 'dark' ? 'grey' : "black" }
+                stroke={ theme.palette.mode == 'dark' ? 'grey' : "grey" }
                 fill={'none'}
                 strokeWidth={width / 100} 
             />
 
-            <Ram/>
+            
 
         </g>
     );

@@ -1,14 +1,16 @@
 import { useTheme } from '@mui/material/styles';
 import { useAppDispatch, useAppSelector } from '../../services/store/hooks';
 
-
-export function Ram() {
+interface RamProps {
+    viewBox: { x: number; y: number; width: number; height: number }; 
+}
+export function Ram({viewBox}: RamProps) {
     const theme = useTheme();
 
-    const { 
-        scale, 
-        viewBox
-    } = useAppSelector(state => state.cacParamsReducer);
+    // const { 
+    //     scale, 
+    //     // viewBox
+    // } = useAppSelector(state => state.cacParamsReducer);
 
     const baseSize = 0.4; // Фиксированный размер рамки на экране
 
@@ -43,16 +45,16 @@ export function Ram() {
         <g>
             <polyline
                 points={ram}
-                stroke={theme.palette.mode === 'dark' ? 'grey' : 'black'}
+                stroke={theme.palette.mode === 'dark' ? 'grey' : 'grey'}
                 fill="none"
-                strokeWidth={viewBox.width * 0.006} // Толщина тоже пропорциональна viewBox
+                strokeWidth={viewBox.width * 0.006}
             />
-            <polyline
+            {/* <polyline
                 points={ram1}
                 stroke={theme.palette.mode === 'dark' ? '#424242' : 'white'}
                 fill="none"
                 strokeWidth={lamberWidth} // Толщина тоже пропорциональна viewBox
-            />
+            /> */}
         </g>
     );
 }

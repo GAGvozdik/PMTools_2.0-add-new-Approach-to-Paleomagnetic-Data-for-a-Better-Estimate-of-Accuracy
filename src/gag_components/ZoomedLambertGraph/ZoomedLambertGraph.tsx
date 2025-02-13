@@ -13,6 +13,7 @@ import InterpretationSetter from '../../../src/pages/DIRPage/InterpretationSette
 import { DegreeGrid } from "./degreeGrid";
 import { setRZ } from '../../services/reducers/cacParams';
 import styles from "./ZoomedLabertGraph.module.scss" 
+import {Ram} from "./ram";
 import { 
     addInterpretation, 
     setStatisticsMode, 
@@ -47,15 +48,14 @@ const dotSettings: DotSettings = {
 interface HGGraph {
     centerZone: number[],
     gridPoints: number[][],
-    svgRef?: React.RefObject<SVGSVGElement>,
-
+    svgRef: React.RefObject<SVGSVGElement>,
+    viewBox: { x: number; y: number; width: number; height: number };    
 }
 
 
 export function ZoomedLambertGraph({
     centerZone,
-    gridPoints,
-    svgRef,
+    gridPoints, svgRef, viewBox
 }: HGGraph) {
 
     const { 
@@ -69,7 +69,8 @@ export function ZoomedLambertGraph({
         isDegreeVisible,
         isVis,
         scale, 
-        viewBox 
+        // viewBox,
+        // svgRef
     } = useAppSelector(state => state.cacParamsReducer);
 
     const centerZoneColor = '#2b3bb3';
@@ -85,8 +86,6 @@ export function ZoomedLambertGraph({
 
     // let viewBoxSize = getViewBoxSize(centeredDirList, angleList, meanDir, 1.0);
     let viewBoxSize = getViewBoxSize(centeredDirList, angleList, meanDir, 0.15);
-    console.log('viewBoxSize');
-    console.log(viewBoxSize);
     let fullViewBoxSize = viewBoxSize;
     // let fullViewBoxSize = getViewBoxSize(centeredDirList, angleList, meanDir, 0);
     // fullViewBoxSize = getViewBoxSize(centeredDirList, angleList, meanDir, 0.6);
@@ -272,6 +271,7 @@ export function ZoomedLambertGraph({
     
     return (
         <div>
+        {/* <svg className={styles.graph_interface} ref={svgRef}> */}
         <svg className={styles.graph_interface} ref={svgRef} viewBox={`${viewBox.x} ${viewBox.y} ${viewBox.width} ${viewBox.height}`}>
             {/* <InterpretationSetter dataToShow={dataToShow} /> */}
             {/* Градусная сетка */}
@@ -420,7 +420,7 @@ export function ZoomedLambertGraph({
                 strokeWidth={0}
                 settings={dotSettings}
             /> */}
-
+            <Ram viewBox={viewBox} />
         </svg>
         </div>
     );

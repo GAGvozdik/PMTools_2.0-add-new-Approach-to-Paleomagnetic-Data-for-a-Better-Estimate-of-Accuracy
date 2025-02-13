@@ -36,7 +36,8 @@ interface IInitialState {
         alpha95Square: number;
         scale: number;
         viewBox: { x: number; y: number; width: number; height: number };
-    interpretation: number;
+        svgRef: React.RefObject<SVGSVGElement> | null;
+        interpretation: number;
 };
 
 //  step_list = dataToShow?.interpretations.map(interpretation => interpretation.stepCount);
@@ -69,8 +70,8 @@ const initialState: IInitialState = {
         alpha95Square: 0,
         scale: 1,
         viewBox: { x: -0.5, y: -0.5, width: 1, height: 1 },
-
-    interpretation: 0,
+        svgRef: null, 
+        interpretation: 0,
 
 };
 
@@ -171,6 +172,9 @@ const cacParams = createSlice({
     setViewBox(state, action) {
         state.viewBox = action.payload;
     },
+    setSvgRef(state, action) {
+        state.svgRef = action.payload;
+    },
 
   },
 
@@ -201,6 +205,7 @@ export const {
     setAlpha95Square,
     setViewBox,
     setScale,
+    setSvgRef
 
 } = cacParams.actions;
 
