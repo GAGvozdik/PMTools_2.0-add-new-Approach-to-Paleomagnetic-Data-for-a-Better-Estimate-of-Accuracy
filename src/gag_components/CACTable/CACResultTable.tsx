@@ -196,13 +196,17 @@ interface IStatisticsDataTableDIR {
       col.hideSortIcons = true;
       col.disableColumnMenu = true;
     });
-  
+    
     if (!currentFileInterpretations || !currentFileInterpretations.length) {
       return (
         <div className={styles.table2_container + ' ' + styles.commonContainer + ' ' +  styles.grant}>
-          This work was carried out in the framework of budgetary funding of the Geophysical Center of RAS 
-          [grant <a className={styles.grantLink} href="https://rscf.ru/project/22-17-00114/">22-17-00114</a>], adopted by the Ministry 
-          of Science and Higher Education of the Russian Federation. 
+          {t('CACPage.grant1')}
+            <a className={styles.grantLink} href="">075-00439-25-01</a>
+          {t('CACPage.grant2')}
+            <a className={styles.grantLink} href="">075-00603-25-00</a>
+          {t('CACPage.grant3')}
+
+
         </div>
       )
     };
