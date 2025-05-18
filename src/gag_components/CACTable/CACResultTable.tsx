@@ -25,7 +25,7 @@ import { deleteInterpretation, setAllInterpretations, updateCurrentFileInterpret
 import { useCellModesModel } from "../../components/AppLogic/hooks";
 import { StatisticsDataTableRow, StatisticsDataTableColumns } from "../../components/AppLogic/DataTablesDIR/types";
 import { useScrollToInterpretationRow } from "../../components/AppLogic/hooks/useScrollToInterpretationRow";
-
+import { useTranslation } from 'react-i18next';
 
 
 interface IStatisticsDataTableDIR {
@@ -57,7 +57,7 @@ interface IStatisticsDataTableDIR {
     const theme = useTheme();
     const apiRef = useGridApiRef();
     const { cellModesModel, handleCellModesModelChange } = useCellModesModel();
-  
+    const { t, i18n } = useTranslation('translation');
     const { currentInterpretation, allInterpretations } = useAppSelector(state => state.dirPageReducer);
     const [currentClass, setCurrentClass] = useState(styles.current_dark);
   
@@ -148,11 +148,11 @@ interface IStatisticsDataTableDIR {
           ];
         },
       },
-      { field: 'id', headerName: 'Label', type: 'string', width: 80 },
-      { field: 'codeCAC', headerName: 'Code', type: 'string', width: 60 },
+
+      { field: 'id', headerName: t('CACPage.Label'), type: 'string', width: 80 },
+      { field: 'codeCAC', headerName: t('CACPage.Code'), type: 'string', width: 60 },
       // { field: 'stepRange', headerName: 'StepRange', type: 'string', width: 90 },
       { field: 'stepCount', headerName: 'N', type: 'number', minWidth: 30, width: 30 },
-
 
       // { field: 'accuracyGeo', headerName: 'Kgeo', type: 'string', width: 60,
       //   valueFormatter: (params: GridValueFormatterParams) => (params.value as number)?.toFixed(1)
@@ -165,38 +165,27 @@ interface IStatisticsDataTableDIR {
       //   valueFormatter: (params: GridValueFormatterParams) => (params.value as number)?.toFixed(1)
       // },
 
-
-    { field: 'lat', headerName: 'lat', type: 'string', width: 65},
-    { field: 'lon', headerName: 'lon', type: 'string', width: 65},
-
-    { field: 'RZ', headerName: 'RZ', type: 'number', width: 40},
-
-    { field: 'Igeo', headerName: 'FishD', type: 'number', width: 60,
+    { field: 'lat', headerName: t('CACPage.lat'), type: 'string', width: 65},
+    { field: 'lon', headerName: t('CACPage.lon'), type: 'string', width: 65},
+    { field: 'RZ', headerName: t('CACPage.RZ'), type: 'number', width: 40},
+    { field: 'Igeo', headerName: t('CACPage.FishI'), type: 'number', width: 60,
       valueFormatter: (params: GridValueFormatterParams) => (params.value as number)?.toFixed(1)
     },
-
-    { field: 'Dgeo', headerName: 'FishI', type: 'number', width: 60,
+    { field: 'Dgeo', headerName: t('CACPage.FishD'), type: 'number', width: 60,
       valueFormatter: (params: GridValueFormatterParams) => (params.value as number)?.toFixed(1)
     },
-
     { field: 'confidenceRadiusStrat', headerName: 'MADstrat', type: 'string', width: 75,
       valueFormatter: (params: GridValueFormatterParams) => (params.value as number)?.toFixed(1)
     },
-
     { field: 'alpha95', headerName: 'α95', type: 'number', width: 40},
     // { field: 'alpha95Square', headerName: 'Sα95', type: 'number', width: 40},
     // { field: 'zoneSquare', headerName: 'zoneSquare', type: 'number', width: 40},
-
     { field: 'PCaPC', headerName: 'PC/aPC', type: 'string', width: 60},
-
     { field: 'q', headerName: 'q', type: 'number', width: 40},
-
-
     { field: 'selectedD', headerName: 'd', type: 'number', width: 25},
-    { field: 'gridN', headerName: 'gridN', type: 'number', width: 25},
-    { field: 'probability', headerName: 'probability', type: 'number', width: 70},
-
-    { field: 'comment', headerName: 'Comment', type: 'string', minWidth: 40, flex: 1, 
+    { field: 'gridN', headerName: t('CACPage.gridN'), type: 'number', width: 140},
+    { field: 'probability', headerName: t('CACPage.probability'), type: 'number', width: 120},
+    { field: 'comment', headerName: t('CACPage.Comment'), type: 'string', minWidth: 40, flex: 1, 
     editable: true, cellClassName: styles[`editableCell_${theme.palette.mode}`] },
   
     ];

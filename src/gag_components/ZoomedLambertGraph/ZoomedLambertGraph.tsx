@@ -420,7 +420,7 @@ export function ZoomedLambertGraph({
                 strokeWidth={0}
                 settings={dotSettings}
             /> */}
-            <Ram viewBox={viewBox} />
+            {/* <Ram viewBox={viewBox} /> */}
         </svg>
         </div>
     );

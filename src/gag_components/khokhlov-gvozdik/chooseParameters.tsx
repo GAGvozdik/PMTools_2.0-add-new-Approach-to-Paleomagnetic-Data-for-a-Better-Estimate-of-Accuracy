@@ -11,6 +11,8 @@ import {
     setIsGrid,
     setIsVis
 } from '../../services/reducers/cacParams';
+import { useTranslation } from 'react-i18next';
+import { Typography } from '@mui/material';
 
 export default function ChooseParameters() {
 
@@ -26,6 +28,8 @@ export default function ChooseParameters() {
     } = useAppSelector(state => state.cacParamsReducer);
 
     const dispatch = useAppDispatch();
+    // const t = useTranslation('translation');
+    const { t, i18n } = useTranslation('translation');
 
     const theme = useTheme();
 
@@ -97,9 +101,15 @@ export default function ChooseParameters() {
                 value={selectedP} 
                 onChange={handlePChange}
             >
-                <option value={950}>quantile = 0.950</option>
-                <option value={975}>quantile = 0.975</option>
-                <option value={990}>quantile = 0.990</option>
+                <option value={950}>
+                    {t('CACPage.quantile')} = 0.950
+                </option>
+                <option value={975}>
+                    {t('CACPage.quantile')} = 0.975
+                </option>
+                <option value={990}>
+                    {t('CACPage.quantile')} = 0.990
+                </option>
             </select>
 
             <select 
@@ -114,7 +124,7 @@ export default function ChooseParameters() {
             <div className={styles.infoItem1}>
                 <label className={styles.my_input}>
                     <div className={styles.info} style={{ color: theme.palette.mode == 'dark' ? 'lightGrey' : "black"}}>
-                        Show zone
+                        {t('CACPage.ShowZone')}
                     </div>
                     <input type="checkbox" checked={isVis} onChange={handleCheckboxChange}/>
                     <span className={styles.checkmark}></span>
@@ -124,7 +134,7 @@ export default function ChooseParameters() {
             <div className={styles.infoItem2}>
                 <label className={styles.my_input}>
                     <div className={styles.info} style={{ color: theme.palette.mode == 'dark' ? 'lightGrey' : "black"}}>
-                        Show grid
+                        {t('CACPage.ShowGrid')}
                     </div>
                     <input type="checkbox" checked={isDegreeVisible} onChange={gridCheckboxChange}/>
                     <span className={styles.checkmark}></span>
@@ -134,7 +144,7 @@ export default function ChooseParameters() {
             <div className={styles.infoItem3}>
                 <label className={styles.my_input}>
                     <div className={styles.info} style={{ color: theme.palette.mode == 'dark' ? 'lightGrey' : "black"}}>
-                        Show degree grid
+                        {t('CACPage.ShowDegreeGrid')}
                     </div>
                     <input type="checkbox" checked={isGrid} onChange={degreeCheckboxChange}/>
                     <span className={styles.checkmark}></span>

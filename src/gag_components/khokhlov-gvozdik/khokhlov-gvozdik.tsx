@@ -16,6 +16,7 @@ import { useTheme } from '@mui/material/styles';
 import { setCurrentDIRid } from '../../services/reducers/parsedData';
 import InterpretationSetter from '../../../src/pages/DIRPage/InterpretationSetter';
 import ChooseParameters from './chooseParameters';
+import { useTranslation } from 'react-i18next';
 
 import { 
     setDirList,
@@ -179,6 +180,7 @@ export function Khokhlov_Gvozdik() {
             dispatch(setIsCACGraphVisible(false));
         }
     };
+    const { t, i18n } = useTranslation('translation');
 
     return (
         <div className={`${styles.main_container} ${theme.palette.mode == 'dark' ? styles.dark : ''}`}>
@@ -225,7 +227,7 @@ export function Khokhlov_Gvozdik() {
                         {isCACGraphVisible ? (
                             <></>
                         ) : (
-                            <button className={styles.button} onClick={getData}>Calculate results</button>
+                            <button className={styles.button} onClick={getData}>{t('CACPage.CalculateResults')}</button>
                         )}
                     </div>
                 </div>
