@@ -62,7 +62,7 @@ export function GraphContainer() {
     const dispatch = useAppDispatch();
 
     const [viewBox4Props, setViewBox4Props] = useState<{ x: number; y: number; width: number; height: number }>(
-        { x: -0.5, y: -0.5, width: 1, height: 1 }
+        { x: -0.15, y: -0.15, width: 0.3, height: 0.3 }
     );
 
 
