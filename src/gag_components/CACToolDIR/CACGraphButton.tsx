@@ -5,7 +5,7 @@ import { Button, ButtonGroup } from '@mui/material';
 import { setStatisticsMode } from '../../services/reducers/dirPage';
 import { useAppDispatch, useAppSelector } from '../../services/store/hooks';
 import { StatisticsModeCAC } from '../../utils/graphs/types';
-
+import { useTranslation } from 'react-i18next';
 
   interface ICACGraphButton {
     mode: StatisticsModeCAC;
@@ -14,7 +14,8 @@ import { StatisticsModeCAC } from '../../utils/graphs/types';
   
   const CACGraphButton: FC<ICACGraphButton> = ({ mode, changeGraph }) => {
 
-
+    const { t, i18n } = useTranslation('translation');
+    
   
     const dispatch = useAppDispatch();
     const { statisticsMode } = useAppSelector(state => state.dirPageReducer); 
@@ -39,7 +40,8 @@ import { StatisticsModeCAC } from '../../utils/graphs/types';
           }}
           onClick={() => onStatisticsModeClick(mode)}
         >
-          { mode?.toUpperCase() }
+          { mode ? t(`CACPage.${mode}`) : null }
+
         </Button>
 
       </>

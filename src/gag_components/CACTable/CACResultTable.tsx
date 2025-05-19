@@ -8,7 +8,7 @@ import { DataGridDIRFromDIRRow, StatisitcsInterpretationFromDIR } from "../../ut
 import DeleteIcon from '@mui/icons-material/DeleteOutlined';
 import { useAppDispatch, useAppSelector } from "../../services/store/hooks";
 
-import DIRStatisticsDataTableToolbar from "../../components/Common/DataTable/Toolbar/DIRStatisticsDataTableToolbar";
+import CACResultToolbar from "../../components/Common/DataTable/Toolbar/CACResultToolbar";
 import equal from "deep-equal"
 import { acitvateHotkeys, deactivateHotkeys } from "../../services/reducers/appSettings";
 
@@ -167,21 +167,21 @@ interface IStatisticsDataTableDIR {
 
     { field: 'lat', headerName: t('CACPage.lat'), type: 'string', width: 65},
     { field: 'lon', headerName: t('CACPage.lon'), type: 'string', width: 65},
-    { field: 'RZ', headerName: t('CACPage.RZ'), type: 'number', width: 40},
-    { field: 'Igeo', headerName: t('CACPage.FishI'), type: 'number', width: 60,
+    { field: 'RZ', headerName: t('CACPage.RZ'), type: 'number', width: 60},
+    { field: 'Igeo', headerName: t('CACPage.FishI'), type: 'number', width: 120,
       valueFormatter: (params: GridValueFormatterParams) => (params.value as number)?.toFixed(1)
     },
-    { field: 'Dgeo', headerName: t('CACPage.FishD'), type: 'number', width: 60,
+    { field: 'Dgeo', headerName: t('CACPage.FishD'), type: 'number', width: 120,
       valueFormatter: (params: GridValueFormatterParams) => (params.value as number)?.toFixed(1)
     },
-    { field: 'confidenceRadiusStrat', headerName: 'MADstrat', type: 'string', width: 75,
+    { field: 'confidenceRadiusStrat', headerName: t('CACPage.MADstrat'), type: 'string', width: 95,
       valueFormatter: (params: GridValueFormatterParams) => (params.value as number)?.toFixed(1)
     },
     { field: 'alpha95', headerName: 'α95', type: 'number', width: 40},
     // { field: 'alpha95Square', headerName: 'Sα95', type: 'number', width: 40},
     // { field: 'zoneSquare', headerName: 'zoneSquare', type: 'number', width: 40},
     { field: 'PCaPC', headerName: 'PC/aPC', type: 'string', width: 60},
-    { field: 'q', headerName: 'q', type: 'number', width: 40},
+    { field: 'q', headerName: t('CACPage.quantile'), type: 'number', width: 80},
     { field: 'selectedD', headerName: 'd', type: 'number', width: 25},
     { field: 'gridN', headerName: t('CACPage.gridN'), type: 'number', width: 140},
     { field: 'probability', headerName: t('CACPage.probability'), type: 'number', width: 120},
@@ -305,7 +305,7 @@ interface IStatisticsDataTableDIR {
             (params) => params.row.id === currentInterpretation?.label ? currentClass : ''
           }
           components={{
-            Toolbar: DIRStatisticsDataTableToolbar
+            Toolbar: CACResultToolbar
           }}
           onRowClick={(params) => setRowAsCurrentInterpretation(params.row.id)}
           processRowUpdate={(newRow, oldRow) => {

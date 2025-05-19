@@ -20,9 +20,10 @@ import DataTablePMDSkeleton from '../../components/AppLogic/DataTablesDIR/InputD
 import SwapVertRoundedIcon from '@mui/icons-material/SwapVertRounded';
 import SettingsBackupRestoreIcon from '@mui/icons-material/SettingsBackupRestore';
 
-import DIRInputDataTableToolbar from "../../components/Common/DataTable/Toolbar/DIRInputDataTableToolbar";
+// import DIRInputDataTableToolbar from "../../components/Common/DataTable/Toolbar/DIRInputDataTableToolbar";
+import CACResultToolbar from "../../components/Common/DataTable/Toolbar/CACResultToolbar";
 import Direction from "../../utils/graphs/classes/Direction";
-
+import { useTranslation } from 'react-i18next';
 import { GridRowSelectionModel } from '@mui/x-data-grid';
 import { useTheme } from '@mui/material/styles';
 import {
@@ -34,7 +35,7 @@ const DataTableDIR: FC<IDataTableDIR> = ({ data }) => {
 
   const theme = useTheme();
   const dispatch = useAppDispatch();
-
+  const { t, i18n } = useTranslation('translation');
   const { selectedDirectionsIDs, hiddenDirectionsIDs, reversedDirectionsIDs } = useAppSelector(state => state.dirPageReducer);
 
   // selectionModel is array of ID's of rows
@@ -125,38 +126,41 @@ const DataTableDIR: FC<IDataTableDIR> = ({ data }) => {
     },
     { field: 'id', headerName: 'ID', type: 'number', width: 40 },
     { field: 'index', headerName: '№', type: 'number', width: 40 },
-    { field: 'label', headerName: 'Label', type: 'string', width: 90 },
-    { field: 'code', headerName: 'Code', type: 'string', width: 80 },
-    { field: 'stepRange', headerName: 'StepRange', type: 'string', width: 120 },
+    { field: 'label', headerName: t('CACPage.Label'), type: 'string', width: 90 },
+    { field: 'code', headerName: t('CACPage.Code'), type: 'string', width: 80 },
+    { field: 'stepRange', headerName: t('CACPage.StepRange'), type: 'string', width: 120 },
     { field: 'stepCount', headerName: 'N', type: 'number', width: 40 },
-    { field: 'Dgeo', headerName: 'Dgeo', type: 'number', width: 70,
+    { field: 'Dgeo', headerName: t('CACPage.Dgeo'), type: 'number', width: 70,
       valueFormatter: (params: GridValueFormatterParams) => (params.value as number)?.toFixed(1)
     },
-    { field: 'Igeo', headerName: 'Igeo', type: 'number', width: 70,
+    { field: 'Igeo', headerName: t('CACPage.Igeo'), type: 'number', width: 70,
       valueFormatter: (params: GridValueFormatterParams) => (params.value as number)?.toFixed(1)
     },
-    { field: 'accuracyGeo', headerName: 'Kgeo', type: 'string', width: 70,
+    { field: 'accuracyGeo', headerName: t('CACPage.Kgeo'), type: 'string', width: 70,
       valueFormatter: (params: GridValueFormatterParams) => (params.value as number)?.toFixed(1)
     },
-    { field: 'confidenceRadiusGeo', headerName: 'MADgeo', type: 'string', width: 80,
+    { field: 'confidenceRadiusGeo', headerName: t('CACPage.MADgeo'), type: 'string', width: 80,
       valueFormatter: (params: GridValueFormatterParams) => (params.value as number)?.toFixed(1)
     },
-    { field: 'Dstrat', headerName: 'Dstrat', type: 'number', width: 70,
+    { field: 'Dstrat', headerName: t('CACPage.Dstrat'), type: 'number', width: 100,
       valueFormatter: (params: GridValueFormatterParams) => (params.value as number)?.toFixed(1)
     },
-    { field: 'Istrat', headerName: 'Istrat', type: 'number', width: 70,
+    { field: 'Istrat', headerName: t('CACPage.Istrat'), type: 'number', width: 100,
       valueFormatter: (params: GridValueFormatterParams) => (params.value as number)?.toFixed(1)
     },
-    { field: 'accuracyStrat', headerName: 'Kstrat', type: 'string', width: 70,
+    { field: 'accuracyStrat', headerName: t('CACPage.Istrat'), type: 'string', width: 100,
       valueFormatter: (params: GridValueFormatterParams) => (params.value as number)?.toFixed(1)
     },
-    { field: 'confidenceRadiusStrat', headerName: 'MADstrat', type: 'string', width: 80,
+    { field: 'confidenceRadiusStrat', headerName: t('CACPage.MADstrat'), type: 'string', width: 110,
       valueFormatter: (params: GridValueFormatterParams) => (params.value as number)?.toFixed(1)
     },
-    { field: 'comment', headerName: 'Comment', type: 'string', width: 200 },
-    { field: 'lat', headerName: 'Lat', type: 'number', width: 70, },
-    { field: 'lon', headerName: 'Lon', type: 'number', width: 70, },
+    { field: 'comment', headerName: t('CACPage.Comment'), type: 'string', width: 200 },
+    { field: 'lat', headerName: t('CACPage.lat'), type: 'number', width: 70, },
+    { field: 'lon', headerName: t('CACPage.lon'), type: 'number', width: 70, },
   ];
+
+
+
 
   columns.forEach((col) => {
     col.align = 'center';
@@ -215,7 +219,7 @@ const DataTableDIR: FC<IDataTableDIR> = ({ data }) => {
           setSelectedRows(selectedRows);
         }}
         components={{
-          Toolbar: DIRInputDataTableToolbar, 
+          Toolbar: CACResultToolbar, 
         }}
         sx={{
           ...GetDataTableBaseStyle(),

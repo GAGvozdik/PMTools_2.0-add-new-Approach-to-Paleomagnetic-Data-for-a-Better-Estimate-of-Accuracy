@@ -462,7 +462,17 @@
       "Comment": "Comment",
       "grant1": "Работа выполнена в рамках государственного задания Геофизического центра РАН (№ ",
       "grant2": ") и Института теории прогноза землетрясений и математической геофизики РАН (№ ",
-      "grant3": "), утвержденного Минобрнауки России."
+      "grant3": "), утвержденного Минобрнауки России.",
+      "StepRange": "StepRange",
+      "MADgeo": "MADgeo",
+      "Igeo": "Igeo",
+      "Dgeo": "Dgeo",
+      "Kgeo": "Kgeo",
+      "Istrat": "Istrat",
+      "Dstrat": "Dstrat",
+      "Kstrat": "Kstrat",
+      "Fisher": "Fisher",
+      "CAC": "CAC"
   }
 }
 
